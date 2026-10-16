@@ -109,11 +109,11 @@
 - `getWeeklyHourLimit(date: string, parameters: LegalParameters): Result<number, LegalDateError>` usa os limites por etapa e datas calculadas; retorna erro explícito para data de referência inválida ou publicationDate ausente/inválida.
 - Todos os argumentos e resultados de data usam strings de data civil ISO (`YYYY-MM-DD`). Não declarar parâmetros reais aprovados/publicados antes do DOU e do fechamento dos gates GJ-01–GJ-04; a interação do Art. 10 da minuta com o Art. 6º segue pendente de GJ-02.
 
-- [ ] Escrever testes com fixtures exclusivamente hipotéticas, incluindo `publicationDate` 16/10/2026 → Etapa 1 16/12/2026 → Etapa 2 16/12/2027; cobrir adição de meses civis, fim de mês, mudança de ano e ano bissexto (sem tratar mês-calendário como 60 dias).
-- [ ] Escrever testes para limites de 44/42/40 horas imediatamente antes e no início de cada vigência hipotética; verificar erros explícitos para publicationDate ausente/inválida e que a seleção retorna erro quando não houver parâmetros aprovados e publicados aplicáveis, mesmo que exista uma versão provisória com limites registrados.
-- [ ] Implementar aritmética de data civil sem depender do fuso horário local da máquina; usar `America/Sao_Paulo` ao resolver a data atual para a UI.
-- [ ] Rejeitar datas inválidas, versões de parâmetros com vigências sobrepostas e datas sem versão correspondente, com erros explícitos de validação.
-- [ ] Executar `npm test -- --run tests/unit/legal-parameters.test.ts tests/unit/stages.test.ts`; esperar aprovação de todos os casos.
+- [x] Escrever testes com fixtures exclusivamente hipotéticas, incluindo `publicationDate` 16/10/2026 → Etapa 1 16/12/2026 → Etapa 2 16/12/2027; cobrir adição de meses civis, fim de mês, mudança de ano e ano bissexto (sem tratar mês-calendário como 60 dias).
+- [x] Escrever testes para limites de 44/42/40 horas imediatamente antes e no início de cada vigência hipotética; verificar erros explícitos para publicationDate ausente/inválida e que a seleção retorna erro quando não houver parâmetros aprovados e publicados aplicáveis, mesmo que exista uma versão provisória com limites registrados.
+- [x] Implementar aritmética de data civil sem depender do fuso horário local da máquina; usar `America/Sao_Paulo` ao resolver a data atual para a UI.
+- [x] Rejeitar datas inválidas, versões de parâmetros com vigências sobrepostas e datas sem versão correspondente, com erros explícitos de validação.
+- [x] Executar `npm test -- --run tests/unit/legal-parameters.test.ts tests/unit/stages.test.ts`; esperar aprovação de todos os casos.
 
 **Critério de saída:** datas legais determinísticas, versionadas e testáveis sem a UI.
 
