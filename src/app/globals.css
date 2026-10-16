@@ -1,0 +1,62 @@
+:root {
+  color-scheme: light;
+  font-family:
+    "Segoe UI", "Helvetica Neue", sans-serif;
+  background: #f4f7f5;
+  color: #18352d;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.page-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 2rem 1.5rem;
+}
+
+.hero {
+  width: min(100%, 48rem);
+  padding: clamp(2rem, 8vw, 5rem);
+  border: 1px solid #d9e5df;
+  border-radius: 1.5rem;
+  background: #fff;
+  box-shadow: 0 1.5rem 4rem rgb(24 53 45 / 8%);
+}
+
+.eyebrow {
+  margin: 0 0 1rem;
+  color: #247456;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  max-width: 12ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 1.02;
+}
+
+.intro {
+  max-width: 38rem;
+  margin: 1.5rem 0 0;
+  color: #49645a;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.7;
+}
