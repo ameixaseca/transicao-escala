@@ -4,9 +4,11 @@ Oct 16, 2026 · @Luiz Paulo
 
 ## 1. Visão geral
 
-O Copiloto de Transição 6x1 é uma ferramenta web gratuita, sem login, que ajuda pequenos empregadores a calcular o custo da nova jornada, comparar cenários de adaptação e gerar uma escala 5x2 que cubra o horário de funcionamento. A aplicação será construída com Next.js e TypeScript e publicada na Vercel. Cálculos, leitura de CSV, persistência opcional das premissas, geração de documentos e exportações acontecem inteiramente no navegador. A aplicação não coleta nem transmite dados operacionais inseridos pelo usuário e não oferece APIs de produto, banco de dados, analytics, pixels ou integrações com terceiros.
+O Copiloto de Transição 6x1 é uma ferramenta web gratuita, sem login, que ajuda pequenos empregadores a calcular o custo da nova jornada e comparar cenários de adaptação. O release inicial de 30 dias inclui premissas manuais, diagnóstico, comparação de cenários e linha do tempo/checklist legal. Importação CSV, persistência local, geração/edição de escalas 5x2 e geração/exportação de documentos ficam para releases posteriores. A aplicação será construída com Next.js e TypeScript e publicada na Vercel. Todo processamento ocorre no navegador, inclusive as funcionalidades posteriores. A aplicação não coleta nem transmite dados operacionais inseridos pelo usuário e não oferece contas, APIs de produto, banco de dados, telemetria, analytics, pixels ou integrações com terceiros.
 
-O usuário informa apenas as premissas necessárias aos cálculos. A ferramenta não solicita nome, CNPJ, e-mail ou identificadores de funcionários; quando necessário para editar escalas, identifica as pessoas com rótulos anônimos gerados localmente. Dados podem permanecer apenas na sessão ou ser salvos opcionalmente no armazenamento local do navegador. A interface oferece uma ação explícita para apagar esses dados. O provedor de hospedagem pode processar metadados técnicos de acesso, distintos das premissas e resultados dos cálculos.
+O usuário informa apenas as premissas necessárias aos cálculos. A ferramenta não solicita nome, CNPJ, e-mail ou identificadores de funcionários; usa rótulos anônimos gerados localmente para distinguir pessoas. No release inicial, premissas e resultados permanecem apenas em memória durante a sessão, sem persistência local ou remota e sem restauração após recarregar. Em release posterior, o usuário poderá optar por salvar premissas somente no armazenamento local do navegador, com uma ação explícita para apagar esses dados. O provedor de hospedagem pode processar metadados técnicos de acesso, distintos das premissas e resultados dos cálculos.
+
+**Status jurídico: pendente e bloqueante.** O contexto, os fatos e as fontes abaixo são registros existentes do PRD, não fatos confirmados nesta tarefa nem conteúdo juridicamente aprovado. A data efetiva, o texto oficial e as interpretações legais ainda exigem confirmação e revisão por advogado trabalhista. Os gates da seção 8 bloqueiam a implementação dos cálculos afetados e o lançamento; o prazo de 30 dias não dispensa esses gates. Esta tarefa é apenas documental e não implementa cálculos jurídicos.
 
 **Contexto legal.** O Senado aprovou a PEC 221/2019 em 14/10/2026, por 75 votos a 1, em dois turnos ([Senado Notícias](https://www12.senado.leg.br/noticias/materias/2026/10/14/senado-aprova-fim-da-6x1-em-primeiro-turno)). A promulgação foi marcada para 16/10/2026. O texto aprovado estabelece:
 
@@ -28,18 +30,20 @@ O pequeno empregador que opera na 6x1 precisa entender o custo da mudança e reo
 
 | Persona | Quem é | O que precisa |
 | --- | --- | --- |
-| Dona do negócio | Responsável por um restaurante que abre de terça a domingo | Saber o custo extra e gerar uma escala que cubra o fim de semana |
-| Gerente de loja | Responsável por uma loja pequena | Comparar cenários e ajustar uma escala para a equipe |
-| Contador | Profissional que orienta pequenos empregadores | Usar a ferramenta localmente com as premissas necessárias e exportar um relatório para compartilhar por conta própria |
+| Dona do negócio | Responsável por um restaurante que abre de terça a domingo | Saber o custo extra e consultar o checklist; gerar escala que cubra o fim de semana em release posterior |
+| Gerente de loja | Responsável por uma loja pequena | Comparar cenários; ajustar uma escala para a equipe em release posterior |
+| Contador | Profissional que orienta pequenos empregadores | Usar a ferramenta localmente com premissas manuais; exportar relatório para compartilhar por conta própria em release posterior |
 
 ## 3. Objetivos e métricas
 
-**Objetivos**
+**Objetivos do release inicial**
 
 - Em até 10 minutos, o usuário sabe o custo mensal da adaptação em cada etapa.
-- O usuário sai com uma escala 5x2 válida e um cenário escolhido.
+- O usuário compara os quatro cenários e escolhe uma opção com custos e restrições explícitos, sem gerar ou editar escalas.
 - O usuário consulta prazos legais, pendências e checklist dentro da ferramenta.
 - O usuário consegue concluir o fluxo sem login e sem transmitir dados operacionais à aplicação.
+
+A geração de escala 5x2 válida e a exportação de documentos permanecem objetivos de releases posteriores, não critérios de aceite do release de 30 dias.
 
 **Não-objetivos:** controle de ponto, folha de pagamento, integração com eSocial, parecer jurídico, cadastro de contas ou empresas, compartilhamento ou processamento remoto de dados.
 
@@ -47,7 +51,8 @@ O pequeno empregador que opera na 6x1 precisa entender o custo da mudança e reo
 
 | Critério | Como avaliar |
 | --- | --- |
-| Correção das regras de negócio | Cobertura automatizada de cada regra aplicável e resultados esperados verificados nos cenários |
+| Correção das regras de negócio | Cobertura automatizada de cada regra aplicável e resultados esperados verificados nos cenários, conforme o recorte por release da seção 7; aceite condicionado aos gates jurídicos da seção 8 |
+| Completude do release inicial | Verificação documental e testes do fluxo: entrada manual → diagnóstico por etapa → comparação dos quatro cenários e escolha → linha do tempo/checklist legal, sem depender de CSV, persistência, escala ou exportação |
 | Facilidade de uso | Sessões de usabilidade sem instrumentação ou coleta de dados pelo produto |
 | Tempo até o primeiro resultado | Até 10 minutos, avaliado em testes de usabilidade |
 | Privacidade local | Testes automatizados confirmam que dados operacionais não são enviados a endpoints da aplicação ou origens externas e que não há chamadas a serviços ou integrações de terceiros; requisições comuns de assets estáticos e metadados técnicos à hospedagem permanecem permitidos |
@@ -55,7 +60,7 @@ O pequeno empregador que opera na 6x1 precisa entender o custo da mudança e reo
 
 ## 4. Regras de negócio
 
-O produto implementa 16 regras: 10 vêm da EC e da CLT, e 6 são regras do produto. Parâmetros legais são versionados por vigência junto aos artefatos da aplicação. Uma alteração é disponibilizada por uma nova versão publicada do aplicativo, não por administração de banco de dados.
+O produto completo prevê 16 regras: 10 atribuídas à EC e à CLT, ainda sujeitas aos gates jurídicos da seção 8, e 6 regras do produto. Todas são preservadas; o recorte de funcionalidades por release não elimina restrições legais aplicáveis ao diagnóstico ou aos cenários. Não se deve recomendar como viável um cenário sem verificar as restrições aplicáveis de RN-14; a ausência do gerador de escala não dispensa essas verificações nem autoriza afirmar que uma escala foi validada. Parâmetros legais são versionados por vigência junto aos artefatos da aplicação. Uma alteração é disponibilizada por uma nova versão publicada do aplicativo, não por administração de banco de dados.
 
 **Regras legais**
 
@@ -83,9 +88,9 @@ O produto implementa 16 regras: 10 vêm da EC e da CLT, e 6 são regras do produ
 | RN-15 | Todo relatório e documento gerado localmente traz o aviso de que não substitui orientação de contador ou advogado. |
 | RN-16 | Parâmetros legais têm versão e vigência e são publicados com a aplicação. Alterações entram por uma nova versão do aplicativo; não há administração em banco de dados, recálculo remoto ou envio de notificações. |
 
-## 5. Funcionalidades do MVP
+## 5. Funcionalidades por release
 
-O MVP tem 6 módulos. Todos funcionam sem login e processam as premissas e os resultados localmente no navegador.
+O produto completo tem 6 módulos. O release inicial entrega F1 com entrada manual (RF-01 a RF-03 e RF-05), F2, F3 e F5. RF-04 (CSV), F4 e F6 ficam para releases posteriores, assim como a persistência local opcional. A tabela mantém todos os requisitos previstos, sem implicar que todos serão entregues em 30 dias. Todos funcionam sem login e processam as premissas e os resultados localmente no navegador.
 
 | Módulo | Requisitos funcionais | Regras |
 | --- | --- | --- |
@@ -96,18 +101,20 @@ O MVP tem 6 módulos. Todos funcionam sem login e processam as premissas e os re
 | F5. Linha do tempo e checklist | RF-16 exibir prazos legais e checklist por etapa dentro da ferramenta. | RN-01 |
 | F6. Documentos e modelos | RF-17 gerar localmente modelo de comunicado aos funcionários, modelo de aditivo contratual e relatório do diagnóstico em PDF, todos com o aviso legal aplicável. | RN-15 |
 
-**Fluxo principal:** abrir ferramenta → informar premissas mínimas → diagnóstico → comparar cenários → gerar/editar escala → consultar checklist → gerar e baixar documentos localmente.
+**Fluxo principal do release inicial:** abrir ferramenta → informar premissas mínimas manualmente → diagnóstico → comparar cenários e escolher uma opção → consultar linha do tempo/checklist legal. O checklist inicial não depende de geração, edição ou aprovação de uma escala na ferramenta.
 
-**Persistência e exclusão:** o usuário pode optar por manter as premissas no armazenamento local do navegador. A ferramenta deve oferecer uma ação explícita e fácil de localizar para apagar todos os dados salvos localmente; sem essa opção, as premissas permanecem apenas durante a sessão. CSV, cálculos e arquivos gerados não são enviados à aplicação.
+**Fluxo ampliado, em releases posteriores:** adicionar importação CSV às premissas, geração/edição de escala após comparar cenários e geração/download de documentos locais.
+
+**Persistência e exclusão:** no release inicial, os dados ficam apenas em memória durante a sessão; recarregar não restaura premissas ou resultados. A persistência opcional no armazenamento local do navegador fica para release posterior e só pode ser entregue junto de uma ação explícita e fácil de localizar para apagar todos os dados locais da ferramenta, inclusive o estado ativo. CSV, cálculos e arquivos gerados nunca são enviados à aplicação, em nenhum release.
 
 ## 6. Requisitos não funcionais
 
 | ID | Requisito |
 | --- | --- |
 | RNF-01 | Motor de regras separado da interface, com parâmetros legais versionados por vigência e publicados junto aos artefatos da aplicação; atualizações por release. |
-| RNF-02 | Diagnóstico e simulador respondem em até 2 s para até 50 pessoas. O gerador de escala responde em até 10 s, no navegador. |
+| RNF-02 | Diagnóstico e simulador respondem em até 2 s para até 50 pessoas no release inicial. Em release posterior, o gerador de escala responde em até 10 s, no navegador. |
 | RNF-03 | Interface responsiva, priorizando o celular. O conjunto mínimo de premissas cabe em até 3 telas. |
-| RNF-04 | Privacidade e LGPD: não solicitar nome, CNPJ, e-mail ou identificadores de funcionários; não transmitir ou persistir em servidor dados operacionais; não incluir APIs de produto, bancos de dados, analytics, pixels ou integrações externas. Persistência opcional somente no navegador, com ação explícita para apagar dados locais. Informar que a hospedagem pode processar metadados técnicos de acesso distintos dos dados de cálculo. |
+| RNF-04 | Privacidade e LGPD: não solicitar nome, CNPJ, e-mail ou identificadores de funcionários; não transmitir ou persistir em servidor dados operacionais; não incluir contas, APIs de produto, bancos de dados, telemetria, analytics, pixels ou integrações externas. No release inicial, dados somente em memória durante a sessão, sem restauração após recarregar; persistência opcional somente no navegador em release posterior, com ação explícita para apagar dados locais. Informar que a hospedagem pode processar metadados técnicos de acesso distintos dos dados de cálculo. |
 | RNF-05 | Cálculos monetários em JavaScript/TypeScript usam aritmética decimal de base 10, sem depender de ponto flutuante binário. Divisões que resultem em dízimas periódicas mantêm o numerador e o denominador exatos, ou representação racional equivalente, durante todas as operações monetárias subsequentes; não se introduz precisão intermediária arbitrária. O arredondamento bancário (half-even) para 2 casas decimais ocorre somente nos valores finais exibidos e nunca altera os valores usados nos cálculos. |
 | RNF-06 | Toda regra aplicável tem ao menos um cenário automatizado em JavaScript/TypeScript (seção 7); todos os cenários de regras são executados em cada pull request. |
 | RNF-07 | Fuso horário America/Sao\_Paulo em todos os cálculos de data. |
@@ -115,9 +122,11 @@ O MVP tem 6 módulos. Todos funcionam sem login e processam as premissas e os re
 
 ## 7. Plano de testes automatizados
 
-As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 32 definições de cenários automatizados, organizadas por requisito em testes compatíveis com JavaScript/TypeScript. Cada esquema conta como uma definição, com todos os seus exemplos executados. Os cenários abaixo são especificações executáveis em Gherkin em português (`# language: pt`) ou testes equivalentes no ecossistema escolhido. Cada teste de regra identifica o requisito que cobre (`RN-xx`); o pipeline falha se alguma regra ficar sem cobertura. Os testes de privacidade distinguem endpoints da aplicação e origens externas das requisições comuns de assets estáticos e metadados técnicos da hospedagem, que são permitidas e não podem transportar dados operacionais; não pode haver chamadas a serviços ou integrações de terceiros.
+As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 32 definições de cenários automatizados preservadas nas seções 7.1 a 7.11, mais 3 definições específicas do release inicial na seção 7.12 (35 no total), organizadas por requisito em testes compatíveis com JavaScript/TypeScript. Cada esquema conta como uma definição, com todos os seus exemplos executados. Os cenários abaixo são especificações executáveis em Gherkin em português (`# language: pt`) ou testes equivalentes no ecossistema escolhido. Cada teste de regra identifica o requisito que cobre (`RN-xx`); o pipeline falha se alguma regra aplicável ao release ficar sem cobertura. Os testes de privacidade distinguem endpoints da aplicação e origens externas das requisições comuns de assets estáticos e metadados técnicos da hospedagem, que são permitidas e não podem transportar dados operacionais; não pode haver chamadas a serviços ou integrações de terceiros.
 
-**Premissas comuns:** promulgação em 16/10/2026, logo a Etapa 1 começa em 15/12/2026 e a Etapa 2 em 15/12/2027. O fuso é America/Sao\_Paulo. Os valores estão em reais.
+**Recorte por release:** no inicial, executar os cenários aplicáveis ao diagnóstico, simulador, parâmetros e prazos (7.1, 7.2, RN-12 em 7.5, 7.6 e 7.9), as validações legais aplicáveis (7.3 e 7.4) e os três cenários do fluxo manual em 7.12. Os testes de regras sobre escalas podem usar fixtures, sem disponibilizar um gerador/editor no release inicial. A validação completa de escala/cobertura de F4, o checklist com escala de 7.7, os documentos de 7.8 e os fluxos ampliados de privacidade e responsividade de 7.10 e 7.11 são preservados para os releases correspondentes, quando passam a ser obrigatórios. A proteção de privacidade e os dois viewports continuam obrigatórios desde o inicial, cobertos por 7.12, sem esperar funcionalidades futuras. Os gates jurídicos bloqueiam a implementação dos cálculos afetados, inclusive resultados esperados que dependam de interpretações ainda não confirmadas.
+
+**Premissas comuns de teste, não confirmação jurídica:** promulgação em 16/10/2026, logo a Etapa 1 começa em 15/12/2026 e a Etapa 2 em 15/12/2027. São fixtures hipotéticas, não prova de promulgação ou aprovação legal; dependem dos gates da seção 8 antes de uso real. O fuso é America/Sao\_Paulo. Os valores estão em reais.
 
 | Conjunto de testes | Regras | Cenários |
 | --- | --- | --- |
@@ -132,6 +141,7 @@ As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 32 definições de cen
 | parametros | RN-16 | 1 |
 | privacidade | RNF-04 | 3 |
 | responsividade | RNF-03 | 1 |
+| fluxo\_inicial (7.12) | RF-16, RNF-03, RNF-04 | 3 |
 
 ### 7.1 Prazos e limite semanal
 
@@ -512,31 +522,75 @@ Funcionalidade: Fluxo principal em diferentes tamanhos de tela
       | 1440    | 900    |
 ```
 
+### 7.12 Fluxo manual do release inicial
+
+```gherkin
+# language: pt
+Funcionalidade: Release inicial sem persistência ou funcionalidades posteriores
+
+  @RF-16 @RN-01
+  Cenário: Consultar linha do tempo e checklist sem gerar escala
+    Dado que o usuário informou premissas manualmente e comparou os cenários
+    Quando abre a linha do tempo e o checklist legal
+    Então vê prazos por etapa, a versão dos parâmetros e as pendências legais
+    E não precisa importar CSV, gerar ou aprovar escala ou exportar documentos
+    E não recebe e-mail, mensagem ou notificação externa
+
+  @RNF-04
+  Cenário: Processar o fluxo manual sem transmissão ou persistência de dados
+    Dado que o usuário informa premissas manuais e consulta diagnóstico, cenários e checklist
+    Quando o teste observa todas as requisições e o armazenamento do navegador
+    Então nenhuma requisição a endpoints da aplicação ou origens externas contém premissas ou resultados
+    E não há chamadas a serviços ou integrações de terceiros, analytics, pixels ou telemetria
+    E somente são permitidas requisições comuns de assets estáticos e metadados técnicos à hospedagem, sem dados operacionais
+    E premissas e resultados não são persistidos no navegador ou remotamente
+    E depois de recarregar a aplicação essas premissas e resultados não retornam
+
+  @RNF-03
+  Esquema do Cenário: Concluir o fluxo manual em celular e desktop
+    Dado que a aplicação está aberta em um viewport de <largura> × <altura> px
+    Quando o usuário informa as premissas manuais e consulta o diagnóstico
+    E compara os quatro cenários, seleciona uma opção e consulta linha do tempo e checklist
+    Então não há overflow horizontal em nenhuma etapa do fluxo
+    E o controle primário de cada etapa está visível, desobstruído e utilizável
+    E não precisa importar CSV, persistir dados, gerar ou editar escala ou baixar documentos
+
+    Exemplos:
+      | largura | altura |
+      | 390     | 844    |
+      | 1440    | 900    |
+```
+
 ## 8. Riscos, roadmap e questões em aberto
 
-O maior risco é o tempo: o valor do produto cai muito depois de 15/12/2026, então diagnóstico e simulador precisam estar no ar em até 30 dias. Outro risco de produto é uma implementação futura introduzir transmissão ou armazenamento remoto de premissas; a arquitetura e os testes devem manter o processamento local.
+O maior risco é o tempo: considerando a data hipotética de 15/12/2026, o valor do produto cai depois do início da Etapa 1. A meta é entregar premissas manuais, diagnóstico, simulador e linha do tempo/checklist legal em até 30 dias, condicionada aos gates jurídicos abaixo; se permanecerem pendentes, o lançamento fica bloqueado, sem presumir aprovação para cumprir o calendário. Outro risco de produto é uma implementação futura introduzir transmissão ou armazenamento remoto de premissas; a arquitetura e os testes devem manter o processamento local.
 
 | Risco | Mitigação |
 | --- | --- |
-| Lançar depois de a Etapa 1 já ter começado | Lançar F1 a F3 primeiro; a Etapa 2 (40 h) mantém a demanda em 2027 |
+| Lançar depois de a Etapa 1 já ter começado | Priorizar F1 manual, F2, F3 e F5 no release inicial de 30 dias, sem dispensar os gates jurídicos; a Etapa 2 (40 h), se confirmada, mantém a demanda em 2027 |
 | Regulamentação ou interpretação diferente da EC | Parâmetros versionados (RN-16), atualização por release e revisão por advogado trabalhista antes do lançamento |
 | Sistemas de ponto lançarem recurso parecido | Foco em decisão e simulação para quem não tem RH; a ferramenta não integra com sistemas externos |
 | Responsabilização por um cálculo errado | Aviso legal (RN-15), cobertura automatizada de todas as regras e termos de uso revisados |
-| Gerador de escala lento em equipes maiores | Limite de 50 pessoas no MVP e limite de tempo para o algoritmo executado no navegador |
+| Gerador de escala lento em equipes maiores (release posterior) | Limite de 50 pessoas e limite de tempo para o algoritmo executado no navegador |
 | Exposição de premissas operacionais | Processamento e persistência opcionais somente no navegador; sem APIs de produto, banco de dados, analytics ou pixels; cenários automatizados verificam ausência de dados operacionais em endpoints da aplicação e origens externas, exclusão de dados ativos e persistidos após recarga e ausência de chamadas a serviços ou integrações de terceiros. Requisições comuns de assets estáticos e metadados técnicos da hospedagem são permitidas, desde que não transportem dados operacionais |
 
 **Roadmap**
 
-1. Até 15/11/2026: F1 Premissas de cálculo, F2 Diagnóstico e F3 Simulador, com cobertura automatizada das regras desses módulos (RN-01 a RN-14 e RN-16).
-2. Até 01/12/2026: F4 Gerador de escala e F5 Linha do tempo e checklist.
-3. Até 15/12/2026: F6 Documentos e modelos exportáveis localmente.
-4. 2027: atualizar parâmetros legais por releases, ampliar suporte a convenções coletivas por categoria e preparar a ferramenta para a Etapa 2.
+1. Release inicial de 30 dias (meta até 15/11/2026): F1 Premissas manuais (RF-01 a RF-03 e RF-05), F2 Diagnóstico, F3 Simulador de quatro cenários e F5 Linha do tempo/checklist legal. Cobertura automatizada das regras aplicáveis (RN-01 a RN-14 e RN-16), exatidão monetária RNF-05 e testes de privacidade e responsividade do fluxo inicial. Sem CSV, persistência local, geração/edição de escala ou exportação de documentos. Implementação dos cálculos afetados e lançamento condicionados aos gates jurídicos.
+2. Releases posteriores ao inicial, sem data comprometida: RF-04 Importação CSV no navegador, persistência local opcional com exclusão completa, F4 Geração/edição de escala e respectivas exportações PDF/imagem e F6 Documentos/modelos exportáveis localmente. Ativar os cenários ampliados correspondentes sem remover os testes do fluxo inicial.
+3. 2027: atualizar parâmetros legais por releases, ampliar suporte a convenções coletivas por categoria e preparar a ferramenta para a Etapa 2, conforme texto e vigências confirmados.
 
-**Questões em aberto**
+**Gates jurídicos pendentes — bloqueadores da implementação dos cálculos afetados e do lançamento**
 
-- [ ] Confirmar a data de promulgação e o texto publicado no DOU.
-- [ ] Validar com advogado trabalhista as RN-04, RN-07 e RN-10 e o divisor da RN-06.
-- [ ] Definir se 42 h em 5 dias (8h24 por dia) exige acordo de compensação (CLT art. 59, § 2º). Sem ele, os 24 min diários viram hora extra e a RN-12 superestima as horas disponíveis.
+Não há aprovação de advogado fornecida para as fontes ou interpretações legais. Todos os itens abaixo permanecem pendentes; registrar a evidência da confirmação/revisão, o responsável, a data e a versão dos parâmetros antes de encerrar cada gate. As fontes existentes não substituem essa validação, e o aviso legal não libera o lançamento.
+
+- [ ] GJ-01 — Confirmar a data efetiva de promulgação e o texto final publicado no DOU, confrontando os fatos e fontes registrados com a publicação oficial. Bloqueia RN-01 a RN-03 e demais cálculos e prazos dependentes da vigência.
+- [ ] GJ-02 — Obter revisão por advogado trabalhista das fontes e interpretações legais registradas, incluindo RN-04, RN-07 e RN-10 e o divisor da RN-06. Bloqueia os cálculos afetados de repouso, intervalos, custo-hora e cenários dependentes; não há aprovação presumida das demais regras legais.
+- [ ] GJ-03 — Definir com advogado se 42 h em 5 dias (8h24 por dia) exige acordo de compensação (CLT art. 59, § 2º). A interpretação ainda não confirmada é que, sem ele, os 24 min diários viram hora extra e a RN-12 superestima as horas disponíveis. Bloqueia a implementação dos cálculos afetados de disponibilidade, déficit, horas extras e viabilidade/recomendação dos cenários.
+- [ ] GJ-04 — Concluir a revisão jurídica pré-lançamento, incluindo termos de uso, e registrar a aprovação explícita; confirmar que os gates anteriores foram encerrados e os parâmetros e testes refletem as decisões. Enquanto pendente, o lançamento permanece bloqueado.
+
+**Outras questões em aberto**
+
 - [ ] Definir o percentual de encargos padrão por regime tributário com um contador.
-- [ ] Escolher o mecanismo de persistência opcional no navegador e garantir que a ação de apagar cubra todos os dados locais da ferramenta.
+- [ ] Em release posterior, escolher o mecanismo de persistência opcional no navegador e garantir que a ação de apagar cubra todos os dados locais da ferramenta; não introduzir persistência no release inicial.
 - [ ] Definir como comunicar na interface a versão e a vigência dos parâmetros legais publicados.
