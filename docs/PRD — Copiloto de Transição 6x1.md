@@ -10,7 +10,9 @@ O usuário informa apenas as premissas necessárias aos cálculos. A ferramenta 
 
 **Status jurídico: pendente e bloqueante.** O contexto, os fatos e as fontes abaixo são registros existentes do PRD, não fatos confirmados nesta tarefa nem conteúdo juridicamente aprovado. A data efetiva, o texto oficial e as interpretações legais ainda exigem confirmação e revisão por advogado trabalhista. Os gates da seção 8 bloqueiam a implementação dos cálculos afetados e o lançamento; o prazo de 30 dias não dispensa esses gates. Esta tarefa é apenas documental e não implementa cálculos jurídicos.
 
-**Contexto legal.** O Senado aprovou a PEC 221/2019 em 14/10/2026, por 75 votos a 1, em dois turnos ([Senado Notícias](https://www12.senado.leg.br/noticias/materias/2026/10/14/senado-aprova-fim-da-6x1-em-primeiro-turno)). A promulgação foi marcada para 16/10/2026. O texto aprovado estabelece:
+**Atualização informada pelo usuário em 16/10/2026:** o usuário informa que a promulgação ocorreu em 16/10/2026, mas o texto ainda não foi publicado no DOU. Esta informação não constitui confirmação oficial da data ou do texto, nem aprovação jurídica; GJ-01 permanece pendente.
+
+**Contexto legal.** O Senado aprovou a PEC 221/2019 em 14/10/2026, por 75 votos a 1, em dois turnos ([Senado Notícias](https://www12.senado.leg.br/noticias/materias/2026/10/14/senado-aprova-fim-da-6x1-em-primeiro-turno)). O registro anterior previa a promulgação para 16/10/2026; a atualização informada pelo usuário consta acima. O texto aprovado registrado neste PRD, ainda sujeito à confirmação oficial e revisão jurídica, estabelece:
 
 | Marco | Quando | O que muda |
 | --- | --- | --- |
@@ -87,6 +89,8 @@ O produto completo prevê 16 regras: 10 atribuídas à EC e à CLT, ainda sujeit
 | RN-14 | Um cenário que viole RN-03, RN-05, RN-08, RN-09 ou RN-10 é inviável e mostra o motivo. A recomendação é o cenário viável de menor custo mensal; no empate, o de menos horas extras. |
 | RN-15 | Todo relatório e documento gerado localmente traz o aviso de que não substitui orientação de contador ou advogado. |
 | RN-16 | Parâmetros legais têm versão e vigência e são publicados com a aplicação. Alterações entram por uma nova versão do aplicativo; não há administração em banco de dados, recálculo remoto ou envio de notificações. |
+
+**Nota sobre RN-15:** o aviso legal não substitui a aprovação exigida pelos gates GJ-01–GJ-04, nem autoriza implementar os cálculos afetados ou lançar o produto enquanto esses gates permanecerem pendentes.
 
 ## 5. Funcionalidades por release
 
@@ -579,6 +583,8 @@ O maior risco é o tempo: considerando a data hipotética de 15/12/2026, o valor
 1. Release inicial de 30 dias (meta até 15/11/2026): F1 Premissas manuais (RF-01 a RF-03 e RF-05), F2 Diagnóstico, F3 Simulador de quatro cenários e F5 Linha do tempo/checklist legal. Cobertura automatizada das regras aplicáveis (RN-01 a RN-14 e RN-16), exatidão monetária RNF-05 e testes de privacidade e responsividade do fluxo inicial. Sem CSV, persistência local, geração/edição de escala ou exportação de documentos. Implementação dos cálculos afetados e lançamento condicionados aos gates jurídicos.
 2. Releases posteriores ao inicial, sem data comprometida: RF-04 Importação CSV no navegador, persistência local opcional com exclusão completa, F4 Geração/edição de escala e respectivas exportações PDF/imagem e F6 Documentos/modelos exportáveis localmente. Ativar os cenários ampliados correspondentes sem remover os testes do fluxo inicial.
 3. 2027: atualizar parâmetros legais por releases, ampliar suporte a convenções coletivas por categoria e preparar a ferramenta para a Etapa 2, conforme texto e vigências confirmados.
+
+Se os gates jurídicos atrasarem, a meta de publicação será recalculada a partir de seu fechamento, sem reduzir o escopo legal ou dispensar gates.
 
 **Gates jurídicos pendentes — bloqueadores da implementação dos cálculos afetados e do lançamento**
 
