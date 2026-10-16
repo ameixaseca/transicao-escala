@@ -8,21 +8,23 @@ O Copiloto de Transição 6x1 é uma ferramenta web gratuita, sem login, que aju
 
 O usuário informa apenas as premissas necessárias aos cálculos. A ferramenta não solicita nome, CNPJ, e-mail ou identificadores de funcionários; usa rótulos anônimos gerados localmente para distinguir pessoas. No release inicial, premissas e resultados permanecem apenas em memória durante a sessão, sem persistência local ou remota e sem restauração após recarregar. Em release posterior, o usuário poderá optar por salvar premissas somente no armazenamento local do navegador, com uma ação explícita para apagar esses dados. O provedor de hospedagem pode processar metadados técnicos de acesso, distintos das premissas e resultados dos cálculos.
 
-**Status jurídico: pendente e bloqueante.** O contexto, os fatos e as fontes abaixo são registros existentes do PRD, não fatos confirmados nesta tarefa nem conteúdo juridicamente aprovado. A data efetiva, o texto oficial e as interpretações legais ainda exigem confirmação e revisão por advogado trabalhista. Os gates da seção 8 bloqueiam a implementação dos cálculos afetados e o lançamento; o prazo de 30 dias não dispensa esses gates. Esta tarefa é apenas documental e não implementa cálculos jurídicos.
+**Status jurídico: pendente e bloqueante.** A data de publicação no DOU e a data efetiva ainda são desconhecidas; não foi fornecido texto final publicado nem aprovação jurídica. Os gates GJ-01–GJ-04 da seção 8 bloqueiam os cálculos afetados e qualquer release público. A minuta pode orientar planejamento e implementação provisória, mas não aprova cálculos nem autoriza uso público. Esta tarefa é apenas documental e não implementa cálculos jurídicos.
 
-**Atualização informada pelo usuário em 16/10/2026:** o usuário informa que a promulgação ocorreu em 16/10/2026, mas o texto ainda não foi publicado no DOU. Esta informação não constitui confirmação oficial da data ou do texto, nem aprovação jurídica; GJ-01 permanece pendente.
+**Atualização informada pelo usuário em 16/10/2026:** o usuário informa que a promulgação ocorreu nessa data; o texto ainda não foi publicado no DOU e a data de publicação permanece desconhecida. Esse relato não confirma oficialmente a data, o conteúdo da norma ou as interpretações jurídicas; GJ-01 permanece pendente.
 
-**Contexto legal.** O Senado aprovou a PEC 221/2019 em 14/10/2026, por 75 votos a 1, em dois turnos ([Senado Notícias](https://www12.senado.leg.br/noticias/materias/2026/10/14/senado-aprova-fim-da-6x1-em-primeiro-turno)). O registro anterior previa a promulgação para 16/10/2026; a atualização informada pelo usuário consta acima. O texto aprovado registrado neste PRD, ainda sujeito à confirmação oficial e revisão jurídica, estabelece:
+**Contexto e evidência oficial disponíveis.** A [página oficial do Senado para a PEC 221/2019](https://www25.senado.leg.br/web/atividade/materias/-/materia/174386) e o [PDF do Senado identificado como “Minuta”](https://legis.senado.leg.br/sdleg-getter/documento?dm=10331248&ts=1792178675619&disposition=inline) são referências distintas do futuro texto final no DOU. O PDF é um rascunho de quatro páginas, sem número da Emenda e com “Brasília, __ de __ de 2026” em branco; não é texto final, norma publicada nem aprovação jurídica. Segundo a minuta, o Art. 6º prevê as etapas abaixo; o Art. 10 trata de vigência diferenciada e sua interação com as etapas exige interpretação profissional (GJ-02):
 
-| Marco | Quando | O que muda |
+| Marco provisório | Regra de planejamento baseada na minuta | Conteúdo a confirmar |
 | --- | --- | --- |
-| Etapa 1 | Promulgação + 60 dias | Jornada máxima de 42 h/semana; dois dias de repouso semanal remunerado, um deles preferencialmente aos domingos |
-| Etapa 2 | Fim da Etapa 1 + 12 meses (promulgação + 14 meses) | Jornada máxima de 40 h/semana |
-| Exceção | A partir da Etapa 1 | Escala 12x36 e atividades essenciais podem, por acordo ou convenção coletiva, compensar o repouso para garantir, na média, dois dias por semana dentro do mês-calendário |
+| Etapa 1 | Data hipotética de publicação no DOU + 2 meses-calendário | 42 h/semana e dois dias de repouso semanal remunerado, um preferencialmente aos domingos |
+| Etapa 2 | Início da Etapa 1 + 12 meses-calendário | 40 h/semana |
+| Exceção | Regra provisória a partir da Etapa 1 | A minuta descreve exceções para 12x36/atividades essenciais; alcance e vigência dependem do DOU e da revisão jurídica |
 
-Nenhuma etapa permite redução de salário. Na prática, o custo por hora trabalhada sobe cerca de 4,8% na Etapa 1 (44 h → 42 h) e 10% na Etapa 2 (44 h → 40 h).
+Dois meses-calendário não equivalem a 60 dias. A fórmula é provisória e depende da data oficial de publicação e da interpretação jurídica. Os exemplos e valores de datas neste PRD são fixtures hipotéticas; os cálculos permanecem fora de uso público. Nenhuma regra da minuta é apresentada como aconselhamento jurídico.
 
-Fontes: [Senado Notícias](https://www12.senado.leg.br/noticias/senado-agora/2026/10/14/aprovado-em-segundo-turno-fim-da-6x1-vai-a-promulgacao), [Diario de Pernambuco](https://www.diariodepernambuco.com.br/politica/2026/05/11715177-fim-da-escala-6x1-veja-como-votaram-os-deputados-de-pernambuco.html), [Juruá Comunicação](https://juruacomunicacao.com.br/senado-aprova-pec-que-acaba-com-a-escala-6x1-texto-vai-a-promulgacao/). A data efetiva de promulgação e o texto final publicado no DOU precisam ser confirmados antes do lançamento.
+Sob essas hipóteses ainda não aprovadas, a redução de jornada sem redução salarial implicaria aumento aritmético aproximado do custo por hora de 4,8% na Etapa 1 (44 h → 42 h) e 10% na Etapa 2 (44 h → 40 h); isso não constitui parecer jurídico nem autorização para uso público.
+
+Registros jornalísticos sobre a tramitação: [Senado Notícias](https://www12.senado.leg.br/noticias/senado-agora/2026/10/14/aprovado-em-segundo-turno-fim-da-6x1-vai-a-promulgacao), [Diario de Pernambuco](https://www.diariodepernambuco.com.br/politica/2026/05/11715177-fim-da-escala-6x1-veja-como-votaram-os-deputados-de-pernambuco.html) e [Juruá Comunicação](https://juruacomunicacao.com.br/senado-aprova-pec-que-acaba-com-a-escala-6x1-texto-vai-a-promulgacao/). Eles não substituem a página oficial, a minuta identificada como tal, nem a futura publicação no DOU.
 
 ## 2. Problema e público-alvo
 
@@ -68,9 +70,9 @@ O produto completo prevê 16 regras: 10 atribuídas à EC e à CLT, ainda sujeit
 
 | ID | Regra | Fonte |
 | --- | --- | --- |
-| RN-01 | Os prazos são calculados a partir da data de promulgação (parâmetro). Etapa 1 = promulgação + 60 dias. Etapa 2 = início da Etapa 1 + 12 meses. | EC |
-| RN-02 | O limite semanal depende da data de referência: 44 h antes da Etapa 1, 42 h na Etapa 1 e 40 h a partir da Etapa 2. | EC |
-| RN-03 | A partir da Etapa 1, cada funcionário tem 2 dias de repouso por semana. Antes dela, tem 1. | EC |
+| RN-01 | Regra provisória de planejamento baseada na minuta: Etapa 1 = `publicationDate` + 2 meses-calendário; Etapa 2 = início da Etapa 1 + 12 meses-calendário. Dois meses-calendário não são 60 dias; datas dependem da publicação no DOU, da interpretação profissional e dos gates GJ-01–GJ-04. | Minuta do Senado, Art. 6º (não final) |
+| RN-02 | Limites de 44/42/40 h conforme etapa, como hipótese provisória derivada da minuta; não usar publicamente antes da publicação final no DOU e da revisão jurídica. | Minuta do Senado (não final) |
+| RN-03 | Hipótese provisória da minuta: a partir da Etapa 1, cada funcionário tem 2 dias de repouso por semana; antes dela, 1, sujeito à publicação final no DOU e à revisão jurídica. | Minuta do Senado (não final) |
 | RN-04 | Domingo é a folga preferencial. No comércio, ao menos 1 folga a cada 3 semanas cai no domingo (N configurável). | EC; Lei 10.101/2000, art. 6º |
 | RN-05 | Nenhum cenário pode reduzir o salário mensal de um funcionário. | EC |
 | RN-06 | Custo-hora = salário mensal ÷ divisor mensal, onde divisor = jornada semanal × 5 (220, 210, 200). | Prática CLT |
@@ -88,7 +90,7 @@ O produto completo prevê 16 regras: 10 atribuídas à EC e à CLT, ainda sujeit
 | RN-13 | O simulador calcula 4 cenários: contratar CLT integral, contratar tempo parcial (até 30 h, CLT art. 58-A), hora extra e reduzir o horário de funcionamento. Custo de contratação = salário × (1 + % de encargos configurável). Custo de hora extra = déficit × custo-hora × 1,5. Redução de horário = perda de receita informada pelo usuário. Valores mensais = valores semanais × 5, o mesmo fator do divisor. |
 | RN-14 | Um cenário que viole RN-03, RN-05, RN-08, RN-09 ou RN-10 é inviável e mostra o motivo. A recomendação é o cenário viável de menor custo mensal; no empate, o de menos horas extras. |
 | RN-15 | Todo relatório e documento gerado localmente traz o aviso de que não substitui orientação de contador ou advogado. |
-| RN-16 | Parâmetros legais têm versão e vigência e são publicados com a aplicação. Alterações entram por uma nova versão do aplicativo; não há administração em banco de dados, recálculo remoto ou envio de notificações. |
+| RN-16 | Parâmetros têm versão, vigência e status provisório/aprovado. Alterações entram por nova versão do aplicativo; nenhuma versão legal real pode ser tratada como aprovada/publicada antes do DOU e do fechamento dos gates GJ-01–GJ-04. Não há administração em banco de dados, recálculo remoto ou envio de notificações. |
 
 **Nota sobre RN-15:** o aviso legal não substitui a aprovação exigida pelos gates GJ-01–GJ-04, nem autoriza implementar os cálculos afetados ou lançar o produto enquanto esses gates permanecerem pendentes.
 
@@ -130,7 +132,7 @@ As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 32 definições de cen
 
 **Recorte por release:** no inicial, executar os cenários aplicáveis ao diagnóstico, simulador, parâmetros e prazos (7.1, 7.2, RN-12 em 7.5, 7.6 e 7.9), as validações legais aplicáveis (7.3 e 7.4) e os três cenários do fluxo manual em 7.12. Os testes de regras sobre escalas podem usar fixtures, sem disponibilizar um gerador/editor no release inicial. A validação completa de escala/cobertura de F4, o checklist com escala de 7.7, os documentos de 7.8 e os fluxos ampliados de privacidade e responsividade de 7.10 e 7.11 são preservados para os releases correspondentes, quando passam a ser obrigatórios. A proteção de privacidade e os dois viewports continuam obrigatórios desde o inicial, cobertos por 7.12, sem esperar funcionalidades futuras. Os gates jurídicos bloqueiam a implementação dos cálculos afetados, inclusive resultados esperados que dependam de interpretações ainda não confirmadas.
 
-**Premissas comuns de teste, não confirmação jurídica:** promulgação em 16/10/2026, logo a Etapa 1 começa em 15/12/2026 e a Etapa 2 em 15/12/2027. São fixtures hipotéticas, não prova de promulgação ou aprovação legal; dependem dos gates da seção 8 antes de uso real. O fuso é America/Sao\_Paulo. Os valores estão em reais.
+**Premissas comuns de teste, não confirmação jurídica:** `publicationDate` hipotética 16/10/2026 → Etapa 1 em 16/12/2026 (dois meses-calendário) → Etapa 2 em 16/12/2027 (mais doze meses-calendário). Essa publicação é apenas fixture hipotética, não fato; os cálculos não são aprovados nem destinados a uso público e dependem de GJ-01–GJ-04. O fuso é America/Sao\_Paulo. Os valores estão em reais.
 
 | Conjunto de testes | Regras | Cenários |
 | --- | --- | --- |
@@ -154,22 +156,22 @@ As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 32 definições de cen
 Funcionalidade: Prazos da transição e limite semanal
 
   @RN-01
-  Esquema do Cenário: Calcular as datas das etapas a partir da promulgação
-    Dado que a data de promulgação configurada é <promulgacao>
+  Esquema do Cenário: Calcular provisoriamente as datas das etapas a partir de publicationDate
+    Dado que publicationDate hipotética configurada é <publicationDate>
     Quando o sistema calcula a linha do tempo
     Então a Etapa 1 começa em <etapa1>
     E a Etapa 2 começa em <etapa2>
 
     Exemplos:
-      | promulgacao | etapa1     | etapa2     |
-      | 16/10/2026  | 15/12/2026 | 15/12/2027 |
-      | 20/10/2026  | 19/12/2026 | 19/12/2027 |
+      | publicationDate hipotética | etapa1     | etapa2     |
+      | 16/10/2026                 | 16/12/2026 | 16/12/2027 |
+      | 20/10/2026                 | 20/12/2026 | 20/12/2027 |
 
   @RN-01
-  Cenário: Usar a data de promulgação publicada na versão atualizada
-    Dado que a versão atual da ferramenta contém promulgação em 16/10/2026
-    Quando uma nova versão publicada contém promulgação em 20/10/2026
-    Então a ferramenta atualizada calcula a Etapa 1 para 19/12/2026
+  Cenário: Usar uma nova publicationDate hipotética na versão atualizada
+    Dado que a versão de teste contém publicationDate hipotética em 16/10/2026
+    Quando uma fixture de teste atualizada contém publicationDate hipotética em 20/10/2026
+    Então a Etapa 1 provisória é calculada para 20/12/2026
     E nenhum dado de cálculo é transmitido para recalcular diagnósticos remotamente
 
   @RN-02
@@ -179,10 +181,10 @@ Funcionalidade: Prazos da transição e limite semanal
 
     Exemplos:
       | data       | limite |
-      | 14/12/2026 | 44     |
-      | 15/12/2026 | 42     |
-      | 14/12/2027 | 42     |
-      | 15/12/2027 | 40     |
+      | 15/12/2026 | 44     |
+      | 16/12/2026 | 42     |
+      | 15/12/2027 | 42     |
+      | 16/12/2027 | 40     |
 ```
 
 ### 7.2 Custo-hora e irredutibilidade salarial
@@ -469,8 +471,8 @@ Funcionalidade: Parâmetros legais publicados com a aplicação
   Cenário: Usar parâmetros versionados incluídos em uma versão publicada
     Dado uma nova versão publicada da aplicação com parâmetros versionados
     E o adicional de hora extra de 50% até 31/12/2026 e de 60% a partir de 01/01/2027
-    Quando o usuário calcula um cenário para 15/12/2026 e outro para 01/01/2027
-    Então o cenário de 15/12/2026 usa o parâmetro de 50%
+    Quando o usuário calcula um cenário para a data hipotética de 16/12/2026 e outro para 01/01/2027
+    Então o cenário da fixture de 16/12/2026 usa o parâmetro de 50%
     E o cenário de 01/01/2027 usa o parâmetro de 60%
     E os cálculos ocorrem no navegador sem administração de banco de dados ou aviso remoto
 ```
@@ -567,7 +569,7 @@ Funcionalidade: Release inicial sem persistência ou funcionalidades posteriores
 
 ## 8. Riscos, roadmap e questões em aberto
 
-O maior risco é o tempo: considerando a data hipotética de 15/12/2026, o valor do produto cai depois do início da Etapa 1. A meta é entregar premissas manuais, diagnóstico, simulador e linha do tempo/checklist legal em até 30 dias, condicionada aos gates jurídicos abaixo; se permanecerem pendentes, o lançamento fica bloqueado, sem presumir aprovação para cumprir o calendário. Outro risco de produto é uma implementação futura introduzir transmissão ou armazenamento remoto de premissas; a arquitetura e os testes devem manter o processamento local.
+O maior risco é o tempo: considerando a data hipotética de 16/12/2026 para início provisório da Etapa 1, o valor do produto cai depois desse marco. A meta é entregar premissas manuais, diagnóstico, simulador e linha do tempo/checklist legal em até 30 dias, condicionada aos gates jurídicos abaixo; se permanecerem pendentes, o lançamento fica bloqueado, sem presumir aprovação para cumprir o calendário. Outro risco de produto é uma implementação futura introduzir transmissão ou armazenamento remoto de premissas; a arquitetura e os testes devem manter o processamento local.
 
 | Risco | Mitigação |
 | --- | --- |
@@ -590,8 +592,8 @@ Se os gates jurídicos atrasarem, a meta de publicação será recalculada a par
 
 Não há aprovação de advogado fornecida para as fontes ou interpretações legais. Todos os itens abaixo permanecem pendentes; registrar a evidência da confirmação/revisão, o responsável, a data e a versão dos parâmetros antes de encerrar cada gate. As fontes existentes não substituem essa validação, e o aviso legal não libera o lançamento.
 
-- [ ] GJ-01 — Confirmar a data efetiva de promulgação e o texto final publicado no DOU, confrontando os fatos e fontes registrados com a publicação oficial. Bloqueia RN-01 a RN-03 e demais cálculos e prazos dependentes da vigência.
-- [ ] GJ-02 — Obter revisão por advogado trabalhista das fontes e interpretações legais registradas, incluindo RN-04, RN-07 e RN-10 e o divisor da RN-06. Bloqueia os cálculos afetados de repouso, intervalos, custo-hora e cenários dependentes; não há aprovação presumida das demais regras legais.
+- [ ] GJ-01 — Confirmar no DOU a publicação do texto final e sua data oficial, a data efetiva de vigência e a relação com a promulgação informada pelo usuário em 16/10/2026. A data de publicação ainda é desconhecida; não inventar nem preencher um valor real. Bloqueia RN-01 a RN-03 e demais cálculos e prazos dependentes da vigência.
+- [ ] GJ-02 — Obter revisão por advogado trabalhista das fontes e interpretações legais registradas, incluindo resolver a interação entre a vigência diferenciada do Art. 10 da minuta e as etapas do Art. 6º, além de RN-04, RN-07 e RN-10 e o divisor da RN-06. Bloqueia os cálculos afetados de prazos, repouso, intervalos, custo-hora e cenários dependentes; não há aprovação presumida das demais regras legais.
 - [ ] GJ-03 — Definir com advogado se 42 h em 5 dias (8h24 por dia) exige acordo de compensação (CLT art. 59, § 2º). A interpretação ainda não confirmada é que, sem ele, os 24 min diários viram hora extra e a RN-12 superestima as horas disponíveis. Bloqueia a implementação dos cálculos afetados de disponibilidade, déficit, horas extras e viabilidade/recomendação dos cenários.
 - [ ] GJ-04 — Concluir a revisão jurídica pré-lançamento, incluindo termos de uso, e registrar a aprovação explícita; confirmar que os gates anteriores foram encerrados e os parâmetros e testes refletem as decisões. Enquanto pendente, o lançamento permanece bloqueado.
 

@@ -13,10 +13,10 @@
 - A primeira versão entrega premissas inseridas manualmente, diagnóstico, simulador de cenários e linha do tempo/checklist legal em até 30 dias corridos.
 - Não haverá contas, API de produto, processamento de dados operacionais no servidor, analytics, integração com terceiros nem banco de dados.
 - Na primeira versão, os dados ficam somente no estado da sessão do navegador; persistência local será adiada para uma versão posterior e deverá incluir exclusão completa e explícita.
-- Os parâmetros legais são versionados no código-fonte e entram em vigor por meio de uma versão publicada da aplicação.
+- Os parâmetros legais são versionados no código-fonte e entram em vigor por meio de uma versão publicada da aplicação; separar status `provisório` de `aprovado` e não selecionar/publicar parâmetros reais como aprovados até publicação final no DOU e fechamento dos gates GJ-01–GJ-04.
 - As operações monetárias usam aritmética exata em base 10/racional; arredondamento half-even para duas casas decimais somente nos valores finais exibidos.
 - Testes automatizados cobrem cada regra de negócio aplicável e a fronteira de privacidade; o fluxo principal é testado em 390 × 844 px e 1440 × 900 px.
-- Confirmar a data de promulgação, o texto legal publicado e as interpretações jurídicas relevantes antes de liberar cálculos afetados.
+- A promulgação em 16/10/2026 é informação do usuário; a data de publicação no DOU é desconhecida e a minuta do Senado não é texto final. A minuta permite planejar/implementar provisoriamente, mas não aprova cálculos nem autoriza uso público ou release. GJ-01–GJ-04 permanecem bloqueadores; confirmar o texto final no DOU e as interpretações jurídicas antes de liberar cálculos afetados.
 - A geração de escalas deve rodar no navegador e concluir em até 10 segundos para 50 pessoas antes de ser publicada.
 
 ---
@@ -64,7 +64,7 @@
 - [ ] Dividir a tabela dos seis módulos do MVP por versão: versão 1 com premissas manuais (sem CSV), diagnóstico, cenários e linha do tempo/checklist; versões posteriores com CSV, persistência, geração de escalas e exportação de documentos.
 - [ ] Mover geração de escalas, CSV, persistência no navegador e documentos exportáveis para versões posteriores nomeadas; alinhar critérios de sucesso ao que pode ser avaliado sem telemetria do produto.
 - [ ] Verificar que o PRD continua sem requisitos de conta, API, telemetria ou armazenamento no servidor.
-- [ ] Revisar e aprovar o gate jurídico de lançamento: data de promulgação, texto final publicado, divisor, interpretação de repouso semanal, descanso/intervalos diários e premissas de hora extra.
+- [ ] Revisar e aprovar o gate jurídico de lançamento: texto final e data de publicação no DOU, data efetiva, divisor, interação entre a vigência do Art. 10 e as etapas do Art. 6º da minuta, interpretação de repouso semanal, descanso/intervalos diários e premissas de hora extra; manter GJ-01–GJ-04 bloqueadores até evidência e aprovação explícita.
 - [ ] Não iniciar a implementação de um cálculo afetado antes de validar a interpretação jurídica correspondente.
 
 **Critério de saída:** repositório disponível, escopo do produto alinhado à primeira versão e premissas jurídicas dos cálculos incluídos aprovadas ou explicitamente marcadas como bloqueadoras do lançamento.
@@ -103,14 +103,14 @@
 - Testar: `tests/unit/stages.test.ts`
 
 **Interfaces:**
-- `type LegalParameters = { version: string; effectiveFrom: string; promulgationDate: string; weeklyLimits: Array<{ effectiveFrom: string; hours: number }> }`
-- `getParametersForDate(date: string, versions: LegalParameters[]): LegalParameters`
-- `getStageDates(parameters: LegalParameters): { phase1: string; phase2: string }` calcula a Etapa 1 como promulgação + 60 dias corridos e a Etapa 2 como Etapa 1 + 12 meses.
-- `getWeeklyHourLimit(date: string, parameters: LegalParameters): number`
-- Todos os argumentos e resultados de data usam strings de data civil ISO (`YYYY-MM-DD`).
+- `type LegalParameters = { version: string; status: "provisório" | "aprovado"; sourceUrl: string; publicationDate: string | null; weeklyHours: { beforePhase1: number; phase1: number; phase2: number } }`; a minuta provisória pode registrar a fonte e os limites em análise com `publicationDate: null`, sem datas efetivas inventadas.
+- `getParametersForDate(date: string, versions: LegalParameters[]): Result<LegalParameters, ParameterSelectionError>` seleciona somente parâmetros com status `aprovado` e `publicationDate` oficial; retorna erro explícito se não existir versão aplicável aprovada/publicada (não faz fallback para versão provisória).
+- `getStageDates(parameters: LegalParameters): Result<{ phase1: string; phase2: string }, LegalDateError>` usa provisoriamente `publicationDate` + 2 meses-calendário para a Etapa 1 e +12 meses-calendário desde a Etapa 1 para a Etapa 2; retorna erro explícito se `publicationDate` estiver ausente ou inválida. Dois meses-calendário não equivalem a 60 dias. Adicionar meses civis com ajuste para o último dia válido do mês de destino.
+- `getWeeklyHourLimit(date: string, parameters: LegalParameters): Result<number, LegalDateError>` usa os limites por etapa e datas calculadas; retorna erro explícito para data de referência inválida ou publicationDate ausente/inválida.
+- Todos os argumentos e resultados de data usam strings de data civil ISO (`YYYY-MM-DD`). Não declarar parâmetros reais aprovados/publicados antes do DOU e do fechamento dos gates GJ-01–GJ-04; a interação do Art. 10 da minuta com o Art. 6º segue pendente de GJ-02.
 
-- [ ] Escrever testes para promulgação + 60 dias e +12 meses, incluindo limites entre mês/ano e as datas das fixtures aprovadas.
-- [ ] Escrever testes para limites de 44/42/40 horas imediatamente antes e no início de cada vigência.
+- [ ] Escrever testes com fixtures exclusivamente hipotéticas, incluindo `publicationDate` 16/10/2026 → Etapa 1 16/12/2026 → Etapa 2 16/12/2027; cobrir adição de meses civis, fim de mês, mudança de ano e ano bissexto (sem tratar mês-calendário como 60 dias).
+- [ ] Escrever testes para limites de 44/42/40 horas imediatamente antes e no início de cada vigência hipotética; verificar erros explícitos para publicationDate ausente/inválida e que a seleção retorna erro quando não houver parâmetros aprovados e publicados aplicáveis, mesmo que exista uma versão provisória com limites registrados.
 - [ ] Implementar aritmética de data civil sem depender do fuso horário local da máquina; usar `America/Sao_Paulo` ao resolver a data atual para a UI.
 - [ ] Rejeitar datas inválidas, versões de parâmetros com vigências sobrepostas e datas sem versão correspondente, com erros explícitos de validação.
 - [ ] Executar `npm test -- --run tests/unit/legal-parameters.test.ts tests/unit/stages.test.ts`; esperar aprovação de todos os casos.
@@ -385,7 +385,7 @@
 
 ## Gates de lançamento
 
-- **Primeira versão:** Tarefas 1–8 concluídas; revisão jurídica aprovada para os cálculos incluídos; build estático na Vercel; nenhum dado operacional transmitido pela rede; CI aprovado.
+- **Primeira versão:** Tarefas 1–8 concluídas; publicação final no DOU e revisão jurídica aprovadas para os cálculos incluídos, com GJ-01–GJ-04 encerrados mediante evidência; build estático na Vercel; nenhum dado operacional transmitido pela rede; CI aprovado. Enquanto qualquer gate estiver pendente, não há release nem seleção de parâmetro aprovado; fixtures hipotéticas servem apenas a testes.
 - **Versão de dados locais/documentos:** Tarefas 9–11 concluídas; teste de exclusão após reload aprovado; testes de CSV/exportação comprovam ausência de upload ou conversão externa.
 - **Versão de escalas:** Tarefas 12–14 concluídas; todas as regras de escala cobertas; benchmark para 50 pessoas concluído em até 10 segundos no navegador/hardware acordados.
 - Em cada versão, atualizar o PRD e os avisos legais/de privacidade para descrever somente o comportamento efetivamente publicado.
