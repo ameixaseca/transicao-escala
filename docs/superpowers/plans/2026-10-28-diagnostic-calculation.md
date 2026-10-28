@@ -33,7 +33,7 @@
 - A hypothetical legal parameter fixture has publication date `2026-10-16` and weekly limits 44, 42, and 40.
 - Tests consume `calculateDiagnostic(input): Result<DiagnosticResult, DiagnosticValidationError[]>`.
 
-- [ ] **Step 0: Create the shared typed fixture**
+- [x] **Step 0: Create the shared typed fixture**
 
 In `tests/fixtures/diagnostic-cases.ts`, export a factory returning:
 
@@ -71,7 +71,7 @@ export const diagnosticCase = (): DiagnosticInput => ({
 
 Import `DiagnosticInput`, `Rational`, and `PROVISIONAL_LEGAL_PARAMETERS` from their existing domain modules.
 
-- [ ] **Step 1: Write tests for required hours, stage capacities, and deficits**
+- [x] **Step 1: Write tests for required hours, stage capacities, and deficits**
 
 Add this test using the shared fixture:
 
@@ -127,20 +127,20 @@ it("calculates required hours, capacity, and deficits for all stages", () => {
 
 `rational(n, d = 1)` constructs `{ numerator: BigInt(n), denominator: BigInt(d) }`; `hourlyCosts(cost)` maps each of `person-1` through `person-4` to the same exact `cost` rational.
 
-- [ ] **Step 2: Run the targeted test to verify it fails**
+- [x] **Step 2: Run the targeted test to verify it fails**
 
 Run: `npm test -- --run tests/unit/diagnostic.test.ts`
 Expected: FAIL because `calculate-diagnostic.ts` does not exist.
 
-- [ ] **Step 3: Write tests for zero deficit and exact hourly costs**
+- [x] **Step 3: Write tests for zero deficit and exact hourly costs**
 
 Add a test where all five coverage intervals require one person instead of four; required hours become 45 and the deficit is zero in all stages. Assert exact hourly costs are `10/1`, `220/21`, and `11/1`, with no cent rounding.
 
-- [ ] **Step 4: Write tests for invalid input and missing legal dates**
+- [x] **Step 4: Write tests for invalid input and missing legal dates**
 
 Assert an invalid reference date returns the validator's `referenceDate` error. For `publicationDate: null` and `publicationDate: "2026-02-29"`, assert `calculateDiagnostic` returns one error with field `legalParameters.publicationDate` and no `value` or partial stages.
 
-- [ ] **Step 5: Run the targeted test file again**
+- [x] **Step 5: Run the targeted test file again**
 
 Run: `npm test -- --run tests/unit/diagnostic.test.ts`
 Expected: FAIL because `src/domain/diagnostic/calculate-diagnostic.ts` is not present; no assertion should pass due to a fallback or placeholder result.
@@ -158,15 +158,15 @@ Expected: FAIL because `src/domain/diagnostic/calculate-diagnostic.ts` is not pr
 - Consumes: `add`, `divide`, and `type Rational` from `@/domain/money/rational`.
 - Produces: `calculateDiagnostic(input: DiagnosticInput): Result<DiagnosticResult, DiagnosticValidationError[]>`.
 
-- [ ] **Step 1: Calculate weekly required person-hours exactly**
+- [x] **Step 1: Calculate weekly required person-hours exactly**
 
 For each coverage interval, construct the rational `{ numerator: BigInt(endMinute - startMinute), denominator: BigInt(60) }`, multiply it by `{ numerator: BigInt(minimumPeople), denominator: BigInt(1) }`, then fold with `add` starting at `{ numerator: BigInt(0), denominator: BigInt(1) }`.
 
-- [ ] **Step 2: Resolve all stage dates before producing results**
+- [x] **Step 2: Resolve all stage dates before producing results**
 
 Call `validateDiagnosticInput(input)` first and return its errors unchanged when `ok` is false. Then call `getStageDates(input.legalParameters)`. If it fails, return one `DiagnosticValidationError` with `field: "legalParameters.publicationDate"` and a message indicating the legal publication date is unavailable or invalid; do not emit partial stages. Use phase dates to establish that both transitions can be resolved before computing output.
 
-- [ ] **Step 3: Calculate stage availability, deficit, and hourly cost**
+- [x] **Step 3: Calculate stage availability, deficit, and hourly cost**
 
 For the tuples `["before-phase-1", weeklyHours.beforePhase1]`, `["phase-1", weeklyHours.phase1]`, and `["phase-2", weeklyHours.phase2]`:
 - each employee contributes `min(employee.weeklyHours, stageLimit)` available hours;
@@ -176,7 +176,7 @@ For the tuples `["before-phase-1", weeklyHours.beforePhase1]`, `["phase-1", week
 
 Return the three stage results in chronological order with stable IDs `before-phase-1`, `phase-1`, and `phase-2`, preserving `referenceDate` and `legalParameterVersion`.
 
-- [ ] **Step 4: Run diagnostic unit tests**
+- [x] **Step 4: Run diagnostic unit tests**
 
 Run: `npm test -- --run tests/unit/diagnostic.test.ts`
 Expected: PASS for all exact arithmetic, zero/positive deficits, and missing-date errors.
@@ -190,26 +190,26 @@ Expected: PASS for all exact arithmetic, zero/positive deficits, and missing-dat
 **Interfaces:**
 - No new public interfaces.
 
-- [ ] **Step 1: Run all domain unit tests**
+- [x] **Step 1: Run all domain unit tests**
 
-Run: `npm test -- --run tests/unit/diagnostic.test.ts tests/unit/diagnostic-validation.test.ts tests/unit/stages.test.ts tests/unit/money.test.ts`
-Expected: PASS with no failures.
+Run: `npm test -- --run`
+Result: PASS, 6 test files and 133 tests, including the exact-integer guard test.
 
-- [ ] **Step 2: Run TypeScript type checking**
+- [x] **Step 2: Run TypeScript type checking**
 
 Run: `npm run typecheck`
-Expected: exit code 0.
+Result: exit code 0 after the implementation and exact-integer guard test were added.
 
-- [ ] **Step 3: Review the patch and whitespace**
+- [x] **Step 3: Review the patch and whitespace**
 
 Run: `git diff --check`
-Expected: no output and exit code 0.
+Result: run after all final edits; require no output and exit code 0.
 
 ### Task 4: Update the existing project plan status
 
 **Files:**
 - Modify: `docs/superpowers/plans/2026-10-16-copiloto-transicao-6x1.md`
 
-- [ ] **Step 1: Mark only the completed diagnostic steps**
+- [x] **Step 1: Mark only the completed diagnostic steps**
 
 After verification, update the Tarefa 5 checklist to reflect the tests and calculation implementation that actually passed. Leave UI, scenario simulation, and GJ-04 release approval tasks unchanged.

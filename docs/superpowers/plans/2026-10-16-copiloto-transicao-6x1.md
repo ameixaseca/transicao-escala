@@ -168,12 +168,12 @@
 
 - [x] Definir os tipos de entrada/saída e adicionar validação sem cálculos: equipe não vazia, identificadores locais únicos, valores racionais positivos, data civil válida e limites/ordem de intervalos de cobertura.
 - [x] Testar a validação de premissas válidas e inválidas em `tests/unit/diagnostic-validation.test.ts`.
-- [ ] Criar testes inicialmente falhos para as fixtures aprovadas: disponibilidade semanal para 4 pessoas nos limites 44/42/40 h, exigência de 180 horas-pessoa e déficits de 4/12/20 h.
-- [ ] Adicionar testes de cálculo para ausência de déficit, déficit positivo e preservação do salário.
-- [ ] Implementar o diagnóstico como função pura usando os parâmetros da Tarefa 3 e operações racionais da Tarefa 4, segundo as posições reportadas e registradas nos GJ-02/GJ-03 fechados; manter parâmetros provisórios até GJ-04 e não publicar o produto antes de sua conclusão.
+- [x] Criar testes inicialmente falhos para as fixtures aprovadas: disponibilidade semanal para 4 pessoas nos limites 44/42/40 h, exigência de 180 horas-pessoa e déficits de 4/12/20 h.
+- [x] Adicionar testes de cálculo para ausência de déficit, déficit positivo e preservação do salário.
+- [x] Implementar o diagnóstico como função pura usando os parâmetros da Tarefa 3 e operações racionais da Tarefa 4, segundo as posições reportadas e registradas nos GJ-02/GJ-03 fechados; manter parâmetros provisórios até GJ-04 e não publicar o produto antes de sua conclusão.
 - [x] Executar `npm test -- --run tests/unit/diagnostic-validation.test.ts`; os testes de validação passam sem produzir resultados calculados.
 
-**Critério parcial:** os tipos e a validação explícita de premissas estão implementados. O cálculo do diagnóstico pode seguir as regras registradas nos GJ-02/GJ-03; o lançamento continua bloqueado até a conclusão de GJ-04.
+**Critério de saída:** os tipos, a validação explícita das premissas e o cálculo puro de diagnóstico estão implementados e cobertos por testes. O lançamento continua bloqueado até a conclusão de GJ-04.
 
 ### Tarefa 6: Implementar viabilidade e recomendação de cenários
 
