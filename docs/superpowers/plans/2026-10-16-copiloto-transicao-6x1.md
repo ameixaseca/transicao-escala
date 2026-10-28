@@ -164,6 +164,8 @@
 - `DiagnosticValidationError` contém um identificador estável de campo e uma mensagem exibível ao usuário.
 - `DiagnosticResult` é dado de cálculo imutável, sem nomes de funcionários ou identificadores externos.
 
+**Definição aprovada para os cálculos de diagnóstico:** calcular horas exigidas somando, para cada faixa semanal, `(endMinute - startMinute) / 60 × minimumPeople`; a disponibilidade individual em cada etapa é o menor valor entre a jornada semanal informada e o teto legal da etapa; a disponibilidade da equipe é a soma individual. O déficit é `max(0, requiredPersonHours - availableHours)`. O custo-hora individual por etapa é salário mensal dividido pelo divisor correspondente (220/210/200 para 44/42/40 horas). Retornar resultados para as três etapas. Se a publicação ou uma data de etapa necessária estiver ausente/inválida, retornar erro explícito e não usar data ou parâmetro substituto.
+
 - [x] Definir os tipos de entrada/saída e adicionar validação sem cálculos: equipe não vazia, identificadores locais únicos, valores racionais positivos, data civil válida e limites/ordem de intervalos de cobertura.
 - [x] Testar a validação de premissas válidas e inválidas em `tests/unit/diagnostic-validation.test.ts`.
 - [ ] Criar testes inicialmente falhos para as fixtures aprovadas: disponibilidade semanal para 4 pessoas nos limites 44/42/40 h, exigência de 180 horas-pessoa e déficits de 4/12/20 h.
