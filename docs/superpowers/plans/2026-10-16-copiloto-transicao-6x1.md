@@ -13,10 +13,10 @@
 - A primeira versão entrega premissas inseridas manualmente, diagnóstico, simulador de cenários e linha do tempo/checklist legal em até 30 dias corridos.
 - Não haverá contas, API de produto, processamento de dados operacionais no servidor, analytics, integração com terceiros nem banco de dados.
 - Na primeira versão, os dados ficam somente no estado da sessão do navegador; persistência local será adiada para uma versão posterior e deverá incluir exclusão completa e explícita.
-- Os parâmetros legais são versionados no código-fonte e entram em vigor por meio de uma versão publicada da aplicação; separar status `provisório` de `aprovado` e não selecionar/publicar parâmetros reais como aprovados até publicação final no DOU e fechamento dos gates GJ-01–GJ-04.
+- Os parâmetros legais são versionados no código-fonte e entram em vigor por meio de uma versão publicada da aplicação; separar status `provisório` de `aprovado` e não selecionar/publicar parâmetros reais como aprovados até publicação final no DOU e fechamento dos gates aplicáveis, inclusive GJ-04.
 - As operações monetárias usam aritmética exata em base 10/racional; arredondamento half-even para duas casas decimais somente nos valores finais exibidos.
 - Testes automatizados cobrem cada regra de negócio aplicável e a fronteira de privacidade; o fluxo principal é testado em 390 × 844 px e 1440 × 900 px.
-- A promulgação em 16/10/2026 é informação do usuário; a data de publicação no DOU é desconhecida e a minuta do Senado não é texto final. A minuta permite planejar/implementar provisoriamente, mas não aprova cálculos nem autoriza uso público ou release. GJ-01–GJ-04 permanecem bloqueadores; confirmar o texto final no DOU e as interpretações jurídicas antes de liberar cálculos afetados.
+- A EC nº 141 foi confirmada no DOU em 16/10/2026 (Edição 196-A, Seção 1 - Extra A, página 2; https://www.in.gov.br/en/web/dou/-/emenda-constitucional-n-141-738818165). GJ-01 está encerrado documentalmente; GJ-02 foi fechado por decisão do usuário em 28/10/2026 com base nas respostas profissionais reportadas, e GJ-03 está resolvido conforme essas respostas. Ressalvas de fonte/assinatura e risco residual permanecem registradas, sem alegação de verificação independente. GJ-04 continua bloqueando o lançamento.
 - A geração de escalas deve rodar no navegador e concluir em até 10 segundos para 50 pessoas antes de ser publicada.
 
 ---
@@ -64,10 +64,10 @@
 - [ ] Dividir a tabela dos seis módulos do MVP por versão: versão 1 com premissas manuais (sem CSV), diagnóstico, cenários e linha do tempo/checklist; versões posteriores com CSV, persistência, geração de escalas e exportação de documentos.
 - [ ] Mover geração de escalas, CSV, persistência no navegador e documentos exportáveis para versões posteriores nomeadas; alinhar critérios de sucesso ao que pode ser avaliado sem telemetria do produto.
 - [ ] Verificar que o PRD continua sem requisitos de conta, API, telemetria ou armazenamento no servidor.
-- [ ] Revisar e aprovar o gate jurídico de lançamento: texto final e data de publicação no DOU, data efetiva, divisor, interação entre a vigência do Art. 10 e as etapas do Art. 6º da minuta, interpretação de repouso semanal, descanso/intervalos diários e premissas de hora extra; manter GJ-01–GJ-04 bloqueadores até evidência e aprovação explícita.
+- [ ] Revisar e concluir o gate jurídico pré-lançamento GJ-04: verificar que GJ-01 a GJ-03 estão registrados, confrontar parâmetros e testes com as decisões reportadas, revisar termos de uso e obter aprovação explícita para o release. GJ-02 foi fechado por decisão do usuário; suas ressalvas de fonte/assinatura e risco residual permanecem documentadas.
 - [ ] Não iniciar a implementação de um cálculo afetado antes de validar a interpretação jurídica correspondente.
 
-**Critério de saída:** repositório disponível, escopo do produto alinhado à primeira versão e premissas jurídicas dos cálculos incluídos aprovadas ou explicitamente marcadas como bloqueadoras do lançamento.
+**Critério de saída:** repositório disponível, escopo do produto alinhado à primeira versão e premissas jurídicas dos cálculos incluídos refletidas conforme as decisões registradas; o release permanece bloqueado até GJ-04.
 
 ## Fase 1 — Primeira versão em 30 dias corridos
 
@@ -107,7 +107,7 @@
 - `getParametersForDate(date: string, versions: LegalParameters[]): Result<LegalParameters, ParameterSelectionError>` seleciona somente parâmetros com status `aprovado` e `publicationDate` oficial; retorna erro explícito se não existir versão aplicável aprovada/publicada (não faz fallback para versão provisória).
 - `getStageDates(parameters: LegalParameters): Result<{ phase1: string; phase2: string }, LegalDateError>` usa provisoriamente `publicationDate` + 2 meses-calendário para a Etapa 1 e +12 meses-calendário desde a Etapa 1 para a Etapa 2; retorna erro explícito se `publicationDate` estiver ausente ou inválida. Dois meses-calendário não equivalem a 60 dias. Adicionar meses civis com ajuste para o último dia válido do mês de destino.
 - `getWeeklyHourLimit(date: string, parameters: LegalParameters): Result<number, LegalDateError>` usa os limites por etapa e datas calculadas; retorna erro explícito para data de referência inválida ou publicationDate ausente/inválida.
-- Todos os argumentos e resultados de data usam strings de data civil ISO (`YYYY-MM-DD`). Não declarar parâmetros reais aprovados/publicados antes do DOU e do fechamento dos gates GJ-01–GJ-04; a interação do Art. 10 da minuta com o Art. 6º segue pendente de GJ-02.
+- Todos os argumentos e resultados de data usam strings de data civil ISO (`YYYY-MM-DD`). Não declarar parâmetros reais aprovados/publicados antes do DOU e do fechamento dos gates de aprovação aplicáveis; as datas e a interação dos arts. 6º e 10 seguem as posições profissionais reportadas e o fechamento registrado de GJ-02, sem verificação independente neste plano.
 
 - [x] Escrever testes com fixtures exclusivamente hipotéticas, incluindo `publicationDate` 16/10/2026 → Etapa 1 16/12/2026 → Etapa 2 16/12/2027; cobrir adição de meses civis, fim de mês, mudança de ano e ano bissexto (sem tratar mês-calendário como 60 dias).
 - [x] Escrever testes para limites de 44/42/40 horas imediatamente antes e no início de cada vigência hipotética; verificar erros explícitos para publicationDate ausente/inválida e que a seleção retorna erro quando não houver parâmetros aprovados e publicados aplicáveis, mesmo que exista uma versão provisória com limites registrados.
@@ -164,14 +164,16 @@
 - `DiagnosticValidationError` contém um identificador estável de campo e uma mensagem exibível ao usuário.
 - `DiagnosticResult` é dado de cálculo imutável, sem nomes de funcionários ou identificadores externos.
 
+**Definição aprovada para os cálculos de diagnóstico:** calcular horas exigidas somando, para cada faixa semanal, `(endMinute - startMinute) / 60 × minimumPeople`; a disponibilidade individual em cada etapa é o menor valor entre a jornada semanal informada e o teto legal da etapa; a disponibilidade da equipe é a soma individual. O déficit é `max(0, requiredPersonHours - availableHours)`. O custo-hora individual por etapa é salário mensal dividido pelo divisor correspondente (220/210/200 para 44/42/40 horas). Retornar resultados para as três etapas. Se a publicação ou uma data de etapa necessária estiver ausente/inválida, retornar erro explícito e não usar data ou parâmetro substituto.
+
 - [x] Definir os tipos de entrada/saída e adicionar validação sem cálculos: equipe não vazia, identificadores locais únicos, valores racionais positivos, data civil válida e limites/ordem de intervalos de cobertura.
 - [x] Testar a validação de premissas válidas e inválidas em `tests/unit/diagnostic-validation.test.ts`.
-- [ ] Criar testes inicialmente falhos para as fixtures aprovadas: disponibilidade semanal para 4 pessoas nos limites 44/42/40 h, exigência de 180 horas-pessoa e déficits de 4/12/20 h.
-- [ ] Adicionar testes de cálculo para ausência de déficit, déficit positivo e preservação do salário.
-- [ ] Implementar o diagnóstico como função pura usando os parâmetros da Tarefa 3 e operações racionais da Tarefa 4, somente após aprovação jurídica dos gates que bloqueiam os cálculos de disponibilidade, déficit e custo-hora (GJ-02/GJ-03).
+- [x] Criar testes inicialmente falhos para as fixtures aprovadas: disponibilidade semanal para 4 pessoas nos limites 44/42/40 h, exigência de 180 horas-pessoa e déficits de 4/12/20 h.
+- [x] Adicionar testes de cálculo para ausência de déficit, déficit positivo e preservação do salário.
+- [x] Implementar o diagnóstico como função pura usando os parâmetros da Tarefa 3 e operações racionais da Tarefa 4, segundo as posições reportadas e registradas nos GJ-02/GJ-03 fechados; manter parâmetros provisórios até GJ-04 e não publicar o produto antes de sua conclusão.
 - [x] Executar `npm test -- --run tests/unit/diagnostic-validation.test.ts`; os testes de validação passam sem produzir resultados calculados.
 
-**Critério parcial:** os tipos e a validação explícita de premissas estão implementados. O cálculo do diagnóstico permanece bloqueado até o fechamento dos gates jurídicos aplicáveis.
+**Critério de saída:** os tipos, a validação explícita das premissas e o cálculo puro de diagnóstico estão implementados e cobertos por testes. O lançamento continua bloqueado até a conclusão de GJ-04.
 
 ### Tarefa 6: Implementar viabilidade e recomendação de cenários
 
@@ -390,7 +392,7 @@
 
 ## Gates de lançamento
 
-- **Primeira versão:** Tarefas 1–8 concluídas; publicação final no DOU e revisão jurídica aprovadas para os cálculos incluídos, com GJ-01–GJ-04 encerrados mediante evidência; build estático na Vercel; nenhum dado operacional transmitido pela rede; CI aprovado. Enquanto qualquer gate estiver pendente, não há release nem seleção de parâmetro aprovado; fixtures hipotéticas servem apenas a testes.
+- **Primeira versão:** Tarefas 1–8 concluídas; publicação final no DOU confirmada; GJ-01 a GJ-03 registrados como encerrados (GJ-02 por decisão do usuário, com ressalvas documentais preservadas); GJ-04 concluído com aprovação jurídica pré-lançamento; build estático na Vercel; nenhum dado operacional transmitido pela rede; CI aprovado. Enquanto GJ-04 estiver pendente, não há release nem seleção de parâmetro aprovado; fixtures servem apenas a testes.
 - **Versão de dados locais/documentos:** Tarefas 9–11 concluídas; teste de exclusão após reload aprovado; testes de CSV/exportação comprovam ausência de upload ou conversão externa.
 - **Versão de escalas:** Tarefas 12–14 concluídas; todas as regras de escala cobertas; benchmark para 50 pessoas concluído em até 10 segundos no navegador/hardware acordados.
 - Em cada versão, atualizar o PRD e os avisos legais/de privacidade para descrever somente o comportamento efetivamente publicado.

@@ -67,6 +67,27 @@ export const validateDiagnosticInput = (
     });
   }
 
+  const legalHourLimits = [
+    ["beforePhase1", input.legalParameters.weeklyHours.beforePhase1],
+    ["phase1", input.legalParameters.weeklyHours.phase1],
+    ["phase2", input.legalParameters.weeklyHours.phase2],
+  ] as const;
+  let previousLegalHourLimit = Number.POSITIVE_INFINITY;
+  for (const [stage, limit] of legalHourLimits) {
+    if (
+      !Number.isSafeInteger(limit) ||
+      limit <= 0 ||
+      limit > previousLegalHourLimit
+    ) {
+      errors.push({
+        field: `legalParameters.weeklyHours.${stage}`,
+        message:
+          "O limite semanal deve ser um número inteiro positivo e não superar o limite da etapa anterior.",
+      });
+    }
+    previousLegalHourLimit = limit;
+  }
+
   input.coverage.forEach((coverage, index) => {
     if (
       !Number.isInteger(coverage.weekday) ||
@@ -103,7 +124,7 @@ export const validateDiagnosticInput = (
     }
 
     if (
-      !Number.isInteger(coverage.minimumPeople) ||
+      !Number.isSafeInteger(coverage.minimumPeople) ||
       coverage.minimumPeople <= 0
     ) {
       errors.push({
