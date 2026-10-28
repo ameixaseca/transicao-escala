@@ -8,23 +8,25 @@ O Copiloto de Transição 6x1 é uma ferramenta web gratuita, sem login, que aju
 
 O usuário informa apenas as premissas necessárias aos cálculos. A ferramenta não solicita nome, CNPJ, e-mail ou identificadores de funcionários; usa rótulos anônimos gerados localmente para distinguir pessoas. No release inicial, premissas e resultados permanecem apenas em memória durante a sessão, sem persistência local ou remota e sem restauração após recarregar. Em release posterior, o usuário poderá optar por salvar premissas somente no armazenamento local do navegador, com uma ação explícita para apagar esses dados. O provedor de hospedagem pode processar metadados técnicos de acesso, distintos das premissas e resultados dos cálculos.
 
-**Status jurídico: pendente e bloqueante.** A data de publicação no DOU e a data efetiva ainda são desconhecidas; não foi fornecido texto final publicado nem aprovação jurídica. Os gates GJ-01–GJ-04 da seção 8 bloqueiam os cálculos afetados e qualquer release público. A minuta pode orientar planejamento e implementação provisória, mas não aprova cálculos nem autoriza uso público. Esta tarefa é apenas documental e não implementa cálculos jurídicos.
+**Status jurídico: GJ-02 fechado por decisão do usuário em 28/10/2026; GJ-04 segue pendente.** O texto final foi localizado no DOU como Emenda Constitucional nº 141, publicada em 16/10/2026, Edição 196-A, Seção 1 - Extra A, página 2. O usuário confirmou que as respostas recebidas do profissional foram validadas pelo advogado e determinou considerar GJ-02 fechado. As posições reportadas orientam os cálculos e regras do produto; as ressalvas documentais (identificação/assinatura profissional e fontes oficiais anexadas) ficam registradas para rastreabilidade, sem reabrir o gate. Este registro não afirma verificação jurídica independente. GJ-01 e GJ-03 também estão encerrados; GJ-04 permanece como bloqueador do lançamento.
 
-**Atualização informada pelo usuário em 16/10/2026:** o usuário informa que a promulgação ocorreu nessa data; o texto ainda não foi publicado no DOU e a data de publicação permanece desconhecida. Esse relato não confirma oficialmente a data, o conteúdo da norma ou as interpretações jurídicas; GJ-01 permanece pendente.
+**Atualização de 28/10/2026:** a publicação oficial no DOU confirma a data de 16/10/2026, que coincide com a data de promulgação anteriormente informada pelo usuário. O ato publicado é a Emenda Constitucional nº 141; a referência e a data foram verificadas na página do DOU e na versão certificada indicada abaixo.
 
-**Contexto e evidência oficial disponíveis.** A [página oficial do Senado para a PEC 221/2019](https://www25.senado.leg.br/web/atividade/materias/-/materia/174386) e o [PDF do Senado identificado como “Minuta”](https://legis.senado.leg.br/sdleg-getter/documento?dm=10331248&ts=1792178675619&disposition=inline) são referências distintas do futuro texto final no DOU. O PDF é um rascunho de quatro páginas, sem número da Emenda e com “Brasília, __ de __ de 2026” em branco; não é texto final, norma publicada nem aprovação jurídica. Segundo a minuta, o Art. 6º prevê as etapas abaixo; o Art. 10 trata de vigência diferenciada e sua interação com as etapas exige interpretação profissional (GJ-02):
+**Contexto e evidência oficial disponíveis.** A fonte normativa final para este projeto é a [publicação da Emenda Constitucional nº 141 no DOU](https://www.in.gov.br/en/web/dou/-/emenda-constitucional-n-141-738818165), publicada em 16/10/2026, Edição 196-A, Seção 1 - Extra A, página 2. A [versão certificada da página 2](https://pesquisa.in.gov.br/imprensa/jsp/visualiza/index.jsp?data=16/10/2026&jornal=600&pagina=2) confirma a edição e a data. O ato traz a data “Brasília, 16 de outubro de 2026”. A página anterior do Senado e o [PDF identificado como “Minuta”](https://legis.senado.leg.br/sdleg-getter/documento?dm=10331248&ts=1792178675619&disposition=inline) são referências históricas do processo e não substituem o texto publicado. O quadro abaixo resume a redação dos arts. 6º e 10 para planejamento; a interpretação da interação entre eles, do repouso e dos demais requisitos segue pendente de revisão profissional (GJ-02):
 
-| Marco provisório | Regra de planejamento baseada na minuta | Conteúdo a confirmar |
+| Marco textual | Regra descrita na EC nº 141 | Aplicação a confirmar |
 | --- | --- | --- |
-| Etapa 1 | Data hipotética de publicação no DOU + 2 meses-calendário | 42 h/semana e dois dias de repouso semanal remunerado, um preferencialmente aos domingos |
-| Etapa 2 | Início da Etapa 1 + 12 meses-calendário | 40 h/semana |
-| Exceção | Regra provisória a partir da Etapa 1 | A minuta descreve exceções para 12x36/atividades essenciais; alcance e vigência dependem do DOU e da revisão jurídica |
+| Até 15/12/2026 | Leitura sistemática reportada pelo advogado: limite de 44 h e 1 repouso semanal; art. 6º é regra transitória específica em relação à redação geral do art. 7º, XIII | Interpretação reportada pelo profissional; fontes oficiais da análise ainda devem ser anexadas ao registro GJ-02 |
+| A partir de 16/12/2026 | 42 h semanais e 2 repousos semanais; sem norma coletiva que autorize 8h24/dia em cinco dias, jornada normal limitada a 40 h e horas 41/42 tratadas como extras | Resposta profissional reportada; instrumento individual não basta para essa ampliação (GJ-03 resolvido quanto à decisão) |
+| A partir de 16/12/2027 | 40 h semanais e 2 repousos semanais | Resposta profissional reportada; regimes especiais e exceções devem respeitar as regras e bloqueios abaixo |
+| Semana que contém o marco | Para simplificação conservadora do produto, aplicar a regra nova a toda a semana civil em que cair o marco: 14–20/12/2026 e 13–19/12/2027 | Política de produto mais protetiva que a aplicação estritamente diária; apresentar alerta de semana de transição |
+| Vigência diferenciada | Art. 10, I: após 2 meses para a alteração do art. 7º, XV; art. 10, II: na publicação para os demais dispositivos | Leitura reportada: os marcos do art. 6º escalonam a jornada, com o repouso do inciso XV iniciando em 16/12/2026 |
 
-Dois meses-calendário não equivalem a 60 dias. A fórmula é provisória e depende da data oficial de publicação e da interpretação jurídica. Os exemplos e valores de datas neste PRD são fixtures hipotéticas; os cálculos permanecem fora de uso público. Nenhuma regra da minuta é apresentada como aconselhamento jurídico.
+Dois meses não equivalem a 60 dias. A resposta profissional posterior fixa 16/12/2026 e 16/12/2027 e rejeita 15/12/2026; fim de semana ou feriado não desloca os marcos. A regra de aplicar a norma nova à semana civil inteira que contém cada marco é uma escolha conservadora de produto, não uma afirmação de que o prazo legal começa antes do marco. A decisão de fechamento do GJ-02 e suas ressalvas estão registradas na seção 8 e no [roteiro GJ-02](./legal/GJ-02-review-brief.md). Este documento não é aconselhamento jurídico.
 
-Sob essas hipóteses ainda não aprovadas, a redução de jornada sem redução salarial implicaria aumento aritmético aproximado do custo por hora de 4,8% na Etapa 1 (44 h → 42 h) e 10% na Etapa 2 (44 h → 40 h); isso não constitui parecer jurídico nem autorização para uso público.
+Como comparação exclusivamente aritmética dos limites de 44/42/40 horas, a redução de jornada sem redução salarial representaria aumento aproximado do custo-hora de 4,8% na Etapa 1 e 10% na Etapa 2. Esses percentuais não validam o divisor nem constituem parecer jurídico ou autorização para uso público; o divisor e sua aplicação seguem sujeitos a GJ-02.
 
-Registros jornalísticos sobre a tramitação: [Senado Notícias](https://www12.senado.leg.br/noticias/senado-agora/2026/10/14/aprovado-em-segundo-turno-fim-da-6x1-vai-a-promulgacao), [Diario de Pernambuco](https://www.diariodepernambuco.com.br/politica/2026/05/11715177-fim-da-escala-6x1-veja-como-votaram-os-deputados-de-pernambuco.html) e [Juruá Comunicação](https://juruacomunicacao.com.br/senado-aprova-pec-que-acaba-com-a-escala-6x1-texto-vai-a-promulgacao/). Eles não substituem a página oficial, a minuta identificada como tal, nem a futura publicação no DOU.
+Registros jornalísticos sobre a tramitação: [Senado Notícias](https://www12.senado.leg.br/noticias/senado-agora/2026/10/14/aprovado-em-segundo-turno-fim-da-6x1-vai-a-promulgacao), [Diario de Pernambuco](https://www.diariodepernambuco.com.br/politica/2026/05/11715177-fim-da-escala-6x1-veja-como-votaram-os-deputados-de-pernambuco.html) e [Juruá Comunicação](https://juruacomunicacao.com.br/senado-aprova-pec-que-acaba-com-a-escala-6x1-texto-vai-a-promulgacao/). São referências de contexto e não substituem o texto oficial publicado no DOU.
 
 ## 2. Problema e público-alvo
 
@@ -70,16 +72,16 @@ O produto completo prevê 16 regras: 10 atribuídas à EC e à CLT, ainda sujeit
 
 | ID | Regra | Fonte |
 | --- | --- | --- |
-| RN-01 | Regra provisória de planejamento baseada na minuta: Etapa 1 = `publicationDate` + 2 meses-calendário; Etapa 2 = início da Etapa 1 + 12 meses-calendário. Dois meses-calendário não são 60 dias; datas dependem da publicação no DOU, da interpretação profissional e dos gates GJ-01–GJ-04. | Minuta do Senado, Art. 6º (não final) |
-| RN-02 | Limites de 44/42/40 h conforme etapa, como hipótese provisória derivada da minuta; não usar publicamente antes da publicação final no DOU e da revisão jurídica. | Minuta do Senado (não final) |
-| RN-03 | Hipótese provisória da minuta: a partir da Etapa 1, cada funcionário tem 2 dias de repouso por semana; antes dela, 1, sujeito à publicação final no DOU e à revisão jurídica. | Minuta do Senado (não final) |
-| RN-04 | Domingo é a folga preferencial. No comércio, ao menos 1 folga a cada 3 semanas cai no domingo (N configurável). | EC; Lei 10.101/2000, art. 6º |
-| RN-05 | Nenhum cenário pode reduzir o salário mensal de um funcionário. | EC |
-| RN-06 | Custo-hora = salário mensal ÷ divisor mensal, onde divisor = jornada semanal × 5 (220, 210, 200). | Prática CLT |
-| RN-07 | Com acordo ou convenção coletiva marcado para escala 12x36 ou atividade essencial, o repouso é validado pela média de 2 dias/semana no mês-calendário, não semana a semana. | EC |
-| RN-08 | Jornada diária normal de até 8 h. Hora extra de até 2 h/dia, com adicional mínimo de 50%. | CF art. 7º; CLT art. 59 |
-| RN-09 | Intervalo mínimo de 11 h entre duas jornadas. | CLT art. 66 |
-| RN-10 | Jornada acima de 6 h exige intervalo de 1 h a 2 h. Entre 4 h e 6 h, exige 15 min. | CLT art. 71 |
+| RN-01 | Limite de 44 h até 15/12/2026; 42 h a partir de 16/12/2026; 40 h a partir de 16/12/2027. Para simplificação conservadora, toda semana civil que contém a data de cada marco segue o limite novo e recebe aviso de transição. | EC nº 141, arts. 6º e 10; interpretação profissional reportada e registrada no GJ-02, fechado por decisão do usuário |
+| RN-02 | Em 42 h semanais, a jornada diária normal permanece até 8 h. Distribuir 42 h em cinco dias (8h24/dia) requer CCT/ACT; sem instrumento coletivo aplicável, 40 h são normais e as horas 41/42 são extras. Acordo individual não autoriza essa ampliação específica. | EC nº 141, arts. 6º e 7º; interpretação profissional reportada; GJ-03 resolvido quanto à posição |
+| RN-03 | Um repouso semanal até 15/12/2026; a partir de 16/12/2026, dois repousos na semana, não necessariamente consecutivos. Além da regra semanal, validar janela móvel sem mais de 6 dias consecutivos trabalhados. Para cada repouso, considerar 24 h consecutivas mais 11 h interjornada (35 h); repousos consecutivos exigem 59 h contínuas. | EC nº 141, arts. 1º, 6º e 10; CLT, arts. 66 e 67; Súmula TST 110 e OJ 410 (fontes oficiais pendentes em GJ-02) |
+| RN-04 | Domingo “preferencialmente” não é obrigação absoluta. Comércio: ao menos 1 repouso dominical a cada 3 semanas; art. 386 da CLT: aplicar repouso dominical quinzenal a empregadas, salvo CCT com regra própria informada; outras atividades autorizadas: ao menos 1 domingo a cada 7 semanas, segundo Portaria MTP 671/2021, art. 58, § 2º. Feriados no comércio exigem CCT e lei municipal, ressalvadas atividades do Anexo IV da Portaria MTE 1.316/2026. | EC nº 141; Lei 10.101/2000; CLT, art. 386; Portarias MTP 671/2021 e MTE 1.316/2026; ressalvas documentais no registro GJ-02 |
+| RN-05 | Não reduzir remuneração nominal, proporcional ou de qualquer espécie, inclusive pisos. Para horista/diarista, reajustar valor-hora ao reduzir jornada: valor novo ≥ valor anterior × jornada anterior ÷ jornada nova, e verificar remuneração mensal incluindo dois repousos remunerados. | EC nº 141, arts. 2º e 4º; Lei 605/1949; interpretação profissional reportada; GJ-02 |
+| RN-06 | Divisor mensal reportado: jornada semanal × 5 (44/220, 42/210, 40/200); o repouso adicional não altera o divisor. Em dezembro de 2026, regra principal: divisor 220 até 15/12 e 210 desde 16/12; opção simplificadora mais favorável: aplicar divisor 210 desde 01/12. A política de adotar a regra de escala nova na semana inteira do marco não antecipa a troca do divisor, que segue as datas acima. Separar salário-hora de custo patronal. Horas extras usam parcelas salariais e adicional mínimo de 50%; domingo/feriado sem compensação, pagamento dobrado; horas extras habituais repercutem nos repousos e feriados. O método de dias úteis/DSR em 5x2 mantém risco interpretativo; custos patronais tributários dependem de premissas contábeis. | CLT, arts. 59 e 64; CF, art. 7º, XVI; Súmulas TST 146, 172, 264 e 431; Tema 260 (fontes oficiais e risco residual registrados em GJ-02) |
+| RN-07 | Remover “atividade essencial” como exceção autônoma. Regime compensatório de média mensal somente mediante CCT/ACT; exigir no mês-calendário ao menos teto(2 × dias do mês ÷ 7) repousos e pelo menos 1 repouso em cada janela móvel de 7 dias. A regra de arredondamento para cima é conservadora. 12x36 pode ser pactuado por acordo individual escrito (CLT, art. 59-A); média semanal = horas efetivas por plantão × 3,5, considerando hora noturna reduzida. A escala padrão de 12 h efetivas resulta em 42 h semanais; 11 h efetivas mais 1 h de intervalo resulta em 38,5 h. Validar o teto da etapa e bloquear contratos públicos no MVP devido à controvérsia reportada sobre o art. 9º. | EC nº 141, §§ 2º e 3º; CLT, art. 59-A; ADI 5994; ressalvas registradas no GJ-02 |
+| RN-08 | Jornada normal diária até 8 h; até 2 h extras/dia; adicional mínimo de 50%, ou percentual maior de CCT/ACT. Sem CCT/ACT que autorize ampliar a jornada diária na etapa de 42 h, o excedente de 40 h em cinco dias conta como extra. | CF, art. 7º, XIII e XVI; CLT, art. 59; GJ-03 |
+| RN-09 | Garantir ao menos 11 h entre jornadas; cada repouso semanal de 24 h deve ser seguido/precedido de forma a compor 35 h contínuas. Com dois repousos consecutivos, exigir 59 h contínuas. | CLT, arts. 66 e 67; Súmula TST 110; ressalvas documentais no registro GJ-02 |
+| RN-10 | Intervalo pela jornada efetiva: até 4 h, nenhum; acima de 4 h até 6 h, 15 min; acima de 6 h, 1 h, salvo redução para mínimo 30 min por CCT/ACT ou regra especial 12x36. Verificar intervalo exigido e concedido; supressão parcial pode ser estimada pelo tempo suprimido + 50%, com natureza indenizatória. Bloquear categorias com regras próprias não modeladas. | CLT, arts. 71, § 4º, 59-A e 611-A, III; Súmula TST 437; ressalvas documentais no registro GJ-02 |
 
 **Regras do produto**
 
@@ -128,11 +130,11 @@ O produto completo tem 6 módulos. O release inicial entrega F1 com entrada manu
 
 ## 7. Plano de testes automatizados
 
-As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 32 definições de cenários automatizados preservadas nas seções 7.1 a 7.11, mais 3 definições específicas do release inicial na seção 7.12 (35 no total), organizadas por requisito em testes compatíveis com JavaScript/TypeScript. Cada esquema conta como uma definição, com todos os seus exemplos executados. Os cenários abaixo são especificações executáveis em Gherkin em português (`# language: pt`) ou testes equivalentes no ecossistema escolhido. Cada teste de regra identifica o requisito que cobre (`RN-xx`); o pipeline falha se alguma regra aplicável ao release ficar sem cobertura. Os testes de privacidade distinguem endpoints da aplicação e origens externas das requisições comuns de assets estáticos e metadados técnicos da hospedagem, que são permitidas e não podem transportar dados operacionais; não pode haver chamadas a serviços ou integrações de terceiros.
+As 16 regras e os requisitos RNF-03, RNF-04 e RNF-05 têm 45 definições de cenários automatizados nas seções 7.1 a 7.11, mais 3 definições específicas do release inicial na seção 7.12 (48 no total), organizadas por requisito em testes compatíveis com JavaScript/TypeScript. Cada esquema conta como uma definição, com todos os seus exemplos executados. Os cenários abaixo são especificações executáveis em Gherkin em português (`# language: pt`) ou testes equivalentes no ecossistema escolhido. Cada teste de regra identifica o requisito que cobre (`RN-xx`); o pipeline falha se alguma regra aplicável ao release ficar sem cobertura. Os testes de privacidade distinguem endpoints da aplicação e origens externas das requisições comuns de assets estáticos e metadados técnicos da hospedagem, que são permitidas e não podem transportar dados operacionais; não pode haver chamadas a serviços ou integrações de terceiros.
 
 **Recorte por release:** no inicial, executar os cenários aplicáveis ao diagnóstico, simulador, parâmetros e prazos (7.1, 7.2, RN-12 em 7.5, 7.6 e 7.9), as validações legais aplicáveis (7.3 e 7.4) e os três cenários do fluxo manual em 7.12. Os testes de regras sobre escalas podem usar fixtures, sem disponibilizar um gerador/editor no release inicial. A validação completa de escala/cobertura de F4, o checklist com escala de 7.7, os documentos de 7.8 e os fluxos ampliados de privacidade e responsividade de 7.10 e 7.11 são preservados para os releases correspondentes, quando passam a ser obrigatórios. A proteção de privacidade e os dois viewports continuam obrigatórios desde o inicial, cobertos por 7.12, sem esperar funcionalidades futuras. Os gates jurídicos bloqueiam a implementação dos cálculos afetados, inclusive resultados esperados que dependam de interpretações ainda não confirmadas.
 
-**Premissas comuns de teste, não confirmação jurídica:** `publicationDate` hipotética 16/10/2026 → Etapa 1 em 16/12/2026 (dois meses-calendário) → Etapa 2 em 16/12/2027 (mais doze meses-calendário). Essa publicação é apenas fixture hipotética, não fato; os cálculos não são aprovados nem destinados a uso público e dependem de GJ-01–GJ-04. O fuso é America/Sao\_Paulo. Os valores estão em reais.
+**Premissas comuns de teste, não confirmação jurídica independente:** a data factual de publicação é `2026-10-16` (EC nº 141, DOU, Edição 196-A, Seção 1 - Extra A, página 2). As fixtures usam as datas reportadas de 16/12/2026 e 16/12/2027, conforme posições registradas no GJ-02, fechado por decisão do usuário. Isso não equivale a parecer ou conferência jurídica independente. O GJ-04 continua necessário para aprovação pré-lançamento. O fuso é America/Sao\_Paulo. Os valores estão em reais.
 
 | Conjunto de testes | Regras | Cenários |
 | --- | --- | --- |
@@ -177,7 +179,7 @@ Funcionalidade: Prazos da transição e limite semanal
   @RN-02
   Esquema do Cenário: Definir o limite semanal pela data de referência
     Quando o sistema consulta o limite semanal para <data>
-    Então o limite é de <limite> horas
+    Então o teto semanal da etapa é de <limite> horas
 
     Exemplos:
       | data       | limite |
@@ -185,6 +187,21 @@ Funcionalidade: Prazos da transição e limite semanal
       | 16/12/2026 | 42     |
       | 15/12/2027 | 42     |
       | 16/12/2027 | 40     |
+
+  @RN-02 @RN-08
+  Cenário: Sem norma coletiva, limitar a jornada normal a 40 horas na Etapa 1
+    Dado uma pessoa trabalhando 5 dias por semana a partir de 16/12/2026
+    E não há CCT ou ACT aplicável autorizando a distribuição de 42 horas
+    Quando a jornada normal semanal é validada
+    Então o limite normal é de 40 horas
+    E as horas 41 e 42 são classificadas como extraordinárias
+
+  @RN-02 @RN-08
+  Cenário: Com norma coletiva, permitir 42 horas distribuídas em cinco dias
+    Dado uma pessoa trabalhando 5 dias por semana a partir de 16/12/2026
+    E há CCT ou ACT aplicável autorizando a distribuição de 42 horas
+    Quando a jornada diária é de 8 horas e 24 minutos
+    Então a jornada semanal de 42 horas é aprovada
 ```
 
 ### 7.2 Custo-hora e irredutibilidade salarial
@@ -207,6 +224,16 @@ Funcionalidade: Custo-hora e salário
       | 42      | 210     | 10,48 | 4,76%   |
       | 40      | 200     | 11,00 | 10,00%  |
 
+  @RN-06
+  Esquema do Cenário: Aplicar o divisor correto no mês misto de dezembro de 2026
+    Quando o sistema calcula o divisor para o dia <data>
+    Então o divisor é <divisor>
+
+    Exemplos:
+      | data       | divisor |
+      | 15/12/2026 | 220     |
+      | 16/12/2026 | 210     |
+
   @RN-06 @RNF-05
   Cenário: Preservar a fração exata do custo-hora nas horas extras
     Dado um funcionário com salário mensal de R$ 2.200,00 e divisor mensal 210
@@ -221,6 +248,13 @@ Funcionalidade: Custo-hora e salário
     Quando o usuário ajusta o salário para R$ 2.000,00 na jornada de 40 horas
     Então o sistema rejeita o ajuste
     E exibe a mensagem "A emenda não permite reduzir salário na redução de jornada"
+
+  @RN-05
+  Cenário: Preservar a remuneração mensal do horista ao passar de 42 h para 40 h
+    Dado um horista com valor de R$ 30,00 por hora na jornada de 42 h
+    Quando a jornada passa para 40 h
+    Então o sistema exige valor-hora de pelo menos R$ 31,50
+    E rejeita um valor que deixe a remuneração mensal com 2 repousos abaixo do módulo anterior
 
   @RN-05
   Cenário: Permitir aumento de salário
@@ -266,6 +300,34 @@ Funcionalidade: Repouso semanal remunerado
     Quando a escala é validada
     Então a escala não tem violações de repouso
 
+  @RN-03
+  Cenário: Aplicar a regra nova à semana civil que contém o marco
+    Dado a semana de 14 a 20/12/2026
+    Quando a escala é validada pela política conservadora de transição
+    Então a semana inteira exige 2 repousos e respeita o limite novo
+    E o sistema exibe "Nesta semana passa a valer a nova jornada. Esta escala já segue a regra nova."
+
+  @RN-03
+  Cenário: Reprovar mais de 6 dias consecutivos de trabalho
+    Dado uma escala com folgas na segunda e terça da primeira semana
+    E folgas no sábado e domingo da segunda semana
+    E Pessoa 1 trabalha os outros dias
+    Quando a escala é validada na janela móvel
+    Então a escala tem violação por 8 dias consecutivos de trabalho
+
+  @RN-03
+  Cenário: Reprovar repouso separado com menos de 35 horas consecutivas
+    Dado que entre o fim da jornada anterior ao repouso e o início da próxima jornada há 30 horas
+    Quando a escala é validada
+    Então a escala tem violação do repouso mínimo de 35 horas
+
+  @RN-03
+  Cenário: Exigir 59 horas entre jornadas em repousos consecutivos
+    Dado que os dois repousos são consecutivos
+    E há 58 horas entre o fim da jornada anterior e o início da próxima
+    Quando a escala é validada
+    Então a escala tem violação do repouso mínimo de 59 horas
+
   @RN-04
   Cenário: Alertar quando um comerciário passa 3 semanas sem folga no domingo
     Dado uma empresa do segmento comércio com N = 3 semanas
@@ -281,21 +343,59 @@ Funcionalidade: Repouso semanal remunerado
     Então cada funcionário folga em ao menos 1 domingo
     E nenhum domingo tem menos de 2 pessoas
 
-  @RN-07
-  Cenário: Validar o repouso pela média mensal quando há acordo coletivo
-    Dado uma empresa com acordo coletivo de exceção para escala 12x36
-    E Pessoa 3 tem 9 dias de repouso em outubro de 2027, que tem 31 dias
-    Mas tem uma semana desse mês com 1 dia de repouso
-    Quando a escala do mês é validada
-    Então a média de repouso de Pessoa 3 é 2,03 dias por semana
-    E a escala não tem violações de repouso
+  @RN-04
+  Cenário: Bloquear trabalho em feriado no comércio sem convenção coletiva
+    Dado um estabelecimento comercial fora das atividades do Anexo IV da Portaria MTE 1.316/2026
+    E não há convenção coletiva autorizando o trabalho no feriado
+    Quando a escala de feriado é validada
+    Então o trabalho no feriado é bloqueado
+
+  @RN-04
+  Cenário: Permitir trabalho em feriado em farmácia sem convenção coletiva
+    Dado uma farmácia enquadrada no Anexo IV da Portaria MTE 1.316/2026
+    E a lei municipal permite o funcionamento no feriado
+    Quando a escala de feriado é validada
+    Então o trabalho no feriado é permitido
 
   @RN-07
-  Cenário: Média mensal abaixo de 2 dias é inválida mesmo com acordo
-    Dado uma empresa com acordo coletivo de exceção para escala 12x36
+  Cenário: Validar o mínimo mensal conservador de repousos em mês de 31 dias
+    Dado uma empresa com CCT ou ACT aplicável à média mensal
+    E Pessoa 3 tem 9 dias de repouso em outubro de 2027, que tem 31 dias
+    E há pelo menos 1 repouso em cada janela móvel de 7 dias
+    Quando a escala do mês é validada
+    Então o mínimo mensal exigido é 9 repousos
+    E a escala não tem violações da regra de média mensal
+
+  @RN-07
+  Cenário: Reprovar menos que o mínimo mensal conservador de repousos
+    Dado uma empresa com CCT ou ACT aplicável à média mensal
     E Pessoa 3 tem 8 dias de repouso em outubro de 2027
     Quando a escala do mês é validada
-    Então a escala tem a violação "Média de repouso de Pessoa 3 é 1,81 dia por semana; o mínimo é 2"
+    Então a escala tem a violação "Pessoa 3 tem 8 repousos; o mínimo conservador para 31 dias é 9"
+
+  @RN-07
+  Cenário: Exigir 8 repousos na média mensal de fevereiro com 28 dias
+    Dado uma empresa com CCT ou ACT aplicável à média mensal
+    E Pessoa 3 tem 8 dias de repouso em fevereiro de 2027
+    E há pelo menos 1 repouso em cada janela móvel de 7 dias
+    Quando a escala do mês é validada
+    Então o mínimo mensal exigido é 8 repousos
+
+  @RN-07
+  Cenário: Reprovar 12x36 com 12 horas efetivamente trabalhadas após a Etapa 2
+    Dado uma escala 12x36 com 12 horas efetivas por plantão
+    E a data de referência é 16/12/2027
+    Quando a média semanal é calculada como horas efetivas por plantão vezes 3,5
+    Então a média é 42 horas
+    E a escala é reprovada por exceder o teto de 40 horas
+
+  @RN-07
+  Cenário: Aprovar 12x36 com 11 horas efetivas e 1 hora de intervalo após a Etapa 2
+    Dado uma escala 12x36 com 11 horas efetivas e 1 hora de intervalo por plantão
+    E a data de referência é 16/12/2027
+    Quando a média semanal é calculada como horas efetivas por plantão vezes 3,5
+    Então a média é 38,5 horas
+    E a escala é aprovada quanto ao limite semanal
 ```
 
 ### 7.4 Jornada diária e intervalos
@@ -588,13 +688,13 @@ O maior risco é o tempo: considerando a data hipotética de 16/12/2026 para in�
 
 Se os gates jurídicos atrasarem, a meta de publicação será recalculada a partir de seu fechamento, sem reduzir o escopo legal ou dispensar gates.
 
-**Gates jurídicos pendentes — bloqueadores da implementação dos cálculos afetados e do lançamento**
+**Gates jurídicos — bloqueadores da implementação dos cálculos afetados e do lançamento**
 
-Não há aprovação de advogado fornecida para as fontes ou interpretações legais. Todos os itens abaixo permanecem pendentes; registrar a evidência da confirmação/revisão, o responsável, a data e a versão dos parâmetros antes de encerrar cada gate. As fontes existentes não substituem essa validação, e o aviso legal não libera o lançamento.
+O usuário confirmou em 28/10/2026 que as respostas anexadas foram validadas pelo advogado, enviou resoluções adicionais e determinou o fechamento de GJ-02. A cópia não identifica o advogado nem contém assinatura/OAB verificável; essa ressalva e as fontes/decisões de produto ainda não formalizadas permanecem no [roteiro GJ-02](./legal/GJ-02-review-brief.md), sem reabrir o gate. GJ-01, GJ-02 e GJ-03 estão encerrados conforme seus registros; GJ-04 permanece pendente e bloqueia o lançamento. O fechamento de GJ-02 não representa verificação jurídica independente. Registrar a evidência oficial, responsável, data, conclusão explícita e versão dos parâmetros no fechamento do GJ-04.
 
-- [ ] GJ-01 — Confirmar no DOU a publicação do texto final e sua data oficial, a data efetiva de vigência e a relação com a promulgação informada pelo usuário em 16/10/2026. A data de publicação ainda é desconhecida; não inventar nem preencher um valor real. Bloqueia RN-01 a RN-03 e demais cálculos e prazos dependentes da vigência.
-- [ ] GJ-02 — Obter revisão por advogado trabalhista das fontes e interpretações legais registradas, incluindo resolver a interação entre a vigência diferenciada do Art. 10 da minuta e as etapas do Art. 6º, além de RN-04, RN-07 e RN-10 e o divisor da RN-06. Bloqueia os cálculos afetados de prazos, repouso, intervalos, custo-hora e cenários dependentes; não há aprovação presumida das demais regras legais.
-- [ ] GJ-03 — Definir com advogado se 42 h em 5 dias (8h24 por dia) exige acordo de compensação (CLT art. 59, § 2º). A interpretação ainda não confirmada é que, sem ele, os 24 min diários viram hora extra e a RN-12 superestima as horas disponíveis. Bloqueia a implementação dos cálculos afetados de disponibilidade, déficit, horas extras e viabilidade/recomendação dos cenários.
+- [x] GJ-01 — Confirmar no DOU a publicação do texto final, sua data oficial e a vigência textual, e comparar com a data de promulgação informada pelo usuário. Evidência: EC nº 141, DOU de 16/10/2026, Edição 196-A, Seção 1 - Extra A, página 2 ([ato no DOU](https://www.in.gov.br/en/web/dou/-/emenda-constitucional-n-141-738818165); [versão certificada](https://pesquisa.in.gov.br/imprensa/jsp/visualiza/index.jsp?data=16/10/2026&jornal=600&pagina=2)); a data coincide com 16/10/2026, informada anteriormente pelo usuário. O art. 10 prevê vigência na publicação para os demais dispositivos e após 2 meses para a alteração nele especificada. Responsável pela conferência documental: assistente nesta sessão; data: 28/10/2026. O registro confirma a publicação e a data, não uma interpretação jurídica independente da interação entre os arts. 6º e 10.
+- [x] GJ-02 — Fechado por decisão expressa do usuário em 28/10/2026, com base nas respostas profissionais reportadas e nas posições registradas no [roteiro GJ-02](./legal/GJ-02-review-brief.md). As ressalvas sobre identificação/assinatura do responsável, anexação de fontes oficiais, escolhas conservadoras de produto e risco residual do divisor 210 permanecem documentadas para rastreabilidade; não são apresentadas como verificação independente nem reabrem o gate. Os cálculos podem seguir as posições reportadas, observadas as regras e restrições do produto. GJ-04 continua bloqueando o lançamento até a revisão pré-lançamento.
+- [x] GJ-03 — Resolvido pela resposta profissional reportada: 42 h em cinco dias (até 8h24/dia) requer CCT/ACT; acordo individual não basta. Sem norma coletiva aplicável, o limite normal é 40 h e as horas seguintes são extras. A resposta está registrada no [roteiro GJ-02](./legal/GJ-02-review-brief.md); as ressalvas documentais ficam registradas no GJ-02 fechado.
 - [ ] GJ-04 — Concluir a revisão jurídica pré-lançamento, incluindo termos de uso, e registrar a aprovação explícita; confirmar que os gates anteriores foram encerrados e os parâmetros e testes refletem as decisões. Enquanto pendente, o lançamento permanece bloqueado.
 
 **Outras questões em aberto**
