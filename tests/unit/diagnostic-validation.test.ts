@@ -152,4 +152,54 @@ describe("validateDiagnosticInput", () => {
       ],
     });
   });
+
+  it("rejects invalid or non-monotonic weekly legal hour limits", () => {
+    const input = {
+      ...validInput(),
+      legalParameters: {
+        ...PROVISIONAL_LEGAL_PARAMETERS,
+        weeklyHours: {
+          beforePhase1: 44,
+          phase1: 42.5,
+          phase2: 43,
+        },
+      },
+    };
+
+    expect(validateDiagnosticInput(input)).toEqual({
+      ok: false,
+      error: [
+        {
+          field: "legalParameters.weeklyHours.phase1",
+          message: "O limite semanal deve ser um número inteiro positivo e não superar o limite da etapa anterior.",
+        },
+        {
+          field: "legalParameters.weeklyHours.phase2",
+          message: "O limite semanal deve ser um número inteiro positivo e não superar o limite da etapa anterior.",
+        },
+      ],
+    });
+  });
+
+  it("rejects a coverage requirement that cannot be represented as an exact integer", () => {
+    const input = {
+      ...validInput(),
+      coverage: [
+        {
+          ...validInput().coverage[0],
+          minimumPeople: Number.MAX_SAFE_INTEGER + 1,
+        },
+      ],
+    };
+
+    expect(validateDiagnosticInput(input)).toEqual({
+      ok: false,
+      error: [
+        {
+          field: "coverage[0].minimumPeople",
+          message: "Informe uma quantidade mínima de pessoas maior que zero.",
+        },
+      ],
+    });
+  });
 });
