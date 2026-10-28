@@ -147,8 +147,10 @@
 
 **Arquivos:**
 - Criar: `src/domain/diagnostic/types.ts`
+- Criar: `src/domain/diagnostic/validate-diagnostic-input.ts`
 - Criar: `src/domain/diagnostic/calculate-diagnostic.ts`
 - Testar: `tests/unit/diagnostic.test.ts`
+- Testar: `tests/unit/diagnostic-validation.test.ts`
 - Testar: `tests/fixtures/diagnostic-cases.ts`
 
 **Interfaces:**
@@ -158,15 +160,18 @@
 - `type DiagnosticStageResult = { stageId: string; weeklyLimitHours: Rational; availableHours: Rational; requiredPersonHours: Rational; deficitPersonHours: Rational; hourlyCostByLocalId: Record<string, Rational> }`
 - `type DiagnosticResult = { referenceDate: string; legalParameterVersion: string; stages: DiagnosticStageResult[] }`
 - `calculateDiagnostic(input: DiagnosticInput): Result<DiagnosticResult, DiagnosticValidationError[]>`
+- `validateDiagnosticInput(input: DiagnosticInput): Result<void, DiagnosticValidationError[]>` valida premissas estruturais e não calcula valores do diagnóstico.
 - `DiagnosticValidationError` contém um identificador estável de campo e uma mensagem exibível ao usuário.
 - `DiagnosticResult` é dado de cálculo imutável, sem nomes de funcionários ou identificadores externos.
 
+- [x] Definir os tipos de entrada/saída e adicionar validação sem cálculos: equipe não vazia, identificadores locais únicos, valores racionais positivos, data civil válida e limites/ordem de intervalos de cobertura.
+- [x] Testar a validação de premissas válidas e inválidas em `tests/unit/diagnostic-validation.test.ts`.
 - [ ] Criar testes inicialmente falhos para as fixtures aprovadas: disponibilidade semanal para 4 pessoas nos limites 44/42/40 h, exigência de 180 horas-pessoa e déficits de 4/12/20 h.
-- [ ] Adicionar testes para ausência de déficit, déficit positivo, intervalos de cobertura inválidos, equipe vazia e premissas que preservem o salário.
-- [ ] Implementar o diagnóstico como função pura usando os parâmetros da Tarefa 3 e operações racionais da Tarefa 4.
-- [ ] Executar `npm test -- --run tests/unit/diagnostic.test.ts`; esperar aprovação dos casos válidos e inválidos.
+- [ ] Adicionar testes de cálculo para ausência de déficit, déficit positivo e preservação do salário.
+- [ ] Implementar o diagnóstico como função pura usando os parâmetros da Tarefa 3 e operações racionais da Tarefa 4, somente após aprovação jurídica dos gates que bloqueiam os cálculos de disponibilidade, déficit e custo-hora (GJ-02/GJ-03).
+- [x] Executar `npm test -- --run tests/unit/diagnostic-validation.test.ts`; os testes de validação passam sem produzir resultados calculados.
 
-**Critério de saída:** diagnóstico determinístico por etapa, com erros explícitos de validação.
+**Critério parcial:** os tipos e a validação explícita de premissas estão implementados. O cálculo do diagnóstico permanece bloqueado até o fechamento dos gates jurídicos aplicáveis.
 
 ### Tarefa 6: Implementar viabilidade e recomendação de cenários
 
