@@ -60,6 +60,67 @@ describe("validateScenarioInput", () => {
     });
   });
 
+  it.each([
+    ["null", null],
+    ["array", []],
+    ["string", "invalid"],
+  ])("rejects a malformed top-level compliance map (%s)", (_description, checksByStage) => {
+    const assumptions = {
+      ...validAssumptions(),
+      checksByStage,
+    } as unknown as ScenarioAssumptions;
+
+    expect(validateScenarioInput(scenarioDiagnostic(), assumptions)).toEqual(
+      errorFor(
+        "assumptions.checksByStage",
+        "Informe um mapa válido de verificações de conformidade.",
+      ),
+    );
+  });
+
+  it.each([
+    ["null", null],
+    ["array", []],
+    ["string", "invalid"],
+  ])("rejects a malformed stage compliance map (%s)", (_description, stageChecks) => {
+    const assumptions = {
+      ...validAssumptions(),
+      checksByStage: { "phase-1": stageChecks },
+    } as unknown as ScenarioAssumptions;
+
+    expect(validateScenarioInput(scenarioDiagnostic(), assumptions)).toEqual(
+      errorFor(
+        "assumptions.checksByStage.phase-1",
+        "Informe um mapa válido de verificações de conformidade.",
+      ),
+    );
+  });
+
+  it.each([
+    ["unsupported status", "verified", "assumptions.checksByStage.phase-1.weeklyRest"],
+    ["null status", null, "assumptions.checksByStage.phase-1.weeklyRest"],
+    ["unknown check key", "valid", "assumptions.checksByStage.phase-1.weeklyRset"],
+  ])("rejects a malformed compliance check: %s", (_description, status, field) => {
+    const assumptions = {
+      ...validAssumptions(),
+      checksByStage: {
+        "phase-1": {
+          ...allValidChecks(),
+          ...(field.endsWith("weeklyRset")
+            ? { weeklyRset: status }
+            : { weeklyRest: status }),
+        },
+      },
+    } as unknown as ScenarioAssumptions;
+    const message = field.endsWith("weeklyRset")
+      ? "A verificação de conformidade informada é desconhecida."
+      : "Informe um status válido para a verificação de conformidade.";
+
+    expect(validateScenarioInput(scenarioDiagnostic(), assumptions)).toEqual(
+      errorFor(field, message),
+    );
+  });
+
   describe("simulateScenarios", () => {
     it("calculates the PRD example costs with stable scenario order", () => {
       const result = simulateScenarios(scenarioDiagnostic(), validAssumptions());
@@ -203,6 +264,21 @@ describe("validateScenarioInput", () => {
         scenario.reasons.some((reason) => reason.includes("repouso semanal")),
       )).toBe(true);
       expect(invalid.value[0].recommendedScenarioId).toBeNull();
+    });
+
+    it("keeps omitted compliance data incomplete and without a recommendation", () => {
+      const { checksByStage: _checksByStage, ...assumptions } = validAssumptions();
+      const result = simulateScenarios(
+        scenarioDiagnostic(),
+        assumptions as ScenarioAssumptions,
+      );
+
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      expect(result.value[0].scenarios.every(
+        (scenario) => scenario.feasibility === "incomplete",
+      )).toBe(true);
+      expect(result.value[0].recommendedScenarioId).toBeNull();
     });
 
     it("includes explicit reason labels for every unknown compliance check", () => {

@@ -13,6 +13,15 @@ const ASSUMPTION_ERRORS = {
   monthlyRevenueLoss: "A perda de receita mensal não pode ser negativa.",
 };
 
+const SCENARIO_CHECK_IDS = [
+  "dailySchedule",
+  "weeklyRest",
+  "interShiftRest",
+  "mealBreaks",
+  "salaryPreservation",
+] as const;
+const SCENARIO_CHECK_STATUSES = ["valid", "invalid", "unknown"] as const;
+
 const isRational = (value: unknown): value is Rational =>
   typeof value === "object" &&
   value !== null &&
@@ -71,6 +80,54 @@ export function validateScenarioInput(
         field: assumption.field,
         message: assumption.message,
       });
+    }
+  }
+
+  const checksByStage = assumptionsInput?.checksByStage;
+  if (checksByStage !== undefined) {
+    if (
+      typeof checksByStage !== "object" ||
+      checksByStage === null ||
+      Array.isArray(checksByStage)
+    ) {
+      errors.push({
+        field: "assumptions.checksByStage",
+        message: "Informe um mapa válido de verificações de conformidade.",
+      });
+    } else {
+      for (const [stageId, stageChecks] of Object.entries(checksByStage)) {
+        const stageField = `assumptions.checksByStage.${stageId}`;
+        if (
+          typeof stageChecks !== "object" ||
+          stageChecks === null ||
+          Array.isArray(stageChecks)
+        ) {
+          errors.push({
+            field: stageField,
+            message: "Informe um mapa válido de verificações de conformidade.",
+          });
+          continue;
+        }
+
+        for (const [checkId, status] of Object.entries(stageChecks)) {
+          const field = `${stageField}.${checkId}`;
+          if (!SCENARIO_CHECK_IDS.includes(checkId as typeof SCENARIO_CHECK_IDS[number])) {
+            errors.push({
+              field,
+              message: "A verificação de conformidade informada é desconhecida.",
+            });
+          } else if (
+            !SCENARIO_CHECK_STATUSES.includes(
+              status as typeof SCENARIO_CHECK_STATUSES[number],
+            )
+          ) {
+            errors.push({
+              field,
+              message: "Informe um status válido para a verificação de conformidade.",
+            });
+          }
+        }
+      }
     }
   }
 

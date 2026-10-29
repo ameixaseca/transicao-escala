@@ -83,7 +83,7 @@ const checkFeasibility = (
   const reasons = [...scenarioReasons];
   let hasInvalid = false;
   let hasUnknown = false;
-  const stageChecks = assumptions.checksByStage[stageId] ?? {};
+  const stageChecks = assumptions.checksByStage?.[stageId] ?? {};
 
   for (const checkId of CHECK_ORDER) {
     const status = stageChecks[checkId] ?? "unknown";
