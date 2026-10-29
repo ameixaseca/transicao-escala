@@ -22,11 +22,11 @@ export type ParameterSelectionError = {
 };
 
 export const PROVISIONAL_LEGAL_PARAMETERS: LegalParameters = Object.freeze({
-  version: "pec-221-2019-senate-minute",
+  version: "ec-141-provisional",
   status: "provisório",
   sourceUrl:
-    "https://legis.senado.leg.br/sdleg-getter/documento?dm=10331248&ts=1792178675619&disposition=inline",
-  publicationDate: null,
+    "https://www.in.gov.br/en/web/dou/-/emenda-constitucional-n-141-738818165",
+  publicationDate: "2026-10-16",
   weeklyHours: Object.freeze({
     beforePhase1: 44,
     phase1: 42,
