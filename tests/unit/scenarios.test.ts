@@ -85,18 +85,156 @@ describe("validateScenarioInput", () => {
       expect(result.value[0].recommendedScenarioId).toBe("overtime");
     });
 
-    it("keeps the part-time scenario feasible when ceil contracts cover large deficits", () => {
-      const result = simulateScenarios(scenarioDiagnostic(rational(65)), validAssumptions());
+    it("returns one ordered group per diagnostic stage", () => {
+      const diagnostic = scenarioDiagnostic();
+      const result = simulateScenarios({
+        ...diagnostic,
+        stages: [
+          diagnostic.stages[0],
+          { ...diagnostic.stages[0], stageId: "phase-2" },
+          { ...diagnostic.stages[0], stageId: "phase-3" },
+        ],
+      }, {
+        ...validAssumptions(),
+        checksByStage: {
+          "phase-1": allValidChecks(),
+          "phase-2": allValidChecks(),
+          "phase-3": allValidChecks(),
+        },
+      });
+
       expect(result.ok).toBe(true);
       if (!result.ok) return;
+      expect(result.value.map((stage) => stage.stageId)).toEqual([
+        "phase-1", "phase-2", "phase-3",
+      ]);
+      expect(result.value.every((stage) => stage.scenarios.length === 4)).toBe(true);
+    });
 
-      const partTime = result.value[0].scenarios.find(
-        (scenario) => scenario.id === "hire-part-time",
-      );
-      expect(partTime).toMatchObject({
-        feasibility: "feasible",
-        monthlyCost: rational(5200),
+    it("selects the stable first scenario when all four costs tie", () => {
+      const diagnostic = scenarioDiagnostic(rational(40), 1, rational(1, 3));
+      diagnostic.stages[0].weeklyLimitHours = rational(40);
+      const assumptions: ScenarioAssumptions = {
+        replacementSalary: rational(100),
+        employerChargesRate: rational(0),
+        monthlyRevenueLoss: rational(100),
+        checksByStage: { "phase-1": allValidChecks() },
+      };
+
+      const result = simulateScenarios(diagnostic, assumptions);
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      expect(result.value[0].scenarios.map((scenario) => scenario.monthlyCost))
+        .toEqual([rational(100), rational(100), rational(100), rational(100)]);
+      expect(result.value[0].recommendedScenarioId).toBe("hire-full-time");
+      expect(result.value[0].scenarios.map((scenario) => scenario.recommended))
+        .toEqual([true, false, false, false]);
+    });
+
+    it("breaks ties by overtime hours before scenario id rank", () => {
+      const result = simulateScenarios(scenarioDiagnostic(), {
+        ...validAssumptions(),
+        employerChargesRate: rational(1, 2),
       });
+
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      const costsById = Object.fromEntries(
+        result.value[0].scenarios.map((scenario) => [scenario.id, scenario.monthlyCost]),
+      );
+      expect(costsById).toEqual({
+        "hire-full-time": rational(3150),
+        "hire-part-time": rational(900),
+        overtime: rational(900),
+        "reduce-hours": rational(1500),
+      });
+      expect(result.value[0].recommendedScenarioId).toBe("hire-part-time");
+    });
+
+    it("uses scenario id rank for remaining exact ties after cost and overtime ties", () => {
+      const result = simulateScenarios(
+        scenarioDiagnostic(rational(12), 4, rational(20)),
+        {
+          ...validAssumptions(),
+          monthlyRevenueLoss: rational(960),
+        },
+      );
+
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      const costsById = Object.fromEntries(
+        result.value[0].scenarios.map((scenario) => [scenario.id, scenario.monthlyCost]),
+      );
+      expect(costsById).toEqual({
+        "hire-full-time": rational(3360),
+        "hire-part-time": rational(960),
+        overtime: rational(1800),
+        "reduce-hours": rational(960),
+      });
+      expect(result.value[0].recommendedScenarioId).toBe("hire-part-time");
+    });
+
+    it("does not recommend a scenario with unknown or invalid checks", () => {
+      const incomplete = simulateScenarios(scenarioDiagnostic(), {
+        ...validAssumptions(),
+        checksByStage: {},
+      });
+      const invalid = simulateScenarios(scenarioDiagnostic(), {
+        ...validAssumptions(),
+        checksByStage: {
+          "phase-1": { ...allValidChecks(), weeklyRest: "invalid" },
+        },
+      });
+
+      expect(incomplete.ok).toBe(true);
+      expect(invalid.ok).toBe(true);
+      if (!incomplete.ok || !invalid.ok) return;
+      expect(incomplete.value[0].scenarios.every(
+        (scenario) => scenario.feasibility === "incomplete",
+      )).toBe(true);
+      expect(incomplete.value[0].scenarios.every((scenario) =>
+        scenario.reasons.some((reason) => reason.includes("repouso semanal")),
+      )).toBe(true);
+      expect(incomplete.value[0].recommendedScenarioId).toBeNull();
+      expect(invalid.value[0].scenarios.every(
+        (scenario) => scenario.feasibility === "infeasible",
+      )).toBe(true);
+      expect(invalid.value[0].scenarios.every((scenario) =>
+        scenario.reasons.some((reason) => reason.includes("repouso semanal")),
+      )).toBe(true);
+      expect(invalid.value[0].recommendedScenarioId).toBeNull();
+    });
+
+    it("includes explicit reason labels for every unknown compliance check", () => {
+      const result = simulateScenarios(scenarioDiagnostic(), {
+        ...validAssumptions(),
+        checksByStage: {
+          "phase-1": {
+            ...allValidChecks(),
+            interShiftRest: "unknown",
+            mealBreaks: "unknown",
+            salaryPreservation: "unknown",
+          },
+        },
+      });
+
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      const reasons = result.value[0].scenarios[0].reasons;
+      expect(reasons).toContain("Verificação pendente: intervalo entre jornadas.");
+      expect(reasons).toContain("Verificação pendente: intervalo intrajornada.");
+      expect(reasons).toContain("Verificação pendente: preservação salarial.");
+    });
+
+    it("marks every option not-needed when the diagnostic has no deficit", () => {
+      const result = simulateScenarios(scenarioDiagnostic(rational(0)), validAssumptions());
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+      expect(result.value[0].scenarios.map((scenario) => scenario.feasibility))
+        .toEqual(["not-needed", "not-needed", "not-needed", "not-needed"]);
+      expect(result.value[0].scenarios.map((scenario) => scenario.monthlyCost))
+        .toEqual([rational(0), rational(0), rational(0), rational(1500)]);
+      expect(result.value[0].recommendedScenarioId).toBeNull();
     });
 
     it("enforces the overtime daily limit boundary exactly", () => {
@@ -125,39 +263,6 @@ describe("validateScenarioInput", () => {
       expect(rejectedOvertime?.reasons).toContain(
         "Exigiria 3 horas extras por dia por funcionário; o limite é 2.",
       );
-    });
-
-    it("applies incomplete and invalid compliance states to every scenario", () => {
-      const incomplete = simulateScenarios(scenarioDiagnostic(), {
-        ...validAssumptions(),
-        checksByStage: {},
-      });
-      const invalid = simulateScenarios(scenarioDiagnostic(), {
-        ...validAssumptions(),
-        checksByStage: {
-          "phase-1": { ...allValidChecks(), weeklyRest: "invalid" },
-        },
-      });
-
-      expect(incomplete.ok).toBe(true);
-      expect(invalid.ok).toBe(true);
-      if (!incomplete.ok || !invalid.ok) return;
-
-      expect(incomplete.value[0].scenarios.every((scenario) => scenario.feasibility === "incomplete")).toBe(true);
-      expect(
-        incomplete.value[0].scenarios.every((scenario) =>
-          scenario.reasons.some((reason) => reason.includes("repouso semanal")),
-        ),
-      ).toBe(true);
-      expect(incomplete.value[0].recommendedScenarioId).toBeNull();
-
-      expect(invalid.value[0].scenarios.every((scenario) => scenario.feasibility === "infeasible")).toBe(true);
-      expect(
-        invalid.value[0].scenarios.every((scenario) =>
-          scenario.reasons.some((reason) => reason.includes("repouso semanal")),
-        ),
-      ).toBe(true);
-      expect(invalid.value[0].recommendedScenarioId).toBeNull();
     });
   });
 

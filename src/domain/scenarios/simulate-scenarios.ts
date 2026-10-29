@@ -18,24 +18,37 @@ const THREE_HALVES: Rational = { numerator: BigInt(3), denominator: BigInt(2) };
 const FIVE: Rational = { numerator: BigInt(5), denominator: BigInt(1) };
 const THIRTY: Rational = { numerator: BigInt(30), denominator: BigInt(1) };
 const ZERO: Rational = { numerator: BigInt(0), denominator: BigInt(1) };
-const CHECK_ORDER: { id: ScenarioCheckId; label: string }[] = [
-  { id: "dailySchedule", label: "jornada diária" },
-  { id: "weeklyRest", label: "repouso semanal" },
-  { id: "interShiftRest", label: "descanso interjornada" },
-  { id: "mealBreaks", label: "intervalos intrajornada" },
-  { id: "salaryPreservation", label: "preservação salarial" },
+const CHECK_ORDER: ScenarioCheckId[] = [
+  "dailySchedule",
+  "weeklyRest",
+  "interShiftRest",
+  "mealBreaks",
+  "salaryPreservation",
 ];
+const CHECK_LABELS: Record<ScenarioCheckId, string> = {
+  dailySchedule: "jornada diária",
+  weeklyRest: "repouso semanal",
+  interShiftRest: "intervalo entre jornadas",
+  mealBreaks: "intervalo intrajornada",
+  salaryPreservation: "preservação salarial",
+};
 const SCENARIO_ORDER: ScenarioId[] = [
   "hire-full-time",
   "hire-part-time",
   "overtime",
   "reduce-hours",
 ];
+const ID_RANK: Record<ScenarioId, number> = {
+  "hire-full-time": 0,
+  "hire-part-time": 1,
+  overtime: 2,
+  "reduce-hours": 3,
+};
 
 const ceilRatio = (numerator: bigint, denominator: bigint): bigint =>
   (numerator + denominator - BigInt(1)) / denominator;
 
-const compareRational = (left: Rational, right: Rational): number => {
+const compare = (left: Rational, right: Rational): number => {
   const a = normalizeRational(left);
   const b = normalizeRational(right);
   const lhs = a.numerator * b.denominator;
@@ -57,21 +70,10 @@ const formatHoursForReason = (value: Rational): string => {
   return `${whole.toString()},${fraction.toString().padStart(2, "0")}`;
 };
 
-const selectRecommendedScenarioId = (scenarios: ScenarioResult[]): ScenarioId | null => {
-  let selected: ScenarioResult | null = null;
-  for (const scenario of scenarios) {
-    if (scenario.feasibility !== "feasible") {
-      continue;
-    }
-    if (
-      selected === null ||
-      compareRational(scenario.monthlyCost, selected.monthlyCost) < 0
-    ) {
-      selected = scenario;
-    }
-  }
-  return selected?.id ?? null;
-};
+const compareScenarios = (left: ScenarioResult, right: ScenarioResult): number =>
+  compare(left.monthlyCost, right.monthlyCost) ||
+  compare(left.weeklyOvertimeHours, right.weeklyOvertimeHours) ||
+  ID_RANK[left.id] - ID_RANK[right.id];
 
 const checkFeasibility = (
   stageId: string,
@@ -83,16 +85,16 @@ const checkFeasibility = (
   let hasUnknown = false;
   const stageChecks = assumptions.checksByStage[stageId] ?? {};
 
-  for (const check of CHECK_ORDER) {
-    const status = stageChecks[check.id] ?? "unknown";
+  for (const checkId of CHECK_ORDER) {
+    const status = stageChecks[checkId] ?? "unknown";
     if (status === "invalid") {
       hasInvalid = true;
-      reasons.push(`Violação de conformidade: ${check.label}.`);
+      reasons.push(`Violação de conformidade: ${CHECK_LABELS[checkId]}.`);
       continue;
     }
     if (status === "unknown") {
       hasUnknown = true;
-      reasons.push(`Verificação pendente: ${check.label}.`);
+      reasons.push(`Verificação pendente: ${CHECK_LABELS[checkId]}.`);
     }
   }
 
@@ -158,7 +160,7 @@ export function simulateScenarios(
       THIRTY,
     );
     const partTimeReasons: string[] = [];
-    if (compareRational(partTimeCapacity, deficit) < 0) {
+    if (compare(partTimeCapacity, deficit) < 0) {
       partTimeReasons.push(
         "A contratação parcial não cobre o déficit semanal de horas da etapa.",
       );
@@ -181,7 +183,7 @@ export function simulateScenarios(
       denominator: BigInt(1),
     });
     const overtimeReasons: string[] = [];
-    if (compareRational(dailyOvertime, TWO) > 0) {
+    if (compare(dailyOvertime, TWO) > 0) {
       overtimeReasons.push(
         `Exigiria ${formatHoursForReason(dailyOvertime)} horas extras por dia por funcionário; o limite é 2.`,
       );
@@ -231,7 +233,10 @@ export function simulateScenarios(
       } satisfies ScenarioResult;
     });
 
-    const recommendedScenarioId = selectRecommendedScenarioId(scenarios);
+    const feasibleScenarios = scenarios
+      .filter((scenario) => scenario.feasibility === "feasible")
+      .sort(compareScenarios);
+    const recommendedScenarioId = feasibleScenarios[0]?.id ?? null;
     for (const scenario of scenarios) {
       scenario.recommended = scenario.id === recommendedScenarioId;
     }
