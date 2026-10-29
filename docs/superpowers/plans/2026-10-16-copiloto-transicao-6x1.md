@@ -223,6 +223,7 @@
 - [ ] Testar que a comparação exibe os quatro cenários, marca inviabilidades com seus motivos e identifica somente a recomendação calculada pelo domínio.
 - [ ] Implementar o fluxo: premissas manuais → diagnóstico por etapa legal → comparação de cenários → linha do tempo/checklist na aplicação.
 - [ ] Manter os dados de entrada na memória do cliente, gerar rótulos anônimos locais para as pessoas na equipe e exibir a versão dos parâmetros legais utilizada.
+- [ ] Ao alterar uma premissa do diagnóstico, limpar resultados e reiniciar os checks de cada etapa como `unknown`, sem alterar a checklist da linha do tempo nem as premissas financeiras dos cenários.
 - [ ] Executar `npm test -- --run tests/components`; esperar aprovação dos testes de componentes sem alertas de rótulos acessíveis.
 
 **Critério de saída:** usuário conclui o fluxo principal sem criar conta ou transmitir dados pela rede.

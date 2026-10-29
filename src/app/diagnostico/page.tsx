@@ -108,6 +108,7 @@ export default function DiagnosticPage() {
     setValues(nextValues);
     setDiagnostic(null);
     setDiagnosticErrors([]);
+    setChecksByStage({});
     clearScenarioResult();
   };
 

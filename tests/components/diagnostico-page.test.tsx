@@ -135,6 +135,35 @@ describe("diagnostic dashboard", () => {
     expect(screen.getByText("Resultados pendentes.")).toBeInTheDocument();
   });
 
+  it("resets stage checks to unknown after diagnostic premises change", () => {
+    openDiagnostic();
+    submitDiagnostic();
+
+    for (const stageChecks of screen.getAllByRole("group", {
+      name: /^Verificações —/,
+    })) {
+      for (const validCheck of within(stageChecks).getAllByRole("radio", {
+        name: "Válido",
+      })) {
+        fireEvent.click(validCheck);
+      }
+    }
+
+    submitScenarios();
+    expect(screen.getAllByText("✓ Recomendado").length).toBeGreaterThan(0);
+
+    fireEvent.change(screen.getByLabelText("Horas semanais — Pessoa 1"), {
+      target: { value: "40" },
+    });
+    submitDiagnostic();
+    submitScenarios();
+
+    expect(
+      screen.getAllByRole("radio", { name: "Não verificado", checked: true }),
+    ).toHaveLength(15);
+    expect(screen.queryByText("✓ Recomendado")).not.toBeInTheDocument();
+  });
+
   it("clears only scenario results when a scenario assumption changes", () => {
     openDiagnostic();
     submitDiagnostic();
