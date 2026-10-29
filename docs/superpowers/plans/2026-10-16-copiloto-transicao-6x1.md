@@ -183,10 +183,14 @@
 - Testar: `tests/unit/scenarios.test.ts`
 
 **Interfaces:**
-- `type ScenarioAssumptions = { replacementSalary: Rational; employerChargesRate: Rational; monthlyRevenueLoss: Rational }`
+- `type ScenarioAssumptions = { replacementSalary: Rational; employerChargesRate: Rational; monthlyRevenueLoss: Rational; checksByStage: Partial<Record<string, Partial<Record<ScenarioCheckId, ScenarioCheckStatus>>>> }`
+- `type ScenarioCheckId = "dailySchedule" | "weeklyRest" | "interShiftRest" | "mealBreaks" | "salaryPreservation"`
+- `type ScenarioCheckStatus = "valid" | "invalid" | "unknown"`
 - `type ScenarioId = "hire-full-time" | "hire-part-time" | "overtime" | "reduce-hours"`
-- `type ScenarioResult = { id: ScenarioId; monthlyCost: Rational; feasible: boolean; reasons: string[]; recommended: boolean }`
-- `simulateScenarios(diagnostic: DiagnosticResult, assumptions: ScenarioAssumptions): Result<ScenarioResult[], ScenarioValidationError[]>`
+- `type ScenarioFeasibility = "feasible" | "infeasible" | "incomplete" | "not-needed"`
+- `type ScenarioResult = { id: ScenarioId; monthlyCost: Rational; feasibility: ScenarioFeasibility; reasons: string[]; recommended: boolean; weeklyOvertimeHours: Rational }`
+- `type ScenarioStageResult = { stageId: string; scenarios: ScenarioResult[]; recommendedScenarioId: ScenarioId | null }`
+- `simulateScenarios(diagnostic: DiagnosticResult, assumptions: ScenarioAssumptions): Result<ScenarioStageResult[], ScenarioValidationError[]>`
 - Todo cenário viável retornado tem custo calculado; cenários inviáveis exibem custo estimado quando calculável e sempre incluem um motivo.
 - `ScenarioValidationError` contém um identificador estável de campo e uma mensagem exibível ao usuário.
 
