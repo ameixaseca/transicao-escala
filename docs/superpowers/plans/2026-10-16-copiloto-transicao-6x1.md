@@ -198,7 +198,7 @@
 - [x] Testar os motivos de inviabilidade para redução salarial e limites diários de hora extra.
 - [x] Testar recomendação da opção viável de menor custo e desempate determinístico.
 - [x] Implementar cenários com aritmética racional exata e motivo visível para cada opção inviável; nunca recomendar cenário inviável.
-- [ ] Executar `npm test -- --run tests/unit/scenarios.test.ts`; esperar aprovação dos cenários e desempates.
+- [x] Executar `npm test -- --run tests/unit/scenarios.test.ts`; esperar aprovação dos cenários e desempates.
 
 **Critério de saída:** os quatro cenários são comparáveis, matematicamente exatos e têm recomendação coberta por testes.
 
