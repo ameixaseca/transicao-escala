@@ -513,4 +513,4 @@ Expected: `git diff --check` reports no whitespace errors; the implementation, t
 
 - [ ] **Step 4: Update the parent development plan**
 
-In `docs/superpowers/plans/2026-10-16-copiloto-transicao-6x1.md`, mark only the five Tarefa 6 checklist items complete after the targeted tests, full suite, and typecheck pass. Replace the stale scenario interface summary with the implemented check states and per-stage result shape from `types.ts`. Keep Tarefa 7 and GJ-04 unchecked.
+In `docs/superpowers/plans/2026-10-16-copiloto-transicao-6x1.md`, mark only the four Tarefa 6 checklist items complete after the targeted tests, full suite, and typecheck pass. Replace the stale scenario interface summary with the implemented check states and per-stage result shape from `types.ts`. Keep Tarefa 7 and GJ-04 unchecked.
