@@ -194,10 +194,10 @@
 - Todo cenário viável retornado tem custo calculado; cenários inviáveis exibem custo estimado quando calculável e sempre incluem um motivo.
 - `ScenarioValidationError` contém um identificador estável de campo e uma mensagem exibível ao usuário.
 
-- [ ] Testar os quatro custos dos exemplos aprovados, incluindo encargos de 60% e fator de conversão semanal para mensal.
-- [ ] Testar os motivos de inviabilidade para redução salarial e limites diários de hora extra.
-- [ ] Testar recomendação da opção viável de menor custo e desempate determinístico.
-- [ ] Implementar cenários com aritmética racional exata e motivo visível para cada opção inviável; nunca recomendar cenário inviável.
+- [x] Testar os quatro custos dos exemplos aprovados, incluindo encargos de 60% e fator de conversão semanal para mensal.
+- [x] Testar os motivos de inviabilidade para redução salarial e limites diários de hora extra.
+- [x] Testar recomendação da opção viável de menor custo e desempate determinístico.
+- [x] Implementar cenários com aritmética racional exata e motivo visível para cada opção inviável; nunca recomendar cenário inviável.
 - [ ] Executar `npm test -- --run tests/unit/scenarios.test.ts`; esperar aprovação dos cenários e desempates.
 
 **Critério de saída:** os quatro cenários são comparáveis, matematicamente exatos e têm recomendação coberta por testes.

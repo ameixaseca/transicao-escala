@@ -216,7 +216,7 @@ export function simulateScenarios(
       },
     };
 
-    const scenarios = SCENARIO_ORDER.map((id) => {
+    const scenarios: ScenarioResult[] = SCENARIO_ORDER.map((id): ScenarioResult => {
       const draft = scenarioDrafts[id];
       const { feasibility, reasons } = checkFeasibility(
         stage.stageId,
@@ -230,7 +230,7 @@ export function simulateScenarios(
         reasons,
         recommended: false,
         weeklyOvertimeHours: normalizeRational(draft.weeklyOvertimeHours),
-      } satisfies ScenarioResult;
+      };
     });
 
     const feasibleScenarios = scenarios
