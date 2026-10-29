@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import type { DiagnosticResult } from "@/domain/diagnostic/types";
 import { add, type Rational } from "@/domain/money/rational";
 import type { ScenarioAssumptions } from "@/domain/scenarios/types";
+import { simulateScenarios } from "@/domain/scenarios/simulate-scenarios";
 import { validateScenarioInput } from "@/domain/scenarios/validate-scenario-input";
 
 const rational = (numerator: number, denominator = 1): Rational => ({
@@ -56,6 +57,107 @@ describe("validateScenarioInput", () => {
     expect(validateScenarioInput(scenarioDiagnostic(), validAssumptions())).toEqual({
       ok: true,
       value: undefined,
+    });
+  });
+
+  describe("simulateScenarios", () => {
+    it("calculates the PRD example costs with stable scenario order", () => {
+      const result = simulateScenarios(scenarioDiagnostic(), validAssumptions());
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+
+      expect(result.value[0].scenarios.map((scenario) => scenario.id)).toEqual([
+        "hire-full-time",
+        "hire-part-time",
+        "overtime",
+        "reduce-hours",
+      ]);
+
+      const costsById = Object.fromEntries(
+        result.value[0].scenarios.map((scenario) => [scenario.id, scenario.monthlyCost]),
+      );
+      expect(costsById).toEqual({
+        "hire-full-time": rational(3360),
+        "hire-part-time": rational(960),
+        overtime: rational(900),
+        "reduce-hours": rational(1500),
+      });
+      expect(result.value[0].recommendedScenarioId).toBe("overtime");
+    });
+
+    it("keeps the part-time scenario feasible when ceil contracts cover large deficits", () => {
+      const result = simulateScenarios(scenarioDiagnostic(rational(65)), validAssumptions());
+      expect(result.ok).toBe(true);
+      if (!result.ok) return;
+
+      const partTime = result.value[0].scenarios.find(
+        (scenario) => scenario.id === "hire-part-time",
+      );
+      expect(partTime).toMatchObject({
+        feasibility: "feasible",
+        monthlyCost: rational(5200),
+      });
+    });
+
+    it("enforces the overtime daily limit boundary exactly", () => {
+      const accepted = simulateScenarios(
+        scenarioDiagnostic(rational(20), 2, rational(10)),
+        validAssumptions(),
+      );
+      const rejected = simulateScenarios(
+        scenarioDiagnostic(rational(30), 2, rational(10)),
+        validAssumptions(),
+      );
+
+      expect(accepted.ok).toBe(true);
+      expect(rejected.ok).toBe(true);
+      if (!accepted.ok || !rejected.ok) return;
+
+      const acceptedOvertime = accepted.value[0].scenarios.find(
+        (scenario) => scenario.id === "overtime",
+      );
+      const rejectedOvertime = rejected.value[0].scenarios.find(
+        (scenario) => scenario.id === "overtime",
+      );
+
+      expect(acceptedOvertime).toMatchObject({ feasibility: "feasible" });
+      expect(rejectedOvertime?.feasibility).toBe("infeasible");
+      expect(rejectedOvertime?.reasons).toContain(
+        "Exigiria 3 horas extras por dia por funcionário; o limite é 2.",
+      );
+    });
+
+    it("applies incomplete and invalid compliance states to every scenario", () => {
+      const incomplete = simulateScenarios(scenarioDiagnostic(), {
+        ...validAssumptions(),
+        checksByStage: {},
+      });
+      const invalid = simulateScenarios(scenarioDiagnostic(), {
+        ...validAssumptions(),
+        checksByStage: {
+          "phase-1": { ...allValidChecks(), weeklyRest: "invalid" },
+        },
+      });
+
+      expect(incomplete.ok).toBe(true);
+      expect(invalid.ok).toBe(true);
+      if (!incomplete.ok || !invalid.ok) return;
+
+      expect(incomplete.value[0].scenarios.every((scenario) => scenario.feasibility === "incomplete")).toBe(true);
+      expect(
+        incomplete.value[0].scenarios.every((scenario) =>
+          scenario.reasons.some((reason) => reason.includes("repouso semanal")),
+        ),
+      ).toBe(true);
+      expect(incomplete.value[0].recommendedScenarioId).toBeNull();
+
+      expect(invalid.value[0].scenarios.every((scenario) => scenario.feasibility === "infeasible")).toBe(true);
+      expect(
+        invalid.value[0].scenarios.every((scenario) =>
+          scenario.reasons.some((reason) => reason.includes("repouso semanal")),
+        ),
+      ).toBe(true);
+      expect(invalid.value[0].recommendedScenarioId).toBeNull();
     });
   });
 
