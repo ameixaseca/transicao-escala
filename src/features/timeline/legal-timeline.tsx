@@ -151,8 +151,8 @@ export function LegalTimeline({
                   </div>
                 </dl>
                 <p>
-                  Nesta semana passa a valer a nova jornada. Esta escala já segue
-                  a regra nova.
+                  Nesta semana passa a valer a nova jornada. Confira se a escala
+                  observa a regra nova.
                 </p>
                 <fieldset>
                   <legend>Checklist operacional</legend>

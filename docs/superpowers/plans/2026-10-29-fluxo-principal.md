@@ -454,7 +454,7 @@ Expected: FAIL because the transition-week helper and timeline do not exist.
 
 Calculate weeks using UTC civil-date operations, not local-time arithmetic: find the Monday containing the milestone and add six civil days for Sunday. `LegalTimeline` calls `getStageDates(parameters)` and renders an explicit error for every non-success result.
 
-Render each milestone checklist with stable IDs for these items: `collective-agreement`, `rests-and-breaks`, `sector-sundays-holidays`, `salary-and-divisor`, and `special-regimes`. Keep completion state in the page coordinator; the component receives checked values and emits changes. Include the approved transition notice and state that checking an item is not legal approval.
+Render each milestone checklist with stable IDs for these items: `collective-agreement`, `rests-and-breaks`, `sector-sundays-holidays`, `salary-and-divisor`, and `special-regimes`. Keep completion state in the page coordinator; the component receives checked values and emits changes. Display the neutral transition notice “Nesta semana passa a valer a nova jornada. Confira se a escala observa a regra nova.” and state that checking an item is not legal approval.
 
 - [ ] **Step 4: Run targeted tests and typecheck**
 

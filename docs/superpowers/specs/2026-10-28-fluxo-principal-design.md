@@ -64,7 +64,7 @@ Calcular marcos pelas funções de data do domínio, sem duplicar datas na UI:
 - Etapa 1: **16/12/2026**.
 - Etapa 2: **16/12/2027**.
 
-Não deslocar marcos por fins de semana ou feriados. Para a regra conservadora de transição semanal, apresentar os períodos **14–20/12/2026** e **13–19/12/2027**, com o aviso: “Nesta semana passa a valer a nova jornada. Esta escala já segue a regra nova.”
+Não deslocar marcos por fins de semana ou feriados. Para a regra conservadora de transição semanal, apresentar os períodos **14–20/12/2026** e **13–19/12/2027**, com o aviso: “Nesta semana passa a valer a nova jornada. Confira se a escala observa a regra nova.”
 
 Em todas as seções de resultado e timeline, identificar que os parâmetros são provisórios, que as posições jurídicas se baseiam nas respostas reportadas e que GJ-04 (conferência documental e assinatura profissional) continua pendente e bloqueia o lançamento. Se a função de datas falhar, mostrar erro explícito e não criar marcos de fallback.
 
