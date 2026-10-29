@@ -487,21 +487,21 @@ git commit -m "feat(timeline): show provisional milestones and checklist" -m "Co
 - It calls `parseDiagnosticForm`, `calculateDiagnostic`, `parseScenarioFormValues`, and `simulateScenarios`; all computations stay in existing domain services.
 - Feature components receive props/callbacks only; no feature component writes to browser storage or starts network requests.
 
-- [ ] **Step 1: Write dashboard integration tests**
+- [x] **Step 1: Write dashboard integration tests**
 
-Test the initial **Premissas** section, access to all four sections, the provisional legal warning, and a root-page link to `/diagnostico`. Test valid form submission displays all three diagnostic stages; financial inputs are editable while scenario results remain pending before a valid diagnostic; invalid scenario financial assumptions show the domain errors; unknown checks produce no recommendation; changing a diagnostic premise clears diagnostic/scenario results; changing a scenario assumption or check status clears only scenario results; and the timeline remains accessible before a valid diagnostic.
+Test the initial **Premissas** section, access to all four sections, the provisional legal warning, and a root-page link to `/diagnostico`. Test valid form submission displays all three diagnostic stages; financial inputs are editable while scenario results remain pending before a valid diagnostic; invalid scenario financial assumptions show the domain errors; unknown checks produce no recommendation; changing a diagnostic premise clears diagnostic/scenario results and resets stage checks to `unknown`; changing a scenario assumption or check status clears only scenario results; and the timeline remains accessible before a valid diagnostic.
 
-- [ ] **Step 2: Run integration tests and confirm they fail**
+- [x] **Step 2: Run integration tests and confirm they fail**
 
 Run: `npm test -- --run tests/components/diagnostico-page.test.tsx tests/unit/smoke.test.tsx`
 
 Expected: FAIL because the route and dashboard link do not exist.
 
-- [ ] **Step 3: Implement the client coordinator and root entry**
+- [x] **Step 3: Implement the client coordinator and root entry**
 
 Initialize the reference date with `getTodayInSaoPaulo`; if it returns an error, show the error and do not invent a date. Pass `PROVISIONAL_LEGAL_PARAMETERS` explicitly to diagnostic and timeline functions, and display its provisional status on the page.
 
-Use semantic navigation links for **Premissas**, **Diagnóstico**, **Cenários**, and **Linha do tempo**. Keep all sections mounted/accessible and mark results pending until their dependencies are valid. In each input change handler, clear only the derived result that depends on the changed input; on diagnostic premise changes clear both diagnostic and scenario results.
+Use semantic navigation links for **Premissas**, **Diagnóstico**, **Cenários**, and **Linha do tempo**. Keep all sections mounted/accessible and mark results pending until their dependencies are valid. In each input change handler, clear only the derived result that depends on the changed input; on diagnostic premise changes clear both diagnostic and scenario results and reset all stage checks to `unknown`, without clearing scenario inputs or the timeline checklist.
 
 Add a root CTA using `next/link`:
 
@@ -511,7 +511,7 @@ Add a root CTA using `next/link`:
 
 Style a fixed desktop sidebar and compact mobile navigation in `globals.css`; at narrow widths, stack cards and form fields, constrain tables/cards to the viewport, and never rely on horizontal scrolling to reach controls.
 
-- [ ] **Step 4: Run integration tests, the complete component suite, typecheck, and build**
+- [x] **Step 4: Run integration tests, the complete component suite, typecheck, and build**
 
 Run: `npm test -- --run tests/components/diagnostico-page.test.tsx tests/unit/smoke.test.tsx`
 
@@ -529,7 +529,7 @@ Run: `npm run build`
 
 Expected: static build succeeds and includes `/diagnostico/`.
 
-- [ ] **Step 5: Commit the integrated dashboard**
+- [x] **Step 5: Commit the integrated dashboard**
 
 ```powershell
 git add src/app/diagnostico/page.tsx src/app/page.tsx src/app/globals.css tests/components/diagnostico-page.test.tsx tests/unit/smoke.test.tsx
