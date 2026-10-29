@@ -243,7 +243,7 @@ expect(costsById).toEqual({
 expect(result.value[0].recommendedScenarioId).toBe("overtime");
 ```
 
-Assert every scenario has an exact rational monthly cost and the positive deficit yields four scenario results in stable ID order.
+Assert every scenario has an exact rational monthly cost and the positive deficit yields four scenario results in stable ID order. Also pass a deficit of 65 weekly hours with a 42-hour stage limit and all checks valid; assert the part-time scenario remains feasible because `ceil(65 / 30) = 3` contracts provide 90 hours of weekly capacity.
 
 - [ ] **Step 2: Run the cost tests and verify the intended failure**
 
@@ -283,7 +283,7 @@ const partTimeContractCount = ceilRatio(
 );
 ```
 
-Use normalized, nonnegative deficit and positive denominators before this calculation; zero deficit is handled separately. Calculate the partial-contract count to ensure the deficit can be covered by contracts capped at 30 weekly hours. For overtime, calculate average hourly cost exactly from the sum of employee rates divided by employee count.
+Use normalized, nonnegative deficit and positive denominators before this calculation; zero deficit is handled separately. Multiply `partTimeContractCount` by 30 using rational arithmetic and confirm the resulting capacity is at least the deficit; if it is not, mark the part-time scenario infeasible with a reason that the deficit cannot be covered. For overtime, calculate average hourly cost exactly from the sum of employee rates divided by employee count, and convert the `hourlyCostByLocalId` entry count to `bigint` before using it as a rational denominator.
 
 - [ ] **Step 4: Validate overtime daily limit**
 
@@ -425,7 +425,7 @@ it("marks every option not-needed when the diagnostic has no deficit", () => {
 });
 ```
 
-Also test the tie-break where part-time hiring and overtime both cost R$ 900,00 with 50% employer charges; assert `hire-part-time` is selected because its `weeklyOvertimeHours` is zero. Test the remaining exact tie with deficit 12, limit 42, salary R$ 2,100, 60% charges, and revenue loss R$ 960; part-time and reduced-hours both cost R$ 960 and the ID order selects part-time. Test the 2-hour daily overtime boundary with a 20-hour deficit and two employees (exactly 2 hours each per day, accepted) and a 30-hour deficit and two employees (3 hours each per day, rejected). Ensure unknown checks other than `weeklyRest` also have explicit labels in `reasons`.
+Also test the tie-break where part-time hiring and overtime both cost R$ 900,00 with 50% employer charges; assert `hire-part-time` is selected because its `weeklyOvertimeHours` is zero. Test the remaining exact tie with deficit 12, limit 42, salary R$ 2,100, 60% charges, revenue loss R$ 960, and employee hourly costs of R$ 20; part-time and reduced-hours both cost R$ 960, overtime costs R$ 1,800, and the ID order selects part-time. Test the 2-hour daily overtime boundary with a 20-hour deficit and two employees (exactly 2 hours each per day, accepted) and a 30-hour deficit and two employees (3 hours each per day, rejected). Ensure unknown checks other than `weeklyRest` also have explicit labels in `reasons`.
 
 - [ ] **Step 2: Run the tests and verify the intended failures**
 
