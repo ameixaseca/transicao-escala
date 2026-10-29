@@ -242,13 +242,15 @@
 - Os testes Playwright exercitam o build estático `out/`, servido localmente pelo script `serve`.
 - As verificações de rede permitem assets estáticos da mesma origem e requisições de metadados da hospedagem, mas falham se entradas/resultados operacionais forem enviados a endpoints da aplicação ou origens externas.
 
-- [ ] Testar o fluxo principal em 390 × 844 e 1440 × 900; após cada etapa, confirmar ausência de overflow horizontal e que o controle primário está visível, desobstruído e utilizável.
-- [ ] Interceptar requisições durante preenchimento de salários, cálculo de resultados e alteração de cenários; confirmar que corpo, query string e requisições a origens externas não incluem premissas nem resultados operacionais.
-- [ ] Testar que recarregar a página apaga as premissas mantidas em memória na primeira versão.
-- [ ] Configurar `test:e2e` para servir o build estático e executar Playwright; rodar `npm run test:e2e` e esperar aprovação do fluxo, privacidade e viewports.
-- [ ] Executar `npm run typecheck`, `npm test -- --run` e `npm run build`; exigir saída 0 em cada comando.
+- [x] Testar o fluxo principal em 390 × 844 e 1440 × 900; após cada etapa, confirmar ausência de overflow horizontal e que o controle primário está visível, desobstruído e utilizável.
+- [x] Interceptar requisições durante preenchimento de salários, cálculo de resultados e alteração de cenários; confirmar que corpo, query string e requisições a origens externas não incluem premissas nem resultados operacionais.
+- [x] Testar que recarregar a página apaga as premissas mantidas em memória na primeira versão.
+- [x] Configurar `test:e2e` para servir o build estático e executar Playwright; rodar `npm run test:e2e` e esperar aprovação do fluxo, privacidade e viewports.
+- [x] Executar `npm run typecheck`, `npm test -- --run` e `npm run build`; exigir saída 0 em cada comando.
 - [ ] Publicar um preview na Vercel, inspecionar o build para evitar rotas de API acidentais e confirmar manualmente a exibição do aviso de privacidade e da versão legal utilizada.
 - [ ] Publicar somente após aprovação jurídica, sucesso do CI, testes de privacidade e revisão do checklist de release.
+
+> **Bloqueio de release:** GJ-04 e a aprovação jurídica continuam pendentes. Não publicar preview nem produção; os dois itens de release acima permanecem desmarcados e o critério de publicação não está concluído.
 
 **Critério de saída:** versão estática publicada e utilizável em celular/desktop; nenhum dado operacional sai do navegador; todos os gates de release aprovados.
 
