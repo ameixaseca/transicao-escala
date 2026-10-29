@@ -60,3 +60,270 @@ h1 {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   line-height: 1.7;
 }
+
+a {
+  color: #145b41;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button,
+.primary-button {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1rem;
+  border: 1px solid #145b41;
+  border-radius: 0.5rem;
+  background: #145b41;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  border-color: #9aaca4;
+  background: #9aaca4;
+  cursor: not-allowed;
+}
+
+input,
+select {
+  max-width: 100%;
+  min-width: 0;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid #9aaca4;
+  border-radius: 0.4rem;
+  background: #fff;
+  color: #18352d;
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+fieldset {
+  min-width: 0;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #d9e5df;
+  border-radius: 0.65rem;
+}
+
+legend {
+  padding: 0 0.35rem;
+  font-weight: 700;
+}
+
+.dashboard-shell {
+  min-height: 100vh;
+  padding: 2rem 2rem 3rem 18rem;
+}
+
+.dashboard-header,
+.dashboard-content {
+  width: min(100%, 72rem);
+  margin-inline: auto;
+}
+
+.dashboard-header {
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-header > p:not(.eyebrow) {
+  margin: 0.35rem 0 0.75rem;
+  color: #49645a;
+}
+
+.legal-status {
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.7rem 0.85rem;
+  border-left: 4px solid #9a6a13;
+  background: #fff8e8;
+  line-height: 1.5;
+}
+
+.dashboard-navigation {
+  position: fixed;
+  z-index: 5;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: 15rem;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 2rem 1rem;
+  border-right: 1px solid #d9e5df;
+  background: #fff;
+}
+
+.dashboard-navigation a {
+  display: flex;
+  min-height: 2.8rem;
+  align-items: center;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.5rem;
+  color: #18352d;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.dashboard-navigation a[aria-current="location"] {
+  background: #e7f2ec;
+  color: #145b41;
+}
+
+.dashboard-content {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.dashboard-card {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 1.75rem);
+  border: 1px solid #d9e5df;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 0.6rem 1.8rem rgb(24 53 45 / 5%);
+}
+
+.dashboard-card h1 {
+  max-width: none;
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  letter-spacing: -0.035em;
+}
+
+.dashboard-card h2 {
+  margin-top: 0;
+  font-size: clamp(1.45rem, 3.5vw, 2rem);
+}
+
+.dashboard-card h3 {
+  overflow-wrap: anywhere;
+}
+
+.dashboard-card form > div,
+.dashboard-card form fieldset > fieldset > div,
+#cenarios [aria-labelledby="scenario-comparison-title"] > div:first-of-type {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 0.85rem;
+}
+
+.dashboard-card form > div > div,
+.dashboard-card form fieldset > fieldset > div > div,
+#cenarios [aria-labelledby="scenario-comparison-title"] > div:first-of-type > div {
+  min-width: 0;
+}
+
+.dashboard-card form input:not([type="checkbox"]),
+.dashboard-card form select,
+#cenarios input[type="text"] {
+  display: block;
+  width: 100%;
+}
+
+.dashboard-card form fieldset fieldset {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+  align-items: end;
+}
+
+.dashboard-card form fieldset fieldset legend,
+.dashboard-card form fieldset > legend {
+  grid-column: 1 / -1;
+}
+
+.dashboard-card section,
+.dashboard-card article,
+.dashboard-card dl,
+.dashboard-card ul {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.dashboard-card dl > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0.6rem;
+}
+
+.dashboard-card dd {
+  margin: 0;
+  text-align: right;
+}
+
+.dashboard-card [role="alert"] {
+  padding: 0.85rem;
+  border-left: 4px solid #a4352a;
+  background: #fff0ee;
+}
+
+.scenario-dashboard-card > .primary-button {
+  margin-top: 1rem;
+}
+
+.home-cta {
+  margin-top: 1.75rem;
+}
+
+@media (max-width: 720px) {
+  .dashboard-shell {
+    padding: 1rem 1rem 7rem;
+  }
+
+  .dashboard-navigation {
+    inset: 0 0 auto;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.2rem;
+    padding: 0.35rem;
+    border: 0;
+    border-bottom: 1px solid #d9e5df;
+    box-shadow: 0 0.25rem 0.8rem rgb(24 53 45 / 8%);
+  }
+
+  .dashboard-navigation a {
+    min-width: 0;
+    min-height: 2.6rem;
+    justify-content: center;
+    padding: 0.35rem 0.2rem;
+    font-size: clamp(0.65rem, 2.7vw, 0.8rem);
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .dashboard-header {
+    margin-top: 4.25rem;
+  }
+
+  .dashboard-card {
+    padding: 1rem;
+  }
+
+  .dashboard-card form fieldset fieldset {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dashboard-card dl > div {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .dashboard-card [role="group"] fieldset {
+    margin-inline: 0;
+    padding: 0.75rem;
+  }
+}

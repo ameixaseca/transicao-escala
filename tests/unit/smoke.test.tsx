@@ -9,5 +9,8 @@ describe("home page", () => {
     expect(
       screen.getByRole("heading", { name: "Copiloto de Transição 6x1" }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "Começar diagnóstico" }),
+    ).toHaveAttribute("href", "/diagnostico");
   });
 });
