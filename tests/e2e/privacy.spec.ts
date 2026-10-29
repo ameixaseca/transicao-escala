@@ -44,10 +44,18 @@ test("keeps operational assumptions and results in browser memory only", async (
   await page.getByLabel("Salário mensal de reposição").fill(replacementSalary);
   await page.getByLabel("Perda mensal de receita").fill(revenueLoss);
   await page.getByRole("button", { name: "Calcular cenários" }).click();
-  const firstResults = page.getByRole("region", { name: /Resultados —/ }).first();
-  await expect(firstResults).toBeVisible();
-  const resultValues =
-    (await firstResults.innerText()).match(/R\$\s*[\d.,]+/g) ?? [];
+  const resultRegions = page.getByRole("region", { name: /Resultados —/ });
+  await expect(resultRegions).toHaveCount(3);
+  const resultValues = (await resultRegions.allInnerTexts()).flatMap(
+    (text) => text.match(/R\$\s*[\d.,]+/g) ?? [],
+  );
+
+  for (const region of await resultRegions.all()) {
+    await expect(region).toBeVisible();
+    const stageValues = (await region.innerText()).match(/R\$\s*[\d.,]+/g) ?? [];
+    expect(stageValues.length).toBeGreaterThan(0);
+    expect(resultValues).toEqual(expect.arrayContaining(stageValues));
+  }
 
   const requestText = requests
     .flatMap(({ url, body }) => [
