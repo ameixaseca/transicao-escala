@@ -50,6 +50,12 @@ interface.
   são gerados pela aplicação; nenhum ID do arquivo é preservado.
 - Valores decimais são convertidos com o parser decimal exato existente, sem
   conversão intermediária por ponto flutuante.
+- Ao aplicar uma linha normalizada ao formulário, um formatador exato converte
+  `Rational` em texto decimal brasileiro sem arredondar. Ele aceita somente
+  racionais com representação decimal finita; valores do CSV sempre satisfazem
+  essa condição porque foram produzidos pelo parser decimal. A saída não usa
+  separador de milhar, remove zeros fracionários finais e omite a vírgula para
+  inteiros (por exemplo, `2200,50` torna-se `2200,5`).
 - Duplicidade significa igualdade dos três campos obrigatórios após
   normalização: salário, jornada e tipo de contrato. A primeira linha válida é
   mantida; repetições posteriores recebem erro de linha. Colunas identificadoras
@@ -81,6 +87,8 @@ interface.
 5. Ao aplicar, a lista de equipe ativa é substituída e recebe IDs locais novos.
    Data e cobertura são preservadas; diagnóstico, resultados de cenários e
    verificações dependentes das premissas são invalidados para novo cálculo.
+   Salário e jornada são convertidos para os campos de texto por formatação
+   decimal exata, sem arredondamento.
 6. A importação não salva automaticamente no `localStorage`. A interface informa
    que a equipe importada só será persistida se a pessoa usar o controle explícito
    de salvamento já existente.
@@ -103,6 +111,8 @@ aparência de sucesso.
 
 - CSV válido com separador vírgula e ponto e vírgula, números brasileiros e
   contratos suportados.
+- Formatação exata de `Rational` finito para texto decimal brasileiro e rejeição
+  explícita de racionais sem representação decimal finita.
 - Cabeçalho ausente, arquivo vazio, acima do limite e bytes com codificação
   incompatível.
 - Valores decimais e contratos inválidos, campos ausentes e linhas inválidas
