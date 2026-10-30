@@ -4,6 +4,35 @@ Oct 16, 2026 · @Luiz Paulo
 
 ## 1. Visão geral
 
+### Incremento de 30/10/2026: planejador semanal simplificado
+
+O fluxo principal passa a gerar sugestões semanais a partir da quantidade de
+funcionários e do funcionamento/cobertura mínima por dia, sem exigir salários
+ou cadastro individual. A tela única mostra entradas e resultado lado a lado
+no desktop e empilhados no celular. Diagnóstico, custos, CSV e dados salvos
+continuam disponíveis no painel detalhado, sem migração ou sobrescrita.
+
+A primeira versão do gerador atende equipes homogêneas de 1 a 200 pessoas,
+com disponibilidade comum e operação diurna entre 05:00 e 22:00, sem atravessar
+a meia-noite. Usa teto conservador de até 40 horas semanais, 8 horas efetivas
+diárias e ao menos duas folgas, sem presumir horas extras ou compensação coletiva.
+O teto é uma escolha da simulação, não uma afirmação do limite jurídico vigente.
+
+O verificador confere cobertura temporal, desconta intervalos e verifica os
+descansos modelados. Histórico das semanas adjacentes, rodízio de domingos,
+feriados e regras de categoria permanecem pendências explícitas. A busca é
+determinística, amostral e limitada; não encontrar uma escala não comprova
+impossibilidade. A estimativa de pessoas adicionais é um limite inferior, não
+garantia de suficiência. Edição manual e exportação não fazem parte desta entrega.
+
+As sugestões não constituem aprovação jurídica. Os parâmetros continuam
+provisórios e GJ-04 permanece bloqueando o lançamento. Os dados do planejador
+ficam apenas em memória, sem transmissão ou persistência automática.
+Ver [design](./superpowers/specs/2026-10-30-planejador-simplificado-design.md) e
+[plano](./superpowers/plans/2026-10-30-planejador-simplificado.md).
+
+### Escopo histórico do release inicial
+
 O Copiloto de Transição 6x1 é uma ferramenta web gratuita, sem login, que ajuda pequenos empregadores a calcular o custo da nova jornada e comparar cenários de adaptação. O release inicial de 30 dias inclui premissas manuais, diagnóstico, comparação de cenários e linha do tempo/checklist legal. Importação CSV, persistência local, geração/edição de escalas 5x2 e geração/exportação de documentos ficam para releases posteriores. A aplicação será construída com Next.js e TypeScript e publicada na Vercel. Todo processamento ocorre no navegador, inclusive as funcionalidades posteriores. A aplicação não coleta nem transmite dados operacionais inseridos pelo usuário e não oferece contas, APIs de produto, banco de dados, telemetria, analytics, pixels ou integrações com terceiros.
 
 O usuário informa apenas as premissas necessárias aos cálculos. A ferramenta não solicita nome, CNPJ, e-mail ou identificadores de funcionários; usa rótulos anônimos gerados localmente para distinguir pessoas. No release inicial, premissas e resultados permanecem apenas em memória durante a sessão, sem persistência local ou remota e sem restauração após recarregar. Em release posterior, o usuário poderá optar por salvar premissas somente no armazenamento local do navegador, com uma ação explícita para apagar esses dados. O provedor de hospedagem pode processar metadados técnicos de acesso, distintos das premissas e resultados dos cálculos.

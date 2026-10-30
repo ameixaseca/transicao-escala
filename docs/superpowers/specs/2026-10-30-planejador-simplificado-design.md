@@ -54,6 +54,8 @@ para iniciar uma simulacao.
 ### Equipe
 
 - Quantidade inteira e positiva de funcionarios.
+- Limite de 200 funcionarios por simulacao, aprovado pelo usuario durante
+  a preparacao da implementacao; exceder o limite gera erro explicito.
 - Identificadores locais neutros, como Pessoa 1 e Pessoa 2.
 - Mesma disponibilidade e mesmo limite de jornada para toda a equipe.
 - A quantidade informada e a equipe disponivel, nao a cobertura minima.
@@ -241,5 +243,6 @@ este novo escopo do release inicial historico.
 
 ## Proximo passo
 
-Revisao desta especificacao pelo usuario, seguida de plano de implementacao.
-Nenhum codigo de produto foi alterado nesta etapa de design.
+A especificacao foi revisada e aprovada pelo usuario antes da implementacao.
+O [plano de implementacao](../plans/2026-10-30-planejador-simplificado.md)
+detalha as entregas.
