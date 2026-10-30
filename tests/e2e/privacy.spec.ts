@@ -26,7 +26,7 @@ test("saves only diagnostic assumptions locally and sends no operational data", 
   const replacementSalary = "87654,32";
   const revenueLoss = "12345,67";
 
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
   await expect(
     page.getByText(
       "Informe dados de operação para estimativas locais. Nada é enviado; salvar neste navegador é opcional.",

@@ -20,7 +20,7 @@ test("applies a confirmed CSV preview and preserves date and coverage", async ({
   page,
 }) => {
   await page.goto(baseUrl);
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
 
   const date = page.getByLabel("Data de referência");
   const coverageStart = page.getByLabel("Início — Faixa 1");
@@ -52,7 +52,7 @@ test("applies only valid rows after confirmation and preserves the team on cance
   page,
 }) => {
   await page.goto(baseUrl);
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
   await page.getByLabel("Arquivo CSV da equipe").setInputFiles(
     csvFile(
       [
@@ -121,7 +121,7 @@ test("keeps CSV import local, private, and opt-in for persistence", async ({
     { key: storageKey },
   );
   await page.goto(baseUrl);
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
   const storedBefore = await page.evaluate((key) => localStorage.getItem(key), storageKey);
   const origin = new URL(baseUrl).origin;
 

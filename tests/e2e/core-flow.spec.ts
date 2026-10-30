@@ -46,7 +46,7 @@ for (const viewport of [
     await page.setViewportSize(viewport);
     await page.goto(baseUrl);
 
-    const start = page.getByRole("link", { name: "Começar diagnóstico" });
+    const start = page.getByRole("link", { name: "Diagnóstico e custos detalhados" });
     await expectNoHorizontalOverflow(page);
     await expectPrimaryUsable(page, start);
     await start.click();
