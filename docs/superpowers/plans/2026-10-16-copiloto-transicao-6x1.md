@@ -272,12 +272,12 @@
 - `clearLocalAssumptions(): Result<void, StorageError>`
 - A persistência é opt-in, local ao navegador, versionada e contém somente as premissas necessárias para restaurar o trabalho do usuário.
 
-- [ ] Testar opt-in, restauração válida após reload, dados malformados/esquema antigo, erros de quota/segurança e ausência de escrita antes do opt-in.
-- [ ] Testar que a exclusão explícita remove o estado ativo e todas as chaves locais da ferramenta; verificar após reload que nenhuma premissa apagada retorna.
-- [ ] Limpar também o estado em memória do React quando o usuário confirmar a exclusão.
-- [ ] Implementar adaptador de armazenamento com erros visíveis; se o armazenamento falhar, manter a sessão atual utilizável e não afirmar que os dados foram salvos.
-- [ ] Executar `npm test -- --run tests/unit/local-data-store.test.ts tests/e2e/local-data.spec.ts`; esperar aprovação dos casos de persistência e exclusão.
-- [ ] Reexecutar os testes E2E de privacidade para provar que não surgiu transmissão nem sincronização remota.
+- [x] Testar opt-in, restauração válida após reload, dados malformados/esquema antigo, erros de quota/segurança e ausência de escrita antes do opt-in.
+- [x] Testar que a exclusão explícita remove o estado ativo e todas as chaves locais da ferramenta; verificar após reload que nenhuma premissa apagada retorna.
+- [x] Limpar também o estado em memória do React quando o usuário confirmar a exclusão.
+- [x] Implementar adaptador de armazenamento com erros visíveis; se o armazenamento falhar, manter a sessão atual utilizável e não afirmar que os dados foram salvos.
+- [x] Executar `npm test -- --run tests/unit/local-data-store.test.ts tests/e2e/local-data.spec.ts`; esperar aprovação dos casos de persistência e exclusão.
+- [x] Reexecutar os testes E2E de privacidade para provar que não surgiu transmissão nem sincronização remota.
 
 **Critério de saída:** persistência local opt-in, recuperável e totalmente apagável, sem sair do navegador.
 
