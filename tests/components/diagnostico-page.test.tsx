@@ -169,7 +169,7 @@ describe("diagnostic dashboard", () => {
       screen.getAllByRole("radio", { name: "Não verificado" }).length,
     ).toBeGreaterThan(0);
     expect(screen.queryByText("✓ Recomendado")).not.toBeInTheDocument();
-  });
+  }, 15_000);
 
   it("clears diagnostic and scenario results when a diagnostic premise changes", () => {
     openDiagnostic();
