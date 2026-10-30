@@ -82,6 +82,8 @@ Each diagnosis stage produces one group containing all four scenarios. Check sta
 
 The engine computes the overtime daily-limit rule itself. The other checks represent validation that cannot be inferred from `DiagnosticResult`. If any required check is `invalid`, the scenario is `infeasible`; if none is invalid but at least one is absent or `unknown`, it is `incomplete`; only all-valid checks allow `feasible`. An infeasible result has a reason for each failed check. An incomplete result identifies each unresolved check. Neither may be recommended.
 
+When a diagnostic premise changes in the dashboard, discard the prior diagnostic and scenario results and reset all stage checks to `unknown`. A recalculated diagnostic must not reuse compliance declarations made under different premises; users must explicitly confirm checks again before a recommendation is possible. This reset does not affect the legal timeline checklist or scenario form inputs.
+
 Invalid money inputs return field-level `ScenarioValidationError`s. Replacement salary must be positive; employer charge rate and monthly revenue loss must be nonnegative. Calculations must validate rational denominators before division. No fallback values are allowed.
 
 ## Cálculos dos cenários

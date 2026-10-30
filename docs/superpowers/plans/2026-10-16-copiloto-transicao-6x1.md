@@ -198,7 +198,7 @@
 - [x] Testar os motivos de inviabilidade para redução salarial e limites diários de hora extra.
 - [x] Testar recomendação da opção viável de menor custo e desempate determinístico.
 - [x] Implementar cenários com aritmética racional exata e motivo visível para cada opção inviável; nunca recomendar cenário inviável.
-- [ ] Executar `npm test -- --run tests/unit/scenarios.test.ts`; esperar aprovação dos cenários e desempates.
+- [x] Executar `npm test -- --run tests/unit/scenarios.test.ts`; esperar aprovação dos cenários e desempates.
 
 **Critério de saída:** os quatro cenários são comparáveis, matematicamente exatos e têm recomendação coberta por testes.
 
@@ -219,11 +219,12 @@
 - Os painéis de diagnóstico e cenários consomem `DiagnosticResult` e `ScenarioResult[]`; componentes de UI não implementam cálculos jurídicos ou monetários.
 - `LegalTimeline` consome `LegalParameters` e estado de checklist mantido em memória.
 
-- [ ] Testar campos obrigatórios, salário/jornada inválidos, rótulos acessíveis, links do resumo de erros e ausência de campos de nome, CNPJ ou e-mail de funcionários.
-- [ ] Testar que a comparação exibe os quatro cenários, marca inviabilidades com seus motivos e identifica somente a recomendação calculada pelo domínio.
-- [ ] Implementar o fluxo: premissas manuais → diagnóstico por etapa legal → comparação de cenários → linha do tempo/checklist na aplicação.
-- [ ] Manter os dados de entrada na memória do cliente, gerar rótulos anônimos locais para as pessoas na equipe e exibir a versão dos parâmetros legais utilizada.
-- [ ] Executar `npm test -- --run tests/components`; esperar aprovação dos testes de componentes sem alertas de rótulos acessíveis.
+- [x] Testar campos obrigatórios, salário/jornada inválidos, rótulos acessíveis, links do resumo de erros e ausência de campos de nome, CNPJ ou e-mail de funcionários.
+- [x] Testar que a comparação exibe os quatro cenários, marca inviabilidades com seus motivos e identifica somente a recomendação calculada pelo domínio.
+- [x] Implementar o fluxo: premissas manuais → diagnóstico por etapa legal → comparação de cenários → linha do tempo/checklist na aplicação.
+- [x] Manter os dados de entrada na memória do cliente, gerar rótulos anônimos locais para as pessoas na equipe e exibir a versão dos parâmetros legais utilizada.
+- [x] Ao alterar uma premissa do diagnóstico, limpar resultados e reiniciar os checks de cada etapa como `unknown`, sem alterar a checklist da linha do tempo nem as premissas financeiras dos cenários.
+- [x] Executar `npm test -- --run tests/components`; esperar aprovação dos testes de componentes sem alertas de rótulos acessíveis.
 
 **Critério de saída:** usuário conclui o fluxo principal sem criar conta ou transmitir dados pela rede.
 
@@ -241,13 +242,15 @@
 - Os testes Playwright exercitam o build estático `out/`, servido localmente pelo script `serve`.
 - As verificações de rede permitem assets estáticos da mesma origem e requisições de metadados da hospedagem, mas falham se entradas/resultados operacionais forem enviados a endpoints da aplicação ou origens externas.
 
-- [ ] Testar o fluxo principal em 390 × 844 e 1440 × 900; após cada etapa, confirmar ausência de overflow horizontal e que o controle primário está visível, desobstruído e utilizável.
-- [ ] Interceptar requisições durante preenchimento de salários, cálculo de resultados e alteração de cenários; confirmar que corpo, query string e requisições a origens externas não incluem premissas nem resultados operacionais.
-- [ ] Testar que recarregar a página apaga as premissas mantidas em memória na primeira versão.
-- [ ] Configurar `test:e2e` para servir o build estático e executar Playwright; rodar `npm run test:e2e` e esperar aprovação do fluxo, privacidade e viewports.
-- [ ] Executar `npm run typecheck`, `npm test -- --run` e `npm run build`; exigir saída 0 em cada comando.
+- [x] Testar o fluxo principal em 390 × 844 e 1440 × 900; após cada etapa, confirmar ausência de overflow horizontal e que o controle primário está visível, desobstruído e utilizável.
+- [x] Interceptar requisições durante preenchimento de salários, cálculo de resultados e alteração de cenários; confirmar que corpo, query string e requisições a origens externas não incluem premissas nem resultados operacionais.
+- [x] Testar que recarregar a página apaga as premissas mantidas em memória na primeira versão.
+- [x] Configurar `test:e2e` para servir o build estático e executar Playwright; rodar `npm run test:e2e` e esperar aprovação do fluxo, privacidade e viewports.
+- [x] Executar `npm run typecheck`, `npm test -- --run` e `npm run build`; exigir saída 0 em cada comando.
 - [ ] Publicar um preview na Vercel, inspecionar o build para evitar rotas de API acidentais e confirmar manualmente a exibição do aviso de privacidade e da versão legal utilizada.
 - [ ] Publicar somente após aprovação jurídica, sucesso do CI, testes de privacidade e revisão do checklist de release.
+
+> **Bloqueio de release:** GJ-04 e a aprovação jurídica continuam pendentes. Não publicar preview nem produção; os dois itens de release acima permanecem desmarcados e o critério de publicação não está concluído.
 
 **Critério de saída:** versão estática publicada e utilizável em celular/desktop; nenhum dado operacional sai do navegador; todos os gates de release aprovados.
 
@@ -269,12 +272,12 @@
 - `clearLocalAssumptions(): Result<void, StorageError>`
 - A persistência é opt-in, local ao navegador, versionada e contém somente as premissas necessárias para restaurar o trabalho do usuário.
 
-- [ ] Testar opt-in, restauração válida após reload, dados malformados/esquema antigo, erros de quota/segurança e ausência de escrita antes do opt-in.
-- [ ] Testar que a exclusão explícita remove o estado ativo e todas as chaves locais da ferramenta; verificar após reload que nenhuma premissa apagada retorna.
-- [ ] Limpar também o estado em memória do React quando o usuário confirmar a exclusão.
-- [ ] Implementar adaptador de armazenamento com erros visíveis; se o armazenamento falhar, manter a sessão atual utilizável e não afirmar que os dados foram salvos.
-- [ ] Executar `npm test -- --run tests/unit/local-data-store.test.ts tests/e2e/local-data.spec.ts`; esperar aprovação dos casos de persistência e exclusão.
-- [ ] Reexecutar os testes E2E de privacidade para provar que não surgiu transmissão nem sincronização remota.
+- [x] Testar opt-in, restauração válida após reload, dados malformados/esquema antigo, erros de quota/segurança e ausência de escrita antes do opt-in.
+- [x] Testar que a exclusão explícita remove o estado ativo e todas as chaves locais da ferramenta; verificar após reload que nenhuma premissa apagada retorna.
+- [x] Limpar também o estado em memória do React quando o usuário confirmar a exclusão.
+- [x] Implementar adaptador de armazenamento com erros visíveis; se o armazenamento falhar, manter a sessão atual utilizável e não afirmar que os dados foram salvos.
+- [x] Executar `npm test -- --run tests/unit/local-data-store.test.ts tests/e2e/local-data.spec.ts`; esperar aprovação dos casos de persistência e exclusão.
+- [x] Reexecutar os testes E2E de privacidade para provar que não surgiu transmissão nem sincronização remota.
 
 **Critério de saída:** persistência local opt-in, recuperável e totalmente apagável, sem sair do navegador.
 
@@ -293,10 +296,10 @@
 - `type CsvImportError = { row: number; field: string; code: string; message: string }`
 - `ImportPreview` contém somente campos normalizados para os cálculos e mensagens de validação por linha; colunas desconhecidas são descartadas.
 
-- [ ] Testar arquivo válido, colunas obrigatórias ausentes, linhas duplicadas, decimal/data malformados, codificação incompatível, arquivo vazio e colunas identificadoras adicionais.
-- [ ] Configurar o parser para usar cabeçalhos e texto local; ler o conteúdo no navegador, sem enviar o arquivo, persistir seu conteúdo original ou reter colunas desnecessárias.
-- [ ] Exibir uma prévia local e exigir confirmação do usuário antes de aplicar as premissas importadas.
-- [ ] Executar `npm test -- --run tests/unit/parse-assumptions-csv.test.ts tests/e2e/csv-import.spec.ts`; confirmar que o navegador não faz requisição de upload.
+- [x] Testar arquivo válido, colunas obrigatórias ausentes, linhas duplicadas, decimal/data malformados, codificação incompatível, arquivo vazio e colunas identificadoras adicionais.
+- [x] Configurar o parser para usar cabeçalhos e texto local; ler o conteúdo no navegador, sem enviar o arquivo, persistir seu conteúdo original ou reter colunas desnecessárias.
+- [x] Exibir uma prévia local e exigir confirmação do usuário antes de aplicar as premissas importadas.
+- [x] Executar `npm test -- --run tests/unit/parse-assumptions-csv.test.ts tests/e2e/csv-import.spec.ts`; confirmar que o navegador não faz requisição de upload.
 
 **Critério de saída:** importação CSV compreensível, rejeição explícita de linhas inválidas e processamento comprovadamente local.
 

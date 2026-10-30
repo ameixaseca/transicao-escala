@@ -27,6 +27,16 @@ describe("getParametersForDate", () => {
     expect(Object.isFrozen(PROVISIONAL_LEGAL_PARAMETERS.weeklyHours)).toBe(true);
   });
 
+  it("identifies the provisional EC 141 publication record", () => {
+    expect(PROVISIONAL_LEGAL_PARAMETERS).toMatchObject({
+      version: "ec-141-provisional",
+      status: "provisório",
+      sourceUrl:
+        "https://www.in.gov.br/en/web/dou/-/emenda-constitucional-n-141-738818165",
+      publicationDate: "2026-10-16",
+    });
+  });
+
   it("does not select a provisional version for current calculations", () => {
     expect(getParametersForDate("2026-12-16", [PROVISIONAL_LEGAL_PARAMETERS])).toEqual({
       ok: false,

@@ -62,6 +62,13 @@ describe("date-only values", () => {
 });
 
 describe("provisional stage dates", () => {
+  it("calculates milestone dates from the provisional legal parameters", () => {
+    expect(getStageDates(PROVISIONAL_LEGAL_PARAMETERS)).toEqual({
+      ok: true,
+      value: { phase1: "2026-12-16", phase2: "2027-12-16" },
+    });
+  });
+
   it("calculates dates from a hypothetical publication date using calendar months", () => {
     expect(getStageDates(hypotheticalParameters("2026-10-16"))).toEqual({
       ok: true,

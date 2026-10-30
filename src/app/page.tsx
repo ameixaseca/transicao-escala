@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="page-shell">
@@ -8,6 +10,9 @@ export default function Home() {
           Entenda os impactos da transição e compare alternativas para o seu
           negócio. As premissas informadas serão processadas no seu navegador.
         </p>
+        <Link className="primary-button home-cta" href="/diagnostico/">
+          Começar diagnóstico
+        </Link>
       </section>
     </main>
   );
