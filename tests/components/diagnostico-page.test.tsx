@@ -1,4 +1,11 @@
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import DiagnosticPage from "@/app/diagnostico/page";
 
@@ -16,6 +23,9 @@ const submitDiagnostic = () => {
 const submitScenarios = () => {
   fireEvent.click(screen.getByRole("button", { name: "Calcular cenários" }));
 };
+
+const createCsvFile = (contents: string) =>
+  new File([contents], "equipe.csv", { type: "text/csv" });
 
 describe("diagnostic dashboard", () => {
   it("starts in Premissas and exposes all four sections", () => {
@@ -270,4 +280,130 @@ describe("diagnostic dashboard", () => {
     expect(screen.getByText("Resultados pendentes.")).toBeInTheDocument();
     expect(screen.getAllByText("Déficit de horas-pessoa").length).toBeGreaterThan(0);
   });
+
+  it("applies imported employees without changing other assumptions, checks, or stored data", async () => {
+    localStorage.setItem(
+      "transicao-escala:assumptions",
+      JSON.stringify({
+        schemaVersion: 1,
+        savedAt: "2026-10-29T12:00:00.000Z",
+        assumptions: {
+          employeeRows: [
+            {
+              localId: "stored-person",
+              salaryDecimal: "2.200,00",
+              weeklyHoursDecimal: "44",
+              contractType: "full-time",
+            },
+          ],
+          coverage: [
+            {
+              weekday: 1,
+              startMinute: 495,
+              endMinute: 1440,
+              minimumPeople: 1,
+            },
+          ],
+          referenceDate: "2026-12-16",
+          legalParameterVersion: "older-legal-parameters",
+        },
+      }),
+    );
+    openDiagnostic();
+    await waitFor(() =>
+      expect(screen.getByLabelText("Data de referência")).toHaveValue("2026-12-16"),
+    );
+    submitDiagnostic();
+    fireEvent.click(
+      within(
+        screen.getAllByRole("group", { name: /^Verificações —/ })[0],
+      ).getAllByRole("radio", { name: "Válido" })[0],
+    );
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Salário mensal de reposição" }),
+      { target: { value: "3.100,75" } },
+    );
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Encargos do empregador (%)" }),
+      { target: { value: "35" } },
+    );
+    fireEvent.change(
+      screen.getByRole("textbox", { name: "Perda mensal de receita" }),
+      { target: { value: "123,45" } },
+    );
+    submitScenarios();
+    expect(screen.getAllByRole("region", { name: /Resultados —/ })).toHaveLength(3);
+
+    const timelineCheck = screen.getAllByLabelText(
+      "Revisar limite de jornada e instrumento coletivo aplicável",
+    )[0];
+    fireEvent.click(timelineCheck);
+    fireEvent.click(screen.getByRole("button", { name: "Salvar neste navegador" }));
+    expect(screen.getByRole("status")).toHaveTextContent(
+      "Premissas salvas neste navegador.",
+    );
+    const storedBeforeImport = localStorage.getItem(
+      "transicao-escala:assumptions",
+    );
+    const referenceDate = screen.getByLabelText("Data de referência");
+    const coverageStart = screen.getByLabelText("Início — Faixa 1");
+    const coverageEnd = screen.getByLabelText("Fim — Faixa 1");
+    const initialReferenceDate = (referenceDate as HTMLInputElement).value;
+    const initialCoverageStart = (coverageStart as HTMLInputElement).value;
+    const initialCoverageEnd = (coverageEnd as HTMLInputElement).value;
+    fireEvent.change(screen.getByLabelText("Arquivo CSV da equipe"), {
+      target: {
+        files: [
+          createCsvFile(
+            [
+              "salario_mensal,horas_semanais,tipo_contrato,email",
+              '"2.200,50","42,75",full-time,nome-secreto@example.test',
+              '"3.100,25","36,5",part-time,outra-pessoa@example.test',
+            ].join("\n"),
+          ),
+        ],
+      },
+    });
+    await screen.findByRole("table", { name: "Prévia da equipe" });
+    expect(screen.getByLabelText("Salário mensal — Pessoa 1")).toHaveValue(
+      "2.200,00",
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Aplicar linhas válidas" }));
+
+    expect(screen.getByLabelText("Salário mensal — Pessoa 1")).toHaveValue(
+      "2200,5",
+    );
+    expect(screen.getByLabelText("Horas semanais — Pessoa 1")).toHaveValue(
+      "42,75",
+    );
+    expect(screen.getByLabelText("Salário mensal — Pessoa 2")).toHaveValue(
+      "3100,25",
+    );
+    expect(screen.getByLabelText("Horas semanais — Pessoa 2")).toHaveValue("36,5");
+    expect(screen.queryByText("nome-secreto@example.test")).not.toBeInTheDocument();
+    expect(referenceDate).toHaveValue(initialReferenceDate);
+    expect(coverageStart).toHaveValue(initialCoverageStart);
+    expect(coverageEnd).toHaveValue(initialCoverageEnd);
+    expect(timelineCheck).toBeChecked();
+    expect(screen.getByRole("textbox", { name: "Salário mensal de reposição" })).toHaveValue(
+      "3.100,75",
+    );
+    expect(screen.getByRole("textbox", { name: "Encargos do empregador (%)" })).toHaveValue(
+      "35",
+    );
+    expect(screen.getByRole("textbox", { name: "Perda mensal de receita" })).toHaveValue(
+      "123,45",
+    );
+    expect(screen.getByText("Diagnóstico pendente.")).toBeInTheDocument();
+    expect(screen.getByText("Resultados pendentes.")).toBeInTheDocument();
+    expect(screen.queryByText("Premissas salvas neste navegador.")).not.toBeInTheDocument();
+    expect(localStorage.getItem("transicao-escala:assumptions")).toBe(
+      storedBeforeImport,
+    );
+
+    submitDiagnostic();
+    expect(
+      screen.getAllByRole("radio", { name: "Não verificado", checked: true }),
+    ).toHaveLength(15);
+  }, 15_000);
 });

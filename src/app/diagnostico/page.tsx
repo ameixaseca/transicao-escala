@@ -7,7 +7,11 @@ import { DiagnosticPanel } from "@/features/diagnostic/diagnostic-panel";
 import { calculateDiagnostic } from "@/domain/diagnostic/calculate-diagnostic";
 import { getTodayInSaoPaulo } from "@/domain/dates/date-only";
 import { PROVISIONAL_LEGAL_PARAMETERS } from "@/domain/legal/legal-parameters";
-import type { DiagnosticResult, DiagnosticValidationError } from "@/domain/diagnostic/types";
+import type {
+  DiagnosticResult,
+  DiagnosticValidationError,
+  EmployeeAssumption,
+} from "@/domain/diagnostic/types";
 import type { LegalTimelineChecklist } from "@/features/timeline/legal-timeline";
 import { LegalTimeline } from "@/features/timeline/legal-timeline";
 import { parseDiagnosticForm } from "@/features/assumptions/form-values";
@@ -35,6 +39,8 @@ import {
   toPersistableAssumptions,
 } from "@/features/local-data/form-values";
 import { DataControls } from "@/features/local-data/data-controls";
+import { formatDecimal } from "@/domain/money/decimal";
+import { CsvImport } from "@/features/import/csv-import";
 
 const initialScenarioValues: ScenarioFormValues = {
   replacementSalary: "3.000,00",
@@ -148,6 +154,18 @@ export default function DiagnosticPage() {
     setDiagnosticErrors([]);
     setChecksByStage({});
     clearScenarioResult();
+  };
+
+  const handleImportEmployees = (employees: EmployeeAssumption[]) => {
+    const importedEmployees = employees.map((employee) => ({
+      localId: employee.localId,
+      salary: formatDecimal(employee.salary),
+      weeklyHours: formatDecimal(employee.weeklyHours),
+      contractType: employee.contractType,
+    }));
+
+    handleDiagnosticChange({ ...values, employees: importedEmployees });
+    setStorageStatusMessage(null);
   };
 
   const handleDiagnosticSubmit = (submittedValues: DiagnosticFormValues) => {
@@ -361,6 +379,7 @@ export default function DiagnosticPage() {
             onSave={handleSaveLocalData}
             onDelete={handleDeleteLocalData}
           />
+          <CsvImport onImport={handleImportEmployees} />
           {referenceDateMissing && (
             <p role="alert">{dateInitializationMessage}</p>
           )}
