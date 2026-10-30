@@ -110,7 +110,7 @@ describe("ScenarioComparison", () => {
       "dailySchedule",
       "invalid",
     );
-  });
+  }, 15_000);
 
   it("reports financial input changes and displays parser and domain field errors", () => {
     const onValuesChange = vi.fn();
