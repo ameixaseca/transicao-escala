@@ -156,6 +156,20 @@ describe("local assumptions store", () => {
         ...record,
         assumptions: {
           ...record.assumptions,
+          employeeRows: [],
+        },
+      },
+      {
+        ...record,
+        assumptions: {
+          ...record.assumptions,
+          coverage: [],
+        },
+      },
+      {
+        ...record,
+        assumptions: {
+          ...record.assumptions,
           employeeRows: [
             {
               ...record.assumptions.employeeRows[0],

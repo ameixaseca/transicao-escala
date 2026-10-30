@@ -113,8 +113,10 @@ const isPersistableAssumptions = (
   const assumptions = value.assumptions;
   return (
     Array.isArray(assumptions.employeeRows) &&
+    assumptions.employeeRows.length > 0 &&
     assumptions.employeeRows.every(isEmployeeRow) &&
     Array.isArray(assumptions.coverage) &&
+    assumptions.coverage.length > 0 &&
     assumptions.coverage.every(isCoverageAssumption) &&
     typeof assumptions.referenceDate === "string" &&
     isValidDate(assumptions.referenceDate) &&
