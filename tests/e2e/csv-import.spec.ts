@@ -159,6 +159,8 @@ test("keeps CSV import local, private, and opt-in for persistence", async ({
     "42,75",
     "3.100,25",
     "36,5",
+    "full-time",
+    "part-time",
   ]) {
     expect(requestText).not.toContain(value);
     expect(requestText).not.toContain(encodeURIComponent(value));
