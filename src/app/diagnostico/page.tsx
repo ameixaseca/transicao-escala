@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { AssumptionsForm } from "@/features/assumptions/assumptions-form";
 import type { DiagnosticFormValues } from "@/features/assumptions/form-values";
 import { DiagnosticPanel } from "@/features/diagnostic/diagnostic-panel";
@@ -337,6 +338,7 @@ export default function DiagnosticPage() {
   return (
     <main className="dashboard-shell">
       <header className="dashboard-header">
+        <Link className="dashboard-planner-link" href="/">Voltar ao planejador de escalas</Link>
         <p className="eyebrow">Copiloto de Transição 6x1</p>
         <p>Planeje a transição da jornada com clareza.</p>
         <aside aria-label="Status dos parâmetros legais" className="legal-status">

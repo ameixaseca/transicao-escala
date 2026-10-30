@@ -7,10 +7,10 @@ describe("home page", () => {
     render(<Home />);
 
     expect(
-      screen.getByRole("heading", { name: "Copiloto de Transição 6x1" }),
+      screen.getByRole("heading", { name: "Monte sua escala de trabalho" }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "Começar diagnóstico" }),
+      screen.getByRole("link", { name: "Diagnóstico e custos detalhados" }),
     ).toHaveAttribute("href", "/diagnostico");
   });
 });

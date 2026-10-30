@@ -7,7 +7,7 @@ test("saves diagnostic assumptions only on request and restores them after reloa
   page,
 }) => {
   await page.goto(baseUrl);
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
 
   await page.getByLabel("Salário mensal — Pessoa 1").fill("98765,43");
   await expect(page.getByRole("button", { name: "Salvar neste navegador" })).toBeEnabled();
@@ -36,7 +36,7 @@ test("cancelling deletion preserves both the stored record and active form", asy
   page,
 }) => {
   await page.goto(baseUrl);
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
   await page.getByLabel("Salário mensal — Pessoa 1").fill("98765,43");
   await page.getByRole("button", { name: "Salvar neste navegador" }).click();
   const savedBefore = await page.evaluate(
@@ -59,7 +59,7 @@ test("confirmed deletion clears storage and all active dashboard state", async (
   page,
 }) => {
   await page.goto(baseUrl);
-  await page.getByRole("link", { name: "Começar diagnóstico" }).click();
+  await page.getByRole("link", { name: "Diagnóstico e custos detalhados" }).click();
   await page.getByLabel("Salário mensal — Pessoa 1").fill("98765,43");
   await page.getByRole("button", { name: "Salvar neste navegador" }).click();
 

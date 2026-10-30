@@ -31,6 +31,8 @@ describe("diagnostic dashboard", () => {
   it("starts in Premissas and exposes all four sections", () => {
     openDiagnostic();
 
+    expect(screen.getByRole("link", { name: "Voltar ao planejador de escalas" }))
+      .toHaveAttribute("href", "/");
     expect(
       screen.getByRole("heading", { name: "Premissas", level: 1 }),
     ).toBeInTheDocument();
