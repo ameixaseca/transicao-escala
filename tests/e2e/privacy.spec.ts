@@ -108,6 +108,8 @@ test("saves only diagnostic assumptions locally and sends no operational data", 
     revenueLoss,
     "08:17",
     "17:43",
+    "497",
+    "1063",
     ...resultValues,
   ]) {
     expect(requestText).not.toContain(value);
