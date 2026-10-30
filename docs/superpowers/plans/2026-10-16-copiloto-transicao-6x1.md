@@ -296,10 +296,10 @@
 - `type CsvImportError = { row: number; field: string; code: string; message: string }`
 - `ImportPreview` contém somente campos normalizados para os cálculos e mensagens de validação por linha; colunas desconhecidas são descartadas.
 
-- [ ] Testar arquivo válido, colunas obrigatórias ausentes, linhas duplicadas, decimal/data malformados, codificação incompatível, arquivo vazio e colunas identificadoras adicionais.
-- [ ] Configurar o parser para usar cabeçalhos e texto local; ler o conteúdo no navegador, sem enviar o arquivo, persistir seu conteúdo original ou reter colunas desnecessárias.
-- [ ] Exibir uma prévia local e exigir confirmação do usuário antes de aplicar as premissas importadas.
-- [ ] Executar `npm test -- --run tests/unit/parse-assumptions-csv.test.ts tests/e2e/csv-import.spec.ts`; confirmar que o navegador não faz requisição de upload.
+- [x] Testar arquivo válido, colunas obrigatórias ausentes, linhas duplicadas, decimal/data malformados, codificação incompatível, arquivo vazio e colunas identificadoras adicionais.
+- [x] Configurar o parser para usar cabeçalhos e texto local; ler o conteúdo no navegador, sem enviar o arquivo, persistir seu conteúdo original ou reter colunas desnecessárias.
+- [x] Exibir uma prévia local e exigir confirmação do usuário antes de aplicar as premissas importadas.
+- [x] Executar `npm test -- --run tests/unit/parse-assumptions-csv.test.ts tests/e2e/csv-import.spec.ts`; confirmar que o navegador não faz requisição de upload.
 
 **Critério de saída:** importação CSV compreensível, rejeição explícita de linhas inválidas e processamento comprovadamente local.
 
