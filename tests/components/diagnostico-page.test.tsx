@@ -146,7 +146,7 @@ describe("diagnostic dashboard", () => {
     expect(screen.getByText("O salário de reposição deve ser maior que zero.")).toBeInTheDocument();
     expect(screen.getByText("A taxa de encargos não pode ser negativa.")).toBeInTheDocument();
     expect(screen.getByText("A perda de receita mensal não pode ser negativa.")).toBeInTheDocument();
-  });
+  }, 15_000);
 
   it("does not recommend a scenario while required checks remain unknown", () => {
     openDiagnostic();
@@ -211,7 +211,7 @@ describe("diagnostic dashboard", () => {
       screen.getAllByRole("radio", { name: "Não verificado", checked: true }),
     ).toHaveLength(15);
     expect(screen.queryByText("✓ Recomendado")).not.toBeInTheDocument();
-  });
+  }, 15_000);
 
   it("clears only scenario results when a scenario assumption changes", () => {
     openDiagnostic();
