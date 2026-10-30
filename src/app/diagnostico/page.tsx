@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AssumptionsForm } from "@/features/assumptions/assumptions-form";
 import type { DiagnosticFormValues } from "@/features/assumptions/form-values";
 import { DiagnosticPanel } from "@/features/diagnostic/diagnostic-panel";
@@ -25,6 +25,16 @@ import type {
   ScenarioValidationError,
 } from "@/domain/scenarios/types";
 import type { FieldError } from "@/components/error-summary";
+import {
+  clearLocalAssumptions,
+  loadLocalAssumptions,
+  saveLocalAssumptions,
+} from "@/features/local-data/local-data-store";
+import {
+  fromPersistableAssumptions,
+  toPersistableAssumptions,
+} from "@/features/local-data/form-values";
+import { DataControls } from "@/features/local-data/data-controls";
 
 const initialScenarioValues: ScenarioFormValues = {
   replacementSalary: "3.000,00",
@@ -79,6 +89,8 @@ const asFieldErrors = (
 ): FieldError[] => errors.map(({ field, message }) => ({ field, message }));
 
 const dateInitializationMessage = "Não foi possível determinar a data de hoje em São Paulo. Informe uma data de referência.";
+const versionMismatchMessage =
+  "Os parâmetros legais salvos mudaram. Revise as premissas e calcule o diagnóstico novamente.";
 
 export default function DiagnosticPage() {
   const [values, setValues] = useState(createInitialDiagnosticValues);
@@ -97,7 +109,33 @@ export default function DiagnosticPage() {
   const [checklist, setChecklist] =
     useState<LegalTimelineChecklist>(createInitialChecklist);
   const [selectedSection, setSelectedSection] = useState("premissas");
+  const [storageReady, setStorageReady] = useState(false);
+  const [hasSavedData, setHasSavedData] = useState(false);
+  const [savedAt, setSavedAt] = useState<string | null>(null);
+  const [storageStatusMessage, setStorageStatusMessage] = useState<string | null>(
+    null,
+  );
+  const [storageError, setStorageError] = useState<string | null>(null);
+  const [storageNotice, setStorageNotice] = useState<string | null>(null);
   const referenceDateMissing = values.referenceDate === "";
+
+  useEffect(() => {
+    const loaded = loadLocalAssumptions();
+    if (loaded.ok && loaded.value) {
+      setValues(fromPersistableAssumptions(loaded.value));
+      setHasSavedData(true);
+      setSavedAt(loaded.value.savedAt);
+      if (
+        loaded.value.assumptions.legalParameterVersion !==
+        PROVISIONAL_LEGAL_PARAMETERS.version
+      ) {
+        setStorageNotice(versionMismatchMessage);
+      }
+    } else if (!loaded.ok) {
+      setStorageError(loaded.error.message);
+    }
+    setStorageReady(true);
+  }, []);
 
   const clearScenarioResult = () => {
     setScenarioResults(null);
@@ -208,6 +246,76 @@ export default function DiagnosticPage() {
     }));
   };
 
+  const handleSaveLocalData = () => {
+    const serialized = toPersistableAssumptions(
+      values,
+      PROVISIONAL_LEGAL_PARAMETERS.version,
+      new Date().toISOString(),
+    );
+    if (!serialized.ok) {
+      setDiagnosticErrors(asFieldErrors(serialized.error));
+      return;
+    }
+
+    const saved = saveLocalAssumptions(serialized.value);
+    if (saved.ok) {
+      setHasSavedData(true);
+      setSavedAt(serialized.value.savedAt);
+      setStorageStatusMessage("Premissas salvas neste navegador.");
+      setStorageError(null);
+      setStorageNotice(null);
+    } else {
+      setStorageStatusMessage(null);
+      setStorageError(saved.error.message);
+    }
+  };
+
+  const handleDeleteLocalData = () => {
+    if (
+      !window.confirm(
+        "Excluir as premissas salvas e limpar os dados ativos deste painel?",
+      )
+    ) {
+      return;
+    }
+
+    const cleared = clearLocalAssumptions();
+    if (!cleared.ok) {
+      setStorageError(cleared.error.message);
+      return;
+    }
+
+    setValues(createInitialDiagnosticValues());
+    setDiagnostic(null);
+    setDiagnosticErrors([]);
+    setScenarioValues(initialScenarioValues);
+    setChecksByStage({});
+    setScenarioResults(null);
+    setScenarioErrors([]);
+    setChecklist(createInitialChecklist());
+    setSelectedSection("premissas");
+    setHasSavedData(false);
+    setSavedAt(null);
+    setStorageStatusMessage(null);
+    setStorageError(null);
+    setStorageNotice(null);
+  };
+
+  if (!storageReady) {
+    return (
+      <main className="dashboard-shell">
+        <p aria-live="polite" role="status">
+          Carregando dados salvos neste navegador…
+        </p>
+      </main>
+    );
+  }
+
+  const canSave = parseDiagnosticForm(
+    values,
+    PROVISIONAL_LEGAL_PARAMETERS,
+  ).ok;
+
   return (
     <main className="dashboard-shell">
       <header className="dashboard-header">
@@ -239,7 +347,20 @@ export default function DiagnosticPage() {
       <div className="dashboard-content">
         <section className="dashboard-card" id="premissas" aria-labelledby="assumptions-title">
           <h1 id="assumptions-title">Premissas</h1>
-          <p>Informe dados de operação para estimativas locais. Nenhum dado é enviado ou salvo.</p>
+          <p>
+            Informe dados de operação para estimativas locais. Nada é enviado;
+            salvar neste navegador é opcional.
+          </p>
+          <DataControls
+            canSave={canSave}
+            hasSavedData={hasSavedData}
+            savedAt={savedAt}
+            statusMessage={storageStatusMessage}
+            storageError={storageError}
+            storageNotice={storageNotice}
+            onSave={handleSaveLocalData}
+            onDelete={handleDeleteLocalData}
+          />
           {referenceDateMissing && (
             <p role="alert">{dateInitializationMessage}</p>
           )}

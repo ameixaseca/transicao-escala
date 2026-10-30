@@ -10,7 +10,7 @@ const decodeRequestData = (value: string): string => {
   }
 };
 
-test("keeps operational assumptions and results in browser memory only", async ({
+test("saves only diagnostic assumptions locally and sends no operational data", async ({
   page,
 }) => {
   const requests: Array<{ url: string; body: string | null }> = [];
@@ -27,7 +27,11 @@ test("keeps operational assumptions and results in browser memory only", async (
   const revenueLoss = "12345,67";
 
   await page.getByRole("link", { name: "Começar diagnóstico" }).click();
-  await expect(page.getByText("Nenhum dado é enviado ou salvo.")).toBeVisible();
+  await expect(
+    page.getByText(
+      "Informe dados de operação para estimativas locais. Nada é enviado; salvar neste navegador é opcional.",
+    ),
+  ).toBeVisible();
   await expect(
     page.getByText(
       "Parâmetros legais provisórios · publicados em 16/10/2026 · GJ-04 permanece como bloqueador de lançamento.",
@@ -35,6 +39,13 @@ test("keeps operational assumptions and results in browser memory only", async (
     ),
   ).toBeVisible();
   await page.getByLabel("Salário mensal — Pessoa 1").fill(salary);
+  await page.getByLabel("Início — Faixa 1").fill("08:17");
+  await page.getByLabel("Fim — Faixa 1").fill("17:43");
+  expect(
+    await page.evaluate(() =>
+      localStorage.getItem("transicao-escala:assumptions"),
+    ),
+  ).toBeNull();
   await page.getByRole("button", { name: "Continuar" }).click();
   await expect(
     page.getByText(/Etapa aplicável na data de referência:/),
@@ -57,6 +68,23 @@ test("keeps operational assumptions and results in browser memory only", async (
     expect(resultValues).toEqual(expect.arrayContaining(stageValues));
   }
 
+  await page.getByRole("button", { name: "Salvar neste navegador" }).click();
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        localStorage.getItem("transicao-escala:assumptions"),
+      ),
+    )
+    .toContain(salary);
+  const savedRecord = await page.evaluate(() =>
+    localStorage.getItem("transicao-escala:assumptions"),
+  );
+  expect(savedRecord).toContain('"startMinute":497');
+  expect(savedRecord).toContain('"endMinute":1063');
+  for (const value of [replacementSalary, revenueLoss, ...resultValues]) {
+    expect(savedRecord).not.toContain(value);
+  }
+
   const requestText = requests
     .flatMap(({ url, body }) => [
       url,
@@ -74,7 +102,14 @@ test("keeps operational assumptions and results in browser memory only", async (
       decodeRequestData(body ?? ""),
     ])
     .join("\n");
-  for (const value of [salary, replacementSalary, revenueLoss, ...resultValues]) {
+  for (const value of [
+    salary,
+    replacementSalary,
+    revenueLoss,
+    "08:17",
+    "17:43",
+    ...resultValues,
+  ]) {
     expect(requestText).not.toContain(value);
     expect(requestText).not.toContain(encodeURIComponent(value));
     expect(externalRequestText).not.toContain(value);
@@ -82,7 +117,9 @@ test("keeps operational assumptions and results in browser memory only", async (
   }
 
   await page.reload();
-  await expect(page.getByLabel("Salário mensal — Pessoa 1")).toHaveValue("2.200,00");
+  await expect(page.getByLabel("Salário mensal — Pessoa 1")).toHaveValue(salary);
+  await expect(page.getByLabel("Início — Faixa 1")).toHaveValue("08:17");
+  await expect(page.getByLabel("Fim — Faixa 1")).toHaveValue("17:43");
   await expect(page.getByLabel("Salário mensal de reposição")).toHaveValue(
     "3.000,00",
   );

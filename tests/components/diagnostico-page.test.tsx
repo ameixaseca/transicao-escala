@@ -1,8 +1,9 @@
 import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import DiagnosticPage from "@/app/diagnostico/page";
 
 afterEach(cleanup);
+beforeEach(() => localStorage.clear());
 
 const openDiagnostic = () => {
   render(<DiagnosticPage />);
@@ -36,6 +37,54 @@ describe("diagnostic dashboard", () => {
     expect(
       screen.getAllByText(/Parâmetros legais provisórios/).length,
     ).toBeGreaterThan(0);
+  });
+
+  it("restores saved assumptions before enabling edits and warns on legal version mismatch", () => {
+    localStorage.setItem(
+      "transicao-escala:assumptions",
+      JSON.stringify({
+        schemaVersion: 1,
+        savedAt: "2026-10-29T12:00:00.000Z",
+        assumptions: {
+          employeeRows: [
+            {
+              localId: "stored-person",
+              salaryDecimal: "98.765,43",
+              weeklyHoursDecimal: "42,75",
+              contractType: "part-time",
+            },
+          ],
+          coverage: [
+            {
+              weekday: 1,
+              startMinute: 495,
+              endMinute: 1440,
+              minimumPeople: 1,
+            },
+          ],
+          referenceDate: "2026-12-16",
+          legalParameterVersion: "older-legal-parameters",
+        },
+      }),
+    );
+
+    openDiagnostic();
+
+    expect(screen.getByLabelText("Data de referência")).toHaveValue("2026-12-16");
+    expect(screen.getByLabelText("Salário mensal — Pessoa 1")).toHaveValue(
+      "98.765,43",
+    );
+    expect(screen.getByLabelText("Horas semanais — Pessoa 1")).toHaveValue(
+      "42,75",
+    );
+    expect(screen.getByLabelText("Fim — Faixa 1")).toHaveValue("24:00");
+    expect(
+      screen.getByText(
+        "Os parâmetros legais salvos mudaram. Revise as premissas e calcule o diagnóstico novamente.",
+      ),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Diagnóstico pendente.")).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: /Resultados —/ })).toBeNull();
   });
 
   it("keeps the legal timeline available before a valid diagnostic", () => {
